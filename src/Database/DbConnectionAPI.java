@@ -23,7 +23,8 @@ public class DbConnectionAPI {
 	 * <b>readFromDatabase(String query)</b> - reads from database according to the query received, returns the Result Set. <br>
 	 * <b>insertIntoDatabase(String query)</b> - inserts into database according to the query received, returns true if success.<br>
 	 * <b>deleteFromDatabase(String query)</b> - deletes from database according to the query received, returns true if success.<br>
-	 */
+	 * <b>updateDatabase(String query)</b> - update the database according to the query received, returns true if success.
+	 **/
 	
 	
 	private static BasicDataSource ds;
@@ -107,9 +108,10 @@ public class DbConnectionAPI {
 		
 		try {			
 			
+			//create statement object
 			Statement stmt = con.createStatement();
 			
-			//executeQuery- read from database
+			//execute query
 			rs = stmt.executeQuery(query);		
 			
 		} catch (SQLException e) {		
@@ -128,9 +130,10 @@ public class DbConnectionAPI {
 		
 		try {
 					
+			//create statement object
 			Statement stmt = con.createStatement();
 			
-			//executeUpdate- UPDATE,INSERT,DELETE from database
+			//execute query
 			if(stmt.executeUpdate(query) == 1) 
 				return true;
 				
@@ -145,16 +148,17 @@ public class DbConnectionAPI {
 	
 	
 	/**
-	 * delets from database using the query function - returns true if successful
+	 * deletes from database using the query function - returns true if successful
 	 * @param query - the SQL query to execute
 	 */
 	public boolean deleteFromDatabase(String query) {
 		
 		try {
 
+			//create statement object
 			Statement stmt = con.createStatement();
 			
-			//executeUpdate- UPDATE,INSERT,DELETE from database
+			//execute query
 			if(stmt.executeUpdate(query) == 1) 
 				return true;				
 			
@@ -167,11 +171,38 @@ public class DbConnectionAPI {
 	}
 	
 
+	
+	/**
+	 * update the database using the query function - returns true if successful
+	 * @param query - the SQL query to execute
+	 */
+	public boolean updateDatabase(String query) {
+		
+		try {
+
+			//create statement object
+			Statement stmt = con.createStatement();
+			
+			//execute query
+			if(stmt.executeUpdate(query) == 1) 
+				return true;				
+			
+		} catch (SQLException e) {
+			System.out.println("Error in query: "+e);
+		}
+			
+		return false;	
+		
+	}
+
 
 	
 	
 	
 	
+	//***********************//
+	//MOVE INTO LOGIN SERVLET//
+	//***********************//
 	public boolean doesExist(String userName, String password)
 	{
 		//Query establishment

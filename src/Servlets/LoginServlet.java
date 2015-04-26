@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
@@ -26,6 +27,7 @@ public class LoginServlet extends HttpServlet {
         
         //connect to db using the DB API
         db = new DbConnectionAPI();
+        
     }
 
 

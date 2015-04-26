@@ -38,6 +38,8 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("user");
 		String password = request.getParameter("pwd");
 		
+		db.insertIntoDatabase("INSERT INTO users VALUES ('r','r')");
+		
 		if(db.doesExist(username, password))
 		{
 			response.sendRedirect(request.getContextPath()+"/LoginSuccess.jsp");			
@@ -50,6 +52,7 @@ public class LoginServlet extends HttpServlet {
         }
 		
 		//print DB connection stats
+		
 		//db.printDataSourceStats();
 		
 	}

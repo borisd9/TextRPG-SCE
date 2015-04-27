@@ -37,7 +37,7 @@ public class DbConnectionAPI {
 		ds = new BasicDataSource();
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
 		ds.setUsername("root");
-		//ds.setPassword("root");
+		ds.setPassword("root");
 		ds.setUrl("jdbc:mysql://localhost/database");
 		
 		//connect

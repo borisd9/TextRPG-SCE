@@ -14,7 +14,7 @@ Username: <input type="text" name="user">
 <br>
 Password: <input type="password" name="pwd">
 <br>
-Email: <input type="text" name="user">
+Email: <input type="text" name="email">
 <br>
 
 <input type="submit" value="Register">

@@ -7,13 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="LoginServlet" method="post">
- 
-Username: <input type="text" name="user">
-<br>
-Password: <input type="password" name="pwd">
-<br>
-<input type="submit" value="Login">
+<form action="AuthenticationServlet" method="post">
+Please enter your authentication code here: <input type="text" name="code"/>
+<input type="submit" value="Activate"/>
 </form>
 </body>
 </html>

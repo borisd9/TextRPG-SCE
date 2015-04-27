@@ -8,7 +8,6 @@ import java.sql.Statement;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 
-
 public class DbConnectionAPI {
 
 	/**
@@ -21,9 +20,7 @@ public class DbConnectionAPI {
 	 * <b>printData(ResultSet rs)</b> - prints data from the result set received. <br>
 	 * <b>printDataSourceStats()</b> - prints num of active and idle connections - for internal testing <br>
 	 * <b>readFromDatabase(String query)</b> - reads from database according to the query received, returns the Result Set. <br>
-	 * <b>insertIntoDatabase(String query)</b> - inserts into database according to the query received, returns true if success.<br>
-	 * <b>deleteFromDatabase(String query)</b> - deletes from database according to the query received, returns true if success.<br>
-	 * <b>updateDatabase(String query)</b> - update the database according to the query received, returns true if success.
+	 * <b>modifyDatabase(String query)</b> - update the database according to the query received, returns true if success.
 	 **/
 	
 	
@@ -40,8 +37,8 @@ public class DbConnectionAPI {
 		ds = new BasicDataSource();
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
 		ds.setUsername("root");
-		ds.setPassword("root");
-		ds.setUrl("jdbc:mysql://localhost/test");
+		//ds.setPassword("root");
+		ds.setUrl("jdbc:mysql://localhost/database");
 		
 		//connect
 		try {
@@ -72,7 +69,7 @@ public class DbConnectionAPI {
 	public void closeConnection()
 	{	
 		try {
-			ds.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error closing connection: " + e);
 		}
@@ -87,9 +84,17 @@ public class DbConnectionAPI {
 	public void printData(ResultSet rs) {
 		try {
 			System.out.println("Table: " + rs.getMetaData().getTableName(1));
-			for(int i=1;i<=rs.getMetaData().getColumnCount(); i++) {
-				System.out.println("Column "+i+" - "+rs.getMetaData().getColumnName(i) + " : " + rs.getObject(i));
-			}
+			
+			//print column names
+			for(int i=1;i<=rs.getMetaData().getColumnCount(); i++) 
+				System.out.print("Column "+i+" - "+rs.getMetaData().getColumnName(i) + "  ");
+			
+			//print data
+			while(rs.next())
+				System.out.print("/n");
+				for(int i=1;i<=rs.getMetaData().getColumnCount(); i++) 
+					System.out.print(rs.getObject(i) + "  ");
+			
 		} catch (SQLException e) {
 	
 			e.printStackTrace();
@@ -115,7 +120,7 @@ public class DbConnectionAPI {
 			rs = stmt.executeQuery(query);		
 			
 		} catch (SQLException e) {		
-			System.out.println("Error in query: "+e);
+			System.out.println("Error in read query: "+e);
 		}
 		
 		return rs;
@@ -123,10 +128,10 @@ public class DbConnectionAPI {
 		
 
 	/**
-	 * inserts into database query function - returns the auto incremented value
+	 * inserts/updates/deletes from database using the query function - returns the true if successful
 	 * @param query - the SQL query to execute
 	 */
-	public boolean insertIntoDatabase(String query) {
+	public boolean modifyDatabase(String query) {
 		
 		try {
 					
@@ -138,7 +143,7 @@ public class DbConnectionAPI {
 				return true;
 				
 		} catch (SQLException e) {
-			System.out.println("Error in query: "+e);
+			System.out.println("Error in modify query: "+e);
 		}
 			
 		return false;	
@@ -146,56 +151,6 @@ public class DbConnectionAPI {
 	}
 	
 	
-	
-	/**
-	 * deletes from database using the query function - returns true if successful
-	 * @param query - the SQL query to execute
-	 */
-	public boolean deleteFromDatabase(String query) {
-		
-		try {
-
-			//create statement object
-			Statement stmt = con.createStatement();
-			
-			//execute query
-			if(stmt.executeUpdate(query) == 1) 
-				return true;				
-			
-		} catch (SQLException e) {
-			System.out.println("Error in query: "+e);
-		}
-			
-		return false;	
-		
-	}
-	
-
-	
-	/**
-	 * update the database using the query function - returns true if successful
-	 * @param query - the SQL query to execute
-	 */
-	public boolean updateDatabase(String query) {
-		
-		try {
-
-			//create statement object
-			Statement stmt = con.createStatement();
-			
-			//execute query
-			if(stmt.executeUpdate(query) == 1) 
-				return true;				
-			
-		} catch (SQLException e) {
-			System.out.println("Error in query: "+e);
-		}
-			
-		return false;	
-		
-	}
-
-
 	
 	
 	

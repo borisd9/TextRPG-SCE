@@ -8,6 +8,6 @@
 </head>
 <body>
 <h3>Hi test, Login successful.</h3>
-<a href="Login.jsp">Login Page</a>
+<a href="home.jsp">Homepage</a>
 </body>
 </html>

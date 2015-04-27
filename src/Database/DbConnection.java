@@ -17,6 +17,8 @@ public class DbConnection extends DbConnectionAPI {
 		//Query establishment
 		String query = "SELECT * FROM users WHERE username='"+userName+"' AND password='"+password+"'";		
 		
+		
+		
 		try {			
 			ResultSet rs = readFromDatabase(query);	
 			if(rs.next())

@@ -1,6 +1,7 @@
 package Database;
 
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,6 +40,8 @@ public class DbConnectionAPI {
 		ds.setUsername("root");
 		ds.setPassword("root");
 		ds.setUrl("jdbc:mysql://localhost/database");
+		
+		
 		
 		//connect
 		try {

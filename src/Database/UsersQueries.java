@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class DbConnection extends DbConnectionAPI {
+public class UsersQueries extends DbConnectionAPI {
 
 	//constructor
-	public DbConnection(){
+	public UsersQueries(){
 		super();
 	}
 	
@@ -16,8 +16,6 @@ public class DbConnection extends DbConnectionAPI {
 	{
 		//Query establishment
 		String query = "SELECT * FROM users WHERE username='"+userName+"' AND password='"+password+"'";		
-		
-		
 		
 		try {			
 			ResultSet rs = readFromDatabase(query);	
@@ -29,6 +27,7 @@ public class DbConnection extends DbConnectionAPI {
 		return false;
 	}
 	
+
 	public String doesExit2(String code) {
 		String query = "SELECT * FROM authentication WHERE code='"+code+"'";
 		try {
@@ -41,23 +40,27 @@ public class DbConnection extends DbConnectionAPI {
 		return null;
 	}
 	
+	
 	public boolean insert(String username, String password, String email){
 		String query = "INSERT INTO users (username, password, email, rank, activated) VALUES ('"+username+"','"+password+"','"+email+"', 0, 0)";
 
 		return modifyDatabase(query);
 	}
 	
-	public boolean insert(String username, String code){
-		String query = "INSERT INTO authentication (username, code) VALUES ('"+username+"','"+code+"')";
-		
-		return modifyDatabase(query);
-	}
 	
 	public boolean activate(String username){
+		
 		String query1 = "DELETE FROM authentication WHERE username='" + username + "'";
 		String query2 = "UPDATE users SET activated=1 WHERE username='" + username + "'";
 		
 		return modifyDatabase(query1) && modifyDatabase(query2);
+	}
+	
+	
+	public boolean insert(String username, String code){
+		String query = "INSERT INTO authentication (username, code) VALUES ('"+username+"','"+code+"')";
+		
+		return modifyDatabase(query);
 	}
 	
 	

@@ -20,7 +20,7 @@ margin: 0;
 
 body
 {
-	background: #000000 url(images/back_all.gif) repeat-x top;
+	background: #33aaaa;
 	font: 13px Tahoma, Arial, Helvetica, sans-serif;
 	color: #666666;
 }
@@ -59,10 +59,10 @@ font-size: 12px;
 #buttons
 {
 height: 37px;
-width: 700px;
-border-left: 4px solid #FFFFFF;
+width: 753px;
+border-left: 2px solid #FFFFFF;
 background: url(images/buttons.jpg) repeat-x;
-padding-left: 80px;
+padding-left: 30px;
 }
 
 #buttons li {
@@ -72,20 +72,20 @@ padding-left: 80px;
 #buttons a {
 	display: block;
 	float: left;
-	width: 100px;
+	width: 90px;
 	height: 27px;
 	background: #FFFFFF url(images/buttons.jpg) repeat-x;
 	text-align: center;
 	text-decoration: none;
 	color: #ffffff;
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 13px;
 	padding-top: 10px;
 
 }
 
 #buttons a:hover {
-	width: 100px;
+	width: 80px;
     height: 27px;
 	background: #FFFFFF url(images/buttons_r.jpg) repeat-x;
 }
@@ -95,7 +95,7 @@ padding-left: 80px;
 width: 775px;
 padding: 5px;
 background: #ffffff;
-min-height: 400px;
+min-height:530px;
 }
 
 #left
@@ -126,7 +126,7 @@ float: right;
 
 #sidebar 
 {
-width: 230px;
+width: 250px;
 }
 
 #sidebar ul 
@@ -179,7 +179,7 @@ width: 230px;
 #footer
 {
 	background: url(images/footer.gif) repeat-x;
-	height: 49px;
+	height:49px;
 	font-size: 10px;
 	color: #000000;
 	padding-top: 10px;
@@ -199,3 +199,5 @@ padding: 10px;
 color:#FF0000;
 font-weight: bold;
 }
+
+

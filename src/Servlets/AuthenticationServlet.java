@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Database.DbConnection;
+import Database.UsersQueries;
 
 /**
  * Servlet implementation class AuthenticationServlet
@@ -18,14 +18,14 @@ import Database.DbConnection;
 @WebServlet("/AuthenticationServlet")
 public class AuthenticationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private DbConnection db;   
+    private UsersQueries db;   
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AuthenticationServlet() {
         super();
-        db = new DbConnection();
+        db = new UsersQueries();
     }
 
 	/**

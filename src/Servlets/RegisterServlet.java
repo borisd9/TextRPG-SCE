@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Database.DbConnection;
+import Database.UsersQueries;
 import General.SendMail;
 import General.Sha1Hex;
 
@@ -22,15 +22,15 @@ import General.Sha1Hex;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
-	DbConnection db;
+     public static int flag=0;
+	UsersQueries db;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public RegisterServlet() {
         super();   
-        db = new DbConnection();
+        db = new UsersQueries();
     }
 
 	/**
@@ -69,6 +69,7 @@ public class RegisterServlet extends HttpServlet {
 				SendMail sm = new SendMail(email, username, auth_code);
 				try {
 					sm.send();
+					flag=1;
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -77,9 +78,10 @@ public class RegisterServlet extends HttpServlet {
 		});
 		t.start();
 		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/register.jsp");
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/Register.jsp");
         PrintWriter out= response.getWriter();
-        out.println("<font color=blue>Registration complete! Please follow the steps provided in your mail's inbox to activate your account.</font><br/>");
+        if(flag==1)
+        	out.println("<font color=red>Registration complete! Please follow the steps provided in your mail's inbox to activate your account.</font><br/>");
         rd.include(request, response);
 	}
 

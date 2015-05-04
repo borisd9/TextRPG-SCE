@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class LoginDB extends DbConnectionAPI {
+public class LoginDB extends DbConnectionAPI {1
 
 	//constructor
 	public LoginDB(){

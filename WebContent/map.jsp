@@ -9,12 +9,12 @@
 </head>
 <body>
 <a href="home.jsp.html">Back to Home page</a>
-<img src="images/worldMap.png" width="600" height="500" usemap="#map" border="0">
-<map name="map">
 
-<area shape="circle" coords="42,160,5" title="Home sweet home" href="#" onclick="alert('Home!!!!')" > 
 
-</map>
+<div style="background: url('images/worldMap.png'); width:650px; height:500px; position: relative;">
+    <img src="images/pin.gif" title="Home" style="position: relative; top:112px; left:-1px; width:90px; height:70px;">
+</div>
+
 
 </body>
 </html>

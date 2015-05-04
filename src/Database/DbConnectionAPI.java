@@ -56,10 +56,12 @@ public class DbConnectionAPI {
 	/**
 	 * print stats for database - for internal testing
 	 */
-    public void printDataSourceStats() {
+    public String printDataSourceStats() {
     	//print number of active connections and idle connections
-        System.out.println("NumActive: " + ds.getNumActive());
-        System.out.println("NumIdle: " + ds.getNumIdle());
+        //System.out.println("NumActive: " + ds.getNumActive());
+        //System.out.println("NumIdle: " + ds.getNumIdle());
+    	return "NumActive: " + ds.getNumActive() + "   " + "NumIdle: " + ds.getNumIdle() ;
+   
     }
 	
 	

@@ -1,7 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<%@page import="Database.MapDB"%>
+<% MapDB map = new MapDB();
+map.test();
+%>
+
 <html>
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link href="styles.css" rel="stylesheet" type="text/css" />
@@ -10,11 +14,12 @@
 <body>
 <a href="home.jsp">Back to Home page</a>
 
-
 <div style="background: url('images/worldMap.png'); width:650px; height:500px; position: relative;">
-    <img src="images/pin.gif" title="Home" style="position: relative; top:112px; left:-1px; width:90px; height:70px;">
+    <img src="images/pin.gif" title="<%= map.location %>" style="position: relative; top:<%= map.y %>px; left:<%= map.x %>px; width:90px; height:70px;">
 </div>
 
+For testing<br>
+DB connections: <%= map.printDataSourceStats() %>
 
 </body>
 </html>

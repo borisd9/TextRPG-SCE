@@ -154,35 +154,4 @@ public class DbConnectionAPI {
 	}
 	
 	
-	
-	
-	
-	
-	//***********************//
-	//MOVE INTO LOGIN SERVLET//
-	//***********************//
-	public boolean doesExist(String userName, String password)
-	{
-		//Query establishment
-		ResultSet rs = null; 
-		String query = "SELECT * FROM users WHERE username='"+userName+"' AND password='"+password+"'";		
-		
-		rs = readFromDatabase(query);
-			
-		try {
-			if(rs.next()){
-				printData(rs);
-				return true;
-			}
-		} catch (SQLException e) {
-			System.out.println("Error in query: "+e);
-		}		
-		
-		return false;
-	}
-	
-	
-	
-	
-	
 }

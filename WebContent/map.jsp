@@ -8,7 +8,7 @@
 <title>Map</title>
 </head>
 <body>
-<a href="home.jsp.html">Back to Home page</a>
+<a href="home.jsp">Back to Home page</a>
 
 
 <div style="background: url('images/worldMap.png'); width:650px; height:500px; position: relative;">

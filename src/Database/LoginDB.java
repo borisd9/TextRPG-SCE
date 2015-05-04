@@ -4,6 +4,7 @@ package Database;
 import java.sql.ResultSet;
 
 import java.sql.SQLException;
+import javafx.scene.control.Alert;
 
 
 public class LoginDB extends DbConnectionAPI {

@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Database.UsersQueries;
+import Database.AuthenticationDB;
 
 /**
  * Servlet implementation class AuthenticationServlet
@@ -18,14 +19,14 @@ import Database.UsersQueries;
 @WebServlet("/AuthenticationServlet")
 public class AuthenticationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private UsersQueries db;   
+    private AuthenticationDB db;   
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AuthenticationServlet() {
         super();
-        db = new UsersQueries();
+        db = new AuthenticationDB();
     }
 
 	/**
@@ -40,7 +41,7 @@ public class AuthenticationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String auth_code = request.getParameter("code");
-		String username = db.doesExit2(auth_code);
+		String username = db.doesExit(auth_code);
 		
 		if(username != null){
 			db.activate(username);

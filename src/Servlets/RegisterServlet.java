@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Database.UsersQueries;
+import Database.RegisterDB;
 import General.SendMail;
 import General.Sha1Hex;
 
@@ -23,14 +24,14 @@ import General.Sha1Hex;
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      public static int flag=0;
-	UsersQueries db;
+     RegisterDB db;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public RegisterServlet() {
         super();   
-        db = new UsersQueries();
+        db = new RegisterDB();
     }
 
 	/**

@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 
+
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Database.UsersQueries;
+import Database.LoginDB;
 
 /**
  * Servlet implementation class LoginServlet
@@ -20,13 +21,13 @@ import Database.UsersQueries;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	UsersQueries db;
+	LoginDB db;
 	
     public LoginServlet() {
         super();
         
         //connect to DB
-        db = new UsersQueries();
+        db = new LoginDB();
         
     }
 

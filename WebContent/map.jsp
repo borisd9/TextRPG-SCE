@@ -10,7 +10,6 @@ map.update();
 <title>Map</title>
 </head>
 <body>
-<a href="home.jsp">Back to Home page</a>
 
 <div style="background: url('images/worldMap.png'); width:450px; height:350px; position: relative;">
     <img src="images/pinV2.gif" title="<%= map.getLocation() %>" style="position: relative; top:<%= map.gety() %>px; left:<%= map.getx() %>px; width:90px; height:70px;">

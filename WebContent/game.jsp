@@ -6,7 +6,7 @@
 <link href="styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="game">
+<div id="main">
   <jsp:include page="header.jsp"/>
   <div id="content">
   	<jsp:include page="sidebar.jsp"/>
@@ -21,6 +21,7 @@
     %>
     <div>
     	<jsp:include page="chat.jsp" />
+    	<jsp:include page="map.jsp" />
 	</div>
 	<% } %>  
 	<br/>

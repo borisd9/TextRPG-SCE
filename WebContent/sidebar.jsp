@@ -11,8 +11,6 @@
             </ul>
           </li>
           
-          
-          	<jsp:include page="map.jsp" />
         </ul>
       </div>
     </div>

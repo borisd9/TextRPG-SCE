@@ -18,16 +18,28 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 	
 	private String to;
-	private String text;
 	private String subject;
-
+	private String message;
 	
-	public SendMail(String to, String username, String auth_code) {
+	public SendMail() {
+	}
+
+	public void registerMail(String to, String username, String auth_code) {
 		this.to = to;
 		this.subject = "TextRPG Registration";
-		this.text = "Hello "+username+", welecome to TextRPG!<br><br>Your activation code is:" + auth_code + "<br><br>In order"
-					+ " to activate your account, paste your code in the following <a href='localhost/text-rpg/activate.jsp'>link</a>."
-					+ "<br><br>Regards,<br>TextRPG Team";
+		String link = "<a href='localhost/text-rpg/activate.jsp?code="+auth_code+"&username="+username+"'>link</a>";
+		this.message = "Hello "+username+", welecome to TextRPG!<br><br>In order to activate your account, please go to the following " 
+					+ link + ".<br><br>Regards,<br>TextRPG Team";
+	}
+	
+	public void contactMail(String subject, String message, String name, String from) {
+		this.to = "textrpgsce@gmail.com";
+		this.subject = subject;
+		this.message = "New mail from "+name+"!\nEmail: "+from+"\nMessage: "+message;
+	}
+	
+	public void forgotPassword() {
+		
 	}
 	
 	synchronized public void send() throws MessagingException {
@@ -50,10 +62,9 @@ public class SendMail {
 		props.put("mail.smtp.socketFactory.fallback", "false");
 
 		Session session = Session.getInstance(props);
-		//session.setDebug(true);
 
 		MimeMessage msg = new MimeMessage(session);
-		msg.setText(text, "UTF-8", "html");
+		msg.setText(message, "UTF-8", "html");
 		msg.setSubject(subject);
 		msg.setFrom(new InternetAddress(from_email));
 		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));

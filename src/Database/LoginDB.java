@@ -2,9 +2,7 @@ package Database;
 
 
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
-import javafx.scene.control.Alert;
 
 
 public class LoginDB extends DbConnectionAPI {
@@ -30,18 +28,19 @@ public class LoginDB extends DbConnectionAPI {
 		return false;
 	}
 	
+	
+	public ResultSet rank(String userName)
+	{
+		ResultSet rs = null; 
+		//Query establishment
+		String query = "SELECT rank FROM users WHERE username='"+userName+"'";
+		//try{
+			rs = readFromDatabase(query);
+		//}catch ()
+		return rs;
+	}
 
 
-	
-
-	
-	
-
-	
-	
-
-	
-	
 }
 
 

@@ -1,15 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>TextBased RPG </title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<title>Account activation</title>
 </head>
+
+
 <body>
-<form action="AuthenticationServlet" method="post">
-Please enter your authentication code here: <input type="text" name="code"/>
-<input type="submit" value="Activate"/>
+<div id="main">
+  <jsp:include page="header.jsp"/>
+  
+  
+  <div id="content">
+    <jsp:include page="sidebar.jsp"/>
+    
+    <div id="left">
+    <br>
+      <center><h1>Activation Succeeded!</h1></center>
+      <br/>
+      
+<form id="auth" action="AuthenticationServlet" method="POST">
+<input type="hidden" value="<%= request.getParameter("code")%>" name="code" />
 </form>
+<p>Hello <%= request.getParameter("username") %>! <br> Your account has been successfully activated. Enjoy your stay!</p>
+<br><br>
+<p>What would you like to do now?</p>
+<br>
+<center><a href="game.jsp">Play the game</a></center><br>
+<center><a href="guide.jsp">Check out the game guide</a></center>
+<script>
+    window.onload = function() {
+    	var code = "<%= request.getParameter("code") %>";
+    	if(code!="null"){
+    		document.getElementById("auth").submit();
+    	}	
+    }
+</script>
+</div>
+</div>
+
+  <jsp:include page="footer.jsp" />
+</div>
 </body>
 </html>

@@ -23,8 +23,8 @@ import General.Sha1Hex;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     public static int flag=0;
-     RegisterDB db;
+      
+	RegisterDB db;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -67,10 +67,10 @@ public class RegisterServlet extends HttpServlet {
 		Thread t = new Thread(new Runnable() {	
 			@Override
 			public void run() {
-				SendMail sm = new SendMail(email, username, auth_code);
+				SendMail sm = new SendMail();
+				sm.registerMail(email, username, auth_code);
 				try {
 					sm.send();
-					flag=1;
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -79,10 +79,9 @@ public class RegisterServlet extends HttpServlet {
 		});
 		t.start();
 		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/Register.jsp");
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/register.jsp");
         PrintWriter out= response.getWriter();
-        if(flag==1)
-        	out.println("<font color=red>Registration complete! Please follow the steps provided in your mail's inbox to activate your account.</font><br/>");
+        out.println("<font color=blue>Registration complete! Please follow the steps provided in your mail's inbox to activate your account.</font><br/>");
         rd.include(request, response);
 	}
 

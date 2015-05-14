@@ -7,49 +7,41 @@
 </head>
 <body>
 <div id="main">
-  <div id="header"> 
-    <div id="buttons">
-      <ul>
-   		<li class="first">
-        <li><a href="home.jsp">Home</a></li>
-        <li><a href="login.jsp">Login</a></li>
-        <li><a href="view_game.jsp">View Game</a></li>
-        <li><a href="guide.jsp" >Game Guide</a></li>
-        <li><a href="store.jsp" >Store</a></li>
-        <li><a href="about.jsp">About Us</a></li>
-        <li><a href="contact.jsp">Contact Us</a></li>
-        
-      </ul>
-    </div>
-  </div>
+  <jsp:include page="header.jsp"/>
+  
   <div id="content">
-    <div id="right">
-      <div id="sidebar">
-        <ul>
-          <li>
-            <h2>Game Options</h2>
-            <ul>
-              <li><a href="Map.jsp">Map</a> 
-              <li><a href="Items.jsp">Items</a> 
-              <li><a href="Characters.jsp">Characters</a> 
-              <li><a href="players.jsp">Users/Players</a>
-            </ul>
-          </li>
-          
-        </ul>
-      </div>
-    </div>
+    <jsp:include page="sidebar.jsp"/>
     <div id="left">
     <br>
       <center><h1>Game Guide </h1></center>
       <br/>
-
+      <p>Table of contents:</p><br>
+      - <a href="#General" style="color: blue">General</A><br>
+      - <a href="#Item_list" style="color: blue">Item list</A><br>
+      - <a href="#Map" style="color: blue">Map</A><br>
+      - <a href="#Characters" style="color: blue">Characters</A><br>
+      - <a href="#Chat_rules" style="color: blue">Chat rules</A><br>
+    <br><br>
+    <h3 style="color: black"><u><A NAME=General>General:</A></u></h3>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <p></p>
+    <h3 style="color: black"><u><A NAME=Item_list>Item list:</A></u></h3>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <p></p>
+    <h3 style="color: black"><u><A NAME=Map>Map:</A></u></h3>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <p></p>
+    <h3 style="color: black"><u><A NAME=Characters>Characters:</A></u></h3>
+    <br>
+    <p></p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <h3 style="color: black"><u><A NAME=Chat_rules>Chat rules:</A></u></h3>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <p></p>
       
     </div>
   </div>
-  <div id="footer">
-    <p>Copyright &copy; 2015. Designed by SCE-Project-Team-8
-  </div>
+  
+  <jsp:include page="footer.jsp" />
 </div>
   </body>
 

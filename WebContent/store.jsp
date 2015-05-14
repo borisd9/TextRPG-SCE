@@ -7,38 +7,10 @@
 </head>
 <body>
 <div id="main">
-  <div id="header"> 
-    <div id="buttons">
-      <ul>
-   		<li class="first">
-        <li><a href="home.jsp">Home</a></li>
-        <li><a href="login.jsp">Login</a></li>
-        <li><a href="view_game.jsp">View Game</a></li>
-        <li><a href="guide.jsp" >Game Guide</a></li>
-        <li><a href="store.jsp" >Store</a></li>
-        <li><a href="about.jsp">About Us</a></li>
-        <li><a href="contact.jsp">Contact Us</a></li>
-        
-      </ul>
-    </div>
-  </div>
+  <jsp:include page="header.jsp"/>
   <div id="content">
-    <div id="right">
-      <div id="sidebar">
-        <ul>
-          <li>
-            <h2>Game Options</h2>
-            <ul>
-              <li><a href="Map.jsp">Map</a> 
-              <li><a href="Items.jsp">Items</a> 
-              <li><a href="Characters.jsp">Characters</a> 
-              <li><a href="players.jsp">Users/Players</a>
-            </ul>
-          </li>
-          
-        </ul>
-      </div>
-    </div>
+    <jsp:include page="sidebar.jsp"/>
+    
     <div id="left">
     <br>
       <center><h1>Online Store </h1></center>
@@ -47,9 +19,7 @@
       
     </div>
   </div>
-  <div id="footer">
-    <p>Copyright &copy; 2015. Designed by SCE-Project-Team-8
-  </div>
+  <jsp:include page="footer.jsp" />
 </div>
   </body>
 

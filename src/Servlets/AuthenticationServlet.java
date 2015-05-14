@@ -16,7 +16,7 @@ import Database.AuthenticationDB;
 /**
  * Servlet implementation class AuthenticationServlet
  */
-@WebServlet("/AuthenticationServlet")
+@WebServlet("/AuthenticationServlet/*")
 public class AuthenticationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private AuthenticationDB db;   
@@ -33,7 +33,7 @@ public class AuthenticationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -45,15 +45,12 @@ public class AuthenticationServlet extends HttpServlet {
 		
 		if(username != null){
 			db.activate(username);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/activate.jsp");
-	        PrintWriter out= response.getWriter();
-	        out.println("<font color=blue>You account has been succesfully updated! Enjoy your stay. :)</font><br/>");
-	        rd.include(request, response);
+			response.sendRedirect(request.getContextPath()+"/activate.jsp?username="+username);
 		}
 		else{
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/activate.jsp");
 	        PrintWriter out= response.getWriter();
-	        out.println("<font color=red>Activation error! Please enter the correct code.</font><br/>");
+	        out.println("<font color=red>Activation error!"+auth_code+" Please enter the correct code.</font><br/>");
 	        rd.include(request, response);
 		}
 	}

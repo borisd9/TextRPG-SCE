@@ -7,58 +7,51 @@
 </head>
 <body>
 <div id="main">
-  <div id="header"> 
-    <div id="buttons">
-      <ul>
-        <li class="first">
-        <li><a href="home.jsp">Home</a></li>
-        <li><a href="login.jsp">Login</a></li>
-        <li><a href="view_game.jsp">View Game</a></li>
-        <li><a href="guide.jsp" >Game Guide</a></li>
-        <li><a href="store.jsp" >Store</a></li>
-        <li><a href="about.jsp">About Us</a></li>
-        <li><a href="contact.jsp">Contact Us</a></li>
-        
-      </ul>
-    </div>
-  </div>
+  <jsp:include page="header.jsp"/>
+  
   <div id="content">
-    <div id="right">
-      <div id="sidebar">
-        <ul>
-          <li>
-            <h2>Game Options</h2>
-            <ul>
-              <li><a href="Map.jsp">Map</a> 
-              <li><a href="Items.jsp">Items</a> 
-              <li><a href="Characters.jsp">Characters</a> 
-              <li><a href="players.jsp">Users/Players</a>
-            </ul>
-          </li>
-          
-        </ul>
-      </div>
-    </div>
+    <jsp:include page="sidebar.jsp"/>
+    
     <div id="left">
     <br>
       <center><h1>Contact Us</h1></center>
       <br/>
-	  <p>Have you bump into a problem in the game?
-	  <br>Need some help? Have some improvement suggestions?
-	  <br><br>Our E-Mail: info_rpg@gmail.com
-	  <br>You can also fill the fields below and we will contact you.</p>
-
-	   <br>Full name: <br><input type="text" name="user"  style="background-color:#eeeeee; border:1px solid grey"/>
-	   <br>Phone: <br><input type="tel" name="usrtel"  style="background-color:#eeeeee; border:1px solid grey"/>
-       <br>E-Mail: <br><input type="text" name="user"  style="background-color:#eeeeee; border:1px solid grey"/>
-       <br>Message: <br><input type="text" name="user" maxlength="120" size="120" style="background-color:#eeeeee; border:1px solid grey"/>
-       <br><br><br>
-       <center><input type="submit" value="Send" style="background-color:#eeeeee; border:1px solid grey; "/></center>
+	  <p>Finding yourself in need for assistance?
+	  <br>Got feedback? Got improvement suggestions?
+	  <br><br>Feel free to send us any questions/feedback using the form below.
+	  <br>We will get back to you in no time!</p>
+		<%
+	   		String err = request.getParameter("err");
+	      	if(err!=null){
+	      		if(err.equals("1")){
+	    %>
+	    <font color="red"><b>Email and message fields cannot be empty!</b></font>
+	    <br><br>
+		<%
+	      		}
+	      	}
+	    %>
+	   <br>Name: <br><input type="text" name="name"  style="background-color:#eeeeee; border:1px solid grey"/>
+	   <br>Subject: <br><input type="text" name="subject"  style="background-color:#eeeeee; border:1px solid grey"/>
+       <br>E-Mail: <br><input type="text" name="email"  style="background-color:#eeeeee; border:1px solid grey"/>
+       <br>Message: <br><textarea rows="6" cols="50" name="message" style="background-color:#eeeeee; border:1px solid grey"></textarea><br />
+       <br>
+       <input type="submit" value="Send" style="background-color:#eeeeee; border:1px solid grey;"/>
+       <br>
+       <%
+	   		String ok = request.getParameter("ok");
+	      	if(ok!=null){
+	      		if(ok.equals("1")){
+	    %>
+	    <font color="blue"><b>Your message was sent, we will get in touch with you as soon as possible!</b></font>
+	    <br><br>
+	    <%
+	      		}
+	      	}
+	    %>
     </div>
   </div>
-  <div id="footer">
-    <p>Copyright &copy; 2015. Designed by SCE-Project-Team-8
-  </div>
+  <jsp:include page="footer.jsp" />
 </div>
   </body>
 

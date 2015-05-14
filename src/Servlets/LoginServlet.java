@@ -1,9 +1,9 @@
- package Servlets;
+package Servlets;
 
 import java.io.IOException;
-
-
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Database.LoginDB;
 
@@ -19,40 +20,69 @@ import Database.LoginDB;
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
+
+	//Database handler
 	LoginDB db;
+	//URL path
+	String contextPath;
 	
+	/**
+	 * Constructor
+	 */
     public LoginServlet() {
         super();
-        
-        //connect to DB
         db = new LoginDB();
-        
     }
 
-
+    /**
+     * Redirect to login/jsp
+     */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		contextPath = request.getContextPath();
+		response.sendRedirect(contextPath + "/login.jsp");
 	}
- 
 
+	/**
+     * Handle login process
+     */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("user");
 		String password = request.getParameter("pwd");
+		contextPath = request.getContextPath();
+		ResultSet rs = null; 
 		
-		if(db.doesExist(username, password))
-		{
-			response.sendRedirect(request.getContextPath()+"/login_success.jsp");
+		//If fields are empty - display error
+		if(username=="" || password==""){
+			response.sendRedirect(contextPath + "/login.jsp?err=1");
 		}
+		//Check if user exists in database
+		else if(db.doesExist(username, password))
+		{
+			HttpSession session = request.getSession();
+			
+			//Check if user is already logged in, if not - finish process, if yes - display error
+			if(session.getAttribute("loggedIn")!=null && session.getAttribute("loggedIn").equals(true)){
+				response.sendRedirect(contextPath + "/login.jsp?err=3");
+			}
+			else{
+				rs= db.rank(username);
+				
+				try {
+					rs.next();
+					session.setAttribute("rank_check",rs.getString("rank"));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				session.setAttribute("loggedIn", true);
+				session.setAttribute("username", username);
+				response.sendRedirect(request.getContextPath()+"/home.jsp");
+			}
+		}
+		//If user doesn't exist in database - display error
 		else{
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
-            PrintWriter out= response.getWriter();
-            out.println("<font color=red>Either user name or password is wrong.</font>");
-            rd.include(request, response);
-             
+            response.sendRedirect(contextPath + "/login.jsp?err=2");
         }
-		//db.closeConnection();
 	}
 
 }

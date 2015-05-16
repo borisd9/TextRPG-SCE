@@ -1,7 +1,6 @@
 package Database;
 
 import java.sql.Connection;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -55,13 +54,13 @@ public class DbConnectionAPI {
 	
 	/**
 	 * print stats for database - for internal testing
+	 * @return 
 	 */
     public String getDataSourceStats() {
     	//print number of active connections and idle connections
-    	//System.out.println("NumActive: " + ds.getNumActive());
-        //System.out.println("NumIdle: " + ds.getNumIdle());
-        return " NumActive: " + ds.getNumActive() + "   NumIdle: " + ds.getNumIdle();
-        
+//        System.out.println("NumActive: " + ds.getNumActive());
+//        System.out.println("NumIdle: " + ds.getNumIdle());
+    	return "NumActive: " + ds.getNumActive() + "    NumIdle: " + ds.getNumIdle();
     }
 	
 	

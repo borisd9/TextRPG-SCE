@@ -25,18 +25,20 @@
 	      	if(err!=null){
 	      		if(err.equals("1")){
 	    %>
-	    <font color="red"><b>Email and message fields cannot be empty!</b></font>
-	    <br><br>
+	   <br> <font color="red"><b>Email and message fields cannot be empty!</b></font>
+	    <br>
 		<%
 	      		}
 	      	}
 	    %>
+	   <form name="form1" action="ContactServlet" onsubmit="return validateForm()" method="post" >
 	   <br>Name: <br><input type="text" name="name"  style="background-color:#eeeeee; border:1px solid grey"/>
 	   <br>Subject: <br><input type="text" name="subject"  style="background-color:#eeeeee; border:1px solid grey"/>
        <br>E-Mail: <br><input type="text" name="email"  style="background-color:#eeeeee; border:1px solid grey"/>
        <br>Message: <br><textarea rows="6" cols="50" name="message" style="background-color:#eeeeee; border:1px solid grey"></textarea><br />
        <br>
        <input type="submit" value="Send" style="background-color:#eeeeee; border:1px solid grey;"/>
+       </form>
        <br>
        <%
 	   		String ok = request.getParameter("ok");

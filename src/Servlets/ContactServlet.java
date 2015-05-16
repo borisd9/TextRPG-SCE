@@ -11,18 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import General.SendMail;
 
-/**
- * Servlet implementation class ContactServlert
- */
-@WebServlet("/ContactServlert")
-public class ContactServlert extends HttpServlet {
+@WebServlet("/ContactServlet")
+public class ContactServlet extends HttpServlet {
 	
 	String contextPath;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ContactServlert() {
+    public ContactServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

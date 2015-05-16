@@ -2,8 +2,6 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,7 +47,6 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("user");
 		String password = request.getParameter("pwd");
 		contextPath = request.getContextPath();
-		ResultSet rs = null; 
 		
 		//If fields are empty - display error
 		if(username=="" || password==""){
@@ -65,15 +62,6 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect(contextPath + "/login.jsp?err=3");
 			}
 			else{
-				rs= db.rank(username);
-				
-				try {
-					rs.next();
-					session.setAttribute("rank_check",rs.getString("rank"));
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("username", username);
 				response.sendRedirect(request.getContextPath()+"/home.jsp");

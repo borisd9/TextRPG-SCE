@@ -60,9 +60,22 @@ public class MapDB extends DbConnectionAPI {
 	 * @return true if success
 	 */
 	public boolean move(String moveTo)
-	{
-		String query = "UPDATE players SET location='" + moveTo + "WHERE username='" + username + "'";
-		return modifyDatabase(query);
+	{	
+		String query1 = "SELECT * FROM map WHERE location='" + moveTo + "'";
+		String query2 = "UPDATE players SET location='" + moveTo + "WHERE username='" + username + "'";
+			
+		//check if moveTo parameter exists in map table
+		try {			
+			ResultSet rs = readFromDatabase(query1);	
+			if(rs.next())
+				return modifyDatabase(query2);		
+				
+		} catch (SQLException e) {
+			System.out.println("Error in map moveTo query: "+e);
+		}		
+		return false;
+		
+
 	}
 	
 

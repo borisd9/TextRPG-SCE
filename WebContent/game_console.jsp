@@ -108,15 +108,7 @@
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
 			else displayLocation();
-	 	//view map
-		else if(msg == "/map")
-			//check if game has started
-			if(mode != "start"){
-	    		Console.log(font("red")+"You can't check your map before you start the game!<br>Type <b>"+
-	    					font("blue")+"/startGame</font></b> to start the game.")
-			}
-			else Console.log("Waiting for Boris...");
-	 	
+		
 	 	//view character information
 		else if(msg == "/char")
 			//check if game has started
@@ -176,7 +168,6 @@
 		Console.log(font("blue")+"<b>/start</b></font>"+font("#FF69B4")+" : to start the game.");
 		Console.log(font("blue")+"<b>/char</b></font>"+font("#FF69B4")+" : to check your character's information");
 		Console.log(font("blue")+"<b>/location</b></font>"+font("#FF69B4")+" : to see your current location");
-		Console.log(font("blue")+"<b>/map</b></font>"+font("#FF69B4")+" : to check the entire game map");
 	}
 	
 	//display current location and options
@@ -196,14 +187,16 @@
 	<b>Enjoy your gaming!</b><br/><br/><br/></font>
 	
 	<div id="right">	
-		<div id="mapDisplay" style="background: url('images/worldMap.png'); width: 300px; height:350px; position: relative; left:-20px; visibility: hidden; ">
-	    <img src="images/pinV2.gif" title="<%= map.getLocation() %>" style="position: relative; top:<%= map.gety() %>px; left:<%= map.getx() %>px; width:90px; height:70px;">
+		<div id="mapDisplay" style="background: url('images/worldMap.png'); width: 300px; height:350px; position: relative; left:-10px; visibility: hidden; ">
+	    <img src="images/pin.gif" title="<%= map.getLocation() %>" style="position: relative; top:<%= map.gety() %>px; left:<%= map.getx() %>px; width:90px; height:70px;">
 		</div>
 	
 	
 	For testing DB connections:<br>
 	<%= map.getDataSourceStats() %>	
 	</div>
+
+	
 
 	
 	<div id="console-container">
@@ -213,6 +206,7 @@
 	<p>
 		<input type="text" style="border:2px solid" placeholder="type your commands here." id="chat" name="msg">
 	</p>
+
 	
 </div>
 

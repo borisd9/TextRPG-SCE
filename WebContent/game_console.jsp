@@ -125,9 +125,10 @@
 			//checking if legal character number has been selected
 			if(msg > 0 && msg <= <%=numOfChars%>){
 				Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
+				
+				
+				
 				mode = "start";
-				
-				
 				displayLocation();
 			}
 			else{
@@ -172,7 +173,10 @@
 	
 	//display current location and options
 	function displayLocation(){
-		Console.log(font("#009700")+"You are now in <b>"+font("blue"));
+		<%
+			String locationName = map.getLocation(); 
+		%>
+		Console.log(font("#009700")+"You are now in <b>"+font("blue")+"<%map.getLocation();%>");
 		Console.log(font("#009700")+"What would you like to do?");
 		mode="move";
 	}

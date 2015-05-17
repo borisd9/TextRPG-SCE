@@ -77,6 +77,9 @@
             }
         });
 
+        
+        
+        
         var chatConsole2 = {};
 
         chatConsole2.log = (function(message) {

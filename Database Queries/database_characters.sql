@@ -28,8 +28,8 @@ CREATE TABLE `characters` (
   `def` int(11) DEFAULT NULL,
   `speed` int(11) DEFAULT NULL,
   `hp` int(11) DEFAULT NULL,
-  `atk1` int(11) DEFAULT NULL,
-  `atk2` int(11) DEFAULT NULL,
+  `atk1` varchar(45) DEFAULT NULL,
+  `atk2` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,6 +40,7 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
+INSERT INTO `characters` VALUES ('bulb',49,49,45,45,'leaf','poison'),('char',60,38,65,39,'fire','smoke'),('squir',40,65,35,44,'water','ice');
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-25 14:59:51
+-- Dump completed on 2015-05-17 20:18:13

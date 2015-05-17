@@ -44,4 +44,18 @@ public class GameDB extends DbConnectionAPI
 		}
 		return -1;
 	}
+
+	public boolean addPlayer(String username, String character){
+		String query1 = "SELECT * FROM characters WHERE name='"+character+"'";
+		int attack, defense, hp, speed;
+		
+		ResultSet rs = readFromDatabase(query1);
+		try{
+			if(rs.next())
+		}
+		
+		//String query = "INSERT INTO players VALUES ('"+username+"',Home,)";
+		
+		return true;
+	}
 }

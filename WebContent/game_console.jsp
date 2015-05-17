@@ -172,7 +172,7 @@
 	
 	//display current location and options
 	function displayLocation(){
-		Console.log(font("#009700")+"You are now in <b>"+font("blue")+ <% map.getLocation(); %>);
+		Console.log(font("#009700")+"You are now in <b>"+font("blue"));
 		Console.log(font("#009700")+"What would you like to do?");
 		mode="move";
 	}

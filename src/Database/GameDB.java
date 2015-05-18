@@ -47,24 +47,24 @@ public class GameDB extends DbConnectionAPI
 
 	public boolean addPlayer(String username, String charName){
 		String query1 = "SELECT * FROM characters WHERE name='"+charName+"'";
-		int attack, defense, hp, speed;
 		
 		ResultSet rs = readFromDatabase(query1);
 		
 		try {
 			if(rs.next()){
-				attack = rs.getInt("attack");
-				defense = rs.getInt("defense");
-				hp = rs.getInt("hp");
-				speed = rs.getInt("speed");
+				int attack = rs.getInt("attack");
+				int defense = rs.getInt("defense");
+				int hp = rs.getInt("hp");
+				int speed = rs.getInt("speed");
+				
+				String query2 = "INSERT INTO players VALUES ('"+username+"',Home,'"+charName+"',1,'"+attack+"','"+defense+"','"+speed+"','"+hp+"',0,0,0,None,0,0)";
+				
+				return modifyDatabase(query2);
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in add player query: "+e);
 		}
-	
 		
-		//String query = "INSERT INTO players VALUES ('"+username+"',Home,)";
-		
-		return true;
+		return false;
 	}
 }

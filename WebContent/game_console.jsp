@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Game Console</title>
 
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	//Variables
 	window.chat = {};
@@ -101,22 +102,23 @@
 			document.getElementById("mapDisplay").style.visibility = "visible"
 		}
 	 	//view location
-		else if(msg == "/location") 
+		else if(msg == "/location") {
 			//check if game has started
 			if(mode != "start"){
 	    		Console.log(font("red")+"You can't check your location before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
 			else displayLocation();
-		
+		}
 	 	//view character information
-		else if(msg == "/char")
+		else if(msg == "/char"){
 			//check if game has started
 			if(mode != "start"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
 			else Console.log("too soon bro");
+		}
 		//If player is new, he must select a character
 		else if (mode=="new"){
 			<%
@@ -126,7 +128,10 @@
 			if(msg > 0 && msg <= <%=numOfChars%>){
 				Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
 				
-				
+				$.get('gameservlet', { action: "newPlayer", username: <%=username%>, charName: startChars[msg-1] }, 
+				function(responseText) {
+					Console.log(responseText);         
+				});				
 				
 				mode = "start";
 				displayLocation();
@@ -204,7 +209,9 @@
 	<div id="console-container">
 		<div id="console"></div>
 	</div>
-	<input id='un' type='hidden' value='${sessionScope.username}'/>
+	<input name='un' id='un' type='hidden' value='${sessionScope.username}'/>
+	
+	<input name='help' id='help' type='hidden'/>
 	<p>
 		<input type="text" style="border:2px solid" placeholder="type your commands here." id="chat" name="msg">
 	</p>

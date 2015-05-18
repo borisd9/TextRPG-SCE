@@ -55,26 +55,27 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("pwd");
 		contextPath = request.getContextPath();
 		
-		
-		
+		//encrypting password
 		String hashed = null;
 		Sha1Hex sha1 = new Sha1Hex();
 		try {
 			hashed = sha1.makeSHA1Hash(password);
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("Error creating hash: "+e);
-		}
-		
-		final String auth_code = hashed;
-		
-		
+		}		
+		final String auth_code = hashed;	
 		
 		//If fields are empty - display error
-		if(username=="" || auth_code==""){
+		if(username=="" || password==""){
 			response.sendRedirect(contextPath + "/login.jsp?err=1");
 		}
-		//Check if user exists in database
-		else if(db.doesExist(username, auth_code))
+		//check if the user's account is not activated
+		else if(db.doesExist(username, auth_code)==0)
+		{
+			response.sendRedirect(contextPath + "/login.jsp?err=3");
+		}
+		//Check if user exists in database and his account is activated
+		else if(db.doesExist(username, auth_code)==1)
 		{
 			HttpSession session = request.getSession();
 			//session for logout
@@ -88,7 +89,7 @@ public class LoginServlet extends HttpServlet {
 	
 			//Check if user is already logged in, if not - finish process, if yes - display error
 			if(session.getAttribute("loggedIn")!=null && session.getAttribute("loggedIn").equals(true)){
-				response.sendRedirect(contextPath + "/login.jsp?err=3");
+				response.sendRedirect(contextPath + "/login.jsp?err=4");
 			}
 			else{
 				session.setAttribute("loggedIn", true);

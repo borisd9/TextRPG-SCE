@@ -48,34 +48,21 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("pwd");
 		final String email = request.getParameter("email");
 		
-		String hashed = null;
+		String hashedUsername = null, hashedPassword = null;
 		Sha1Hex sha1 = new Sha1Hex();
 		try {
-			hashed = sha1.makeSHA1Hash(username);
+			hashedUsername = sha1.makeSHA1Hash(username);
+			hashedPassword = sha1.makeSHA1Hash(password);
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("Error creating hash: "+e);
 		}
 		
-		final String auth_code = hashed;
+		final String auth_code = hashedUsername;
+		final String encPassword = hashedPassword;
 		
-		
-		String hashed2 = null;
-		Sha1Hex sha2 = new Sha1Hex();
-		try {
-			hashed2 = sha2.makeSHA1Hash(password);
-		} catch (NoSuchAlgorithmException e) {
-			System.out.println("Error creating hash: "+e);
-		}
-		
-		final String auth_cod2 = hashed2;
-		
-		
-		
-		
-		db.insert(username, auth_cod2, email);
+		db.insert(username, encPassword, email);
 		db.insert(username, auth_code);
-		
-		
+			
 		//Send mail
 		Thread t = new Thread(new Runnable() {	
 			@Override

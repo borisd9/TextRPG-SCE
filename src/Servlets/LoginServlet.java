@@ -63,19 +63,19 @@ public class LoginServlet extends HttpServlet {
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("Error creating hash: "+e);
 		}		
-		final String auth_code = hashed;	
+		final String encPassword = hashed;	
 		
 		//If fields are empty - display error
 		if(username=="" || password==""){
 			response.sendRedirect(contextPath + "/login.jsp?err=1");
 		}
 		//check if the user's account is not activated
-		else if(db.doesExist(username, auth_code)==0)
+		else if(db.doesExist(username, encPassword)==0)
 		{
 			response.sendRedirect(contextPath + "/login.jsp?err=3");
 		}
 		//Check if user exists in database and his account is activated
-		else if(db.doesExist(username, auth_code)==1)
+		else if(db.doesExist(username, encPassword)==1)
 		{
 			HttpSession session = request.getSession();
 			//session for logout

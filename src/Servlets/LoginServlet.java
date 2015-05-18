@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Database.LoginDB;
+import General.Sha1Hex;
 
 /**
  * Servlet implementation class LoginServlet
@@ -53,12 +55,26 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("pwd");
 		contextPath = request.getContextPath();
 		
+		
+		
+		String hashed = null;
+		Sha1Hex sha1 = new Sha1Hex();
+		try {
+			hashed = sha1.makeSHA1Hash(password);
+		} catch (NoSuchAlgorithmException e) {
+			System.out.println("Error creating hash: "+e);
+		}
+		
+		final String auth_code = hashed;
+		
+		
+		
 		//If fields are empty - display error
-		if(username=="" || password==""){
+		if(username=="" || auth_code==""){
 			response.sendRedirect(contextPath + "/login.jsp?err=1");
 		}
 		//Check if user exists in database
-		else if(db.doesExist(username, password))
+		else if(db.doesExist(username, auth_code))
 		{
 			HttpSession session = request.getSession();
 			//session for logout

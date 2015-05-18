@@ -1,7 +1,6 @@
 package Servlets;
 
 import java.io.IOException;
-
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 
@@ -59,7 +58,21 @@ public class RegisterServlet extends HttpServlet {
 		
 		final String auth_code = hashed;
 		
-		db.insert(username, password, email);
+		
+		String hashed2 = null;
+		Sha1Hex sha2 = new Sha1Hex();
+		try {
+			hashed2 = sha2.makeSHA1Hash(password);
+		} catch (NoSuchAlgorithmException e) {
+			System.out.println("Error creating hash: "+e);
+		}
+		
+		final String auth_cod2 = hashed2;
+		
+		
+		
+		
+		db.insert(username, auth_cod2, email);
 		db.insert(username, auth_code);
 		
 		

@@ -16,7 +16,6 @@
       <center><h1>About Our Team</h1></center>
       <br/>
 
-
 <p>
  Our team is doing the best effort so you will enjoy our game and products.
 <br><br>

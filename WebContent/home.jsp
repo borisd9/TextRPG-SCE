@@ -21,7 +21,7 @@
 
       </div>
       <br/><br/><br/> 
-      <a style="font-size: 100%" href="register.jsp">New User? Register Here</a>
+      <a style="font-size: 100%" href="Register.jsp">New User? Register Here</a>
     </div>
   </div>
   

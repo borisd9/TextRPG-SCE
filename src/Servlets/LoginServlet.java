@@ -2,12 +2,11 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +20,10 @@ import Database.LoginDB;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Database handler
 	LoginDB db;
 	//URL path
@@ -49,7 +52,6 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("user");
 		String password = request.getParameter("pwd");
 		contextPath = request.getContextPath();
-		ResultSet rs = null; 
 		
 		//If fields are empty - display error
 		if(username=="" || password==""){
@@ -59,21 +61,20 @@ public class LoginServlet extends HttpServlet {
 		else if(db.doesExist(username, password))
 		{
 			HttpSession session = request.getSession();
+			//session for logout
+			session.setAttribute("user", username);
+			//setting session to expire in 30 mins
+			session.setMaxInactiveInterval(30*60);
+			Cookie userName = new Cookie("user", username);
+			userName.setMaxAge(30*60);
+			response.addCookie(userName);
 			
+	
 			//Check if user is already logged in, if not - finish process, if yes - display error
 			if(session.getAttribute("loggedIn")!=null && session.getAttribute("loggedIn").equals(true)){
 				response.sendRedirect(contextPath + "/login.jsp?err=3");
 			}
 			else{
-				rs= db.rank(username);
-				
-				try {
-					rs.next();
-					session.setAttribute("rank_check",rs.getString("rank"));
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("username", username);
 				response.sendRedirect(request.getContextPath()+"/home.jsp");

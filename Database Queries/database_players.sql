@@ -32,8 +32,6 @@ CREATE TABLE `players` (
   `speed` int(11) DEFAULT NULL,
   `hp` int(11) DEFAULT NULL,
   `exp` decimal(5,2) DEFAULT NULL,
-  `atk1` varchar(45) DEFAULT NULL,
-  `atk2` varchar(45) DEFAULT NULL,
   `money` int(11) DEFAULT NULL,
   `cash` int(11) DEFAULT NULL,
   `item` varchar(45) DEFAULT NULL,
@@ -68,4 +66,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-25 14:59:51
+-- Dump completed on 2015-05-17 20:18:13

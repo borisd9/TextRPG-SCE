@@ -7,20 +7,36 @@ import java.sql.SQLException;
 
 public class MapDB extends DbConnectionAPI {
 	
-	private String location, x, y, up, down, right, left, ac1, ac2, ac3, ac4; 
+	private String username, location, x, y, up, down, right, left, ac1, ac2, ac3, ac4; 
 	private String[] actions = new String[4];
+	
 
 	//constructor
 	public MapDB(){
 		super();
 	}
 	
-	public void update() {
-		String query = "SELECT * FROM map ";
+	/**
+	 * get current map stats for a user
+	 * @param username is the username to get the stats for
+	 */
+	public void update(String username) {
+		this.username = username;
+		String query1 = "SELECT location FROM players WHERE username='" + username + "'";
+		String query2 = "SELECT * FROM map WHERE location='";
 		try {
-			ResultSet rs = readFromDatabase(query);
+			//find user current location
+			ResultSet rs = readFromDatabase(query1);
 			if(rs.next()){
 				location = rs.getString("location");
+				query2 += location + "'";
+				
+				rs.close();
+				
+				//find user options from current location
+				rs = readFromDatabase(query2);
+				rs.next();
+				
 				x = rs.getString("x");
 				y = rs.getString("y");
 				up = rs.getString("up");
@@ -36,9 +52,36 @@ public class MapDB extends DbConnectionAPI {
 			System.out.println("Error in map query: "+e);
 		}		
 	}
+	
+	
+	/**
+	 * moves the current user to a new location
+	 * @param moveTo the new location
+	 * @return true if success
+	 */
+	public boolean move(String moveTo)
+	{	
+		String query1 = "SELECT * FROM map WHERE location='" + moveTo + "'";
+		String query2 = "UPDATE players SET location='" + moveTo + "WHERE username='" + username + "'";
+			
+		//check if moveTo parameter exists in map table
+		try {			
+			ResultSet rs = readFromDatabase(query1);	
+			if(rs.next())
+				return modifyDatabase(query2);		
+				
+		} catch (SQLException e) {
+			System.out.println("Error in map moveTo query: "+e);
+		}		
+		return false;
+		
+
+	}
+	
 
 	/**
-	 * @return the location
+	 * get the location of the user
+	 * @return string of the location
 	 */
 	public String getLocation() {
 		return location;
@@ -46,7 +89,8 @@ public class MapDB extends DbConnectionAPI {
 
 
 	/**
-	 * @return the x
+	 * get the x coordinates of the user - for map
+	 * @return string of the x
 	 */
 	public String getx() {
 		return x;
@@ -54,7 +98,8 @@ public class MapDB extends DbConnectionAPI {
 	
 
 	/**
-	 * @return the y
+	 * get the y coordinates of the user - for map
+	 * @return string of the y
 	 */
 	public String gety() {
 		return y;
@@ -62,28 +107,32 @@ public class MapDB extends DbConnectionAPI {
 
 	
 	/**
-	 * @return the up
+	 * get the up direction info
+	 * @return string of the up direction
 	 */
 	public String getUp() {
 		return up;
 	}
 	
 	/**
-	 * @return the down
+	 * get the down direction info
+	 * @return string of the down direction
 	 */
 	public String getDown() {
 		return down;
 	}
 
 	/**
-	 * @return the right
+	 * get the right direction info
+	 * @return string of the right direction
 	 */
 	public String getRight() {
 		return right;
 	}
 	
 	/**
-	 * @return the left
+	 * get the left direction info
+	 * @return string of the left direction
 	 */
 	public String getLeft() {
 		return left;
@@ -91,7 +140,8 @@ public class MapDB extends DbConnectionAPI {
 
 	
 	/**
-	 * @return an array of actions, max of 4 actions
+	 * get the actions possible to be made at this location
+	 * @return an array of string which contains the actions, max of 4 actions
 	 */
 	public String[] actions() {
 		return actions;

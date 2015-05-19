@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ page import="Database.MapDB" %>
 <html >
 <head>
 <title>TextBased RPG </title>
@@ -29,11 +30,16 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <p></p>
     <h3 style="color: black"><u><A NAME=Map>Map:</A></u></h3>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <img src="images/worldMap.png" alt="Map"/> 
     <p></p>
     <h3 style="color: black"><u><A NAME=Characters>Characters:</A></u></h3>
     <br>
-    <p></p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <img src="images/Growlmon.gif" alt="Growlmon"/> 
+    <br>
+    <img src="images/Grorumon.gif" alt="Grorumon"/> 
+    <br>
+    <img src="images/Angemon.jpg" alt="Angemon"/> 
+    <br>
     <h3 style="color: black"><u><A NAME=Chat_rules>Chat rules:</A></u></h3>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <p></p>

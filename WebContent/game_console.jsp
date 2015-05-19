@@ -23,6 +23,7 @@
 	  	GameDB gdb = new GameDB();
 		String username = (String)session.getAttribute("username");
 		
+		ResultSet rs;
 		MapDB map = new MapDB();
 		map.update(username);
 	%>
@@ -42,7 +43,7 @@
 	     var console = document.getElementById('console');
 	     var p = document.createElement('p');
 	     p.style.wordWrap = 'break-word';
-	     p.innerHTML = system+message;
+	     p.innerHTML = (message=="") ? "<br>" : system+message;
 	     console.appendChild(p);
 	     while (console.childNodes.length > 25) {
 	         console.removeChild(console.firstChild);
@@ -80,26 +81,34 @@
 	 	}
 	 	//Start game
 	 	else if (msg == "/start"){
-	 	<% 
-			boolean doesExist = false;
-			if(username!=null)
-				doesExist = gdb.doesExist(username);
-		%>
-			
-			//If player has never started a game
-			if(<%=doesExist%>==false){
-				Console.log(font("#009700")+"Welcome <b>"+font("blue")+username+"</font></b>! Get ready to start your journey!");
-				newPlayer(username);
+	 		//if game has already started
+		 	if(mode=="started"){
+		 		Console.log(font("red")+"The game has already been started.<br>Type <b>"+font("blue")+"/location</b></font> to check your current whereabouts.")
+		 	}
+		 	else{
+			 	<% 
+					boolean doesExist = false;
+					if(username!=null)
+						doesExist = gdb.doesExist(username);
+				%>
 				
-			}
-			//If player has already started a game
-			else{
-				Console.log("Welcome back "+username+"!");	
-				mode = "started";
-			}
-			
-			//Show map
-			document.getElementById("mapDisplay").style.visibility = "visible"
+				//If player has never started a game
+				if(<%=doesExist%>==false){
+					Console.log(font("#009700")+"Welcome <b>"+font("blue")+username+"</font></b>! Get ready to start your journey!");
+					newPlayer(username);
+					
+				}
+				//If player has already started a game
+				else{
+					Console.log("Welcome back <b>"+font("blue")+username+"</b></font>!");
+					displayLocation();
+					mode = "started";
+				}
+				
+				//Show map
+				document.getElementById("mapDisplay").style.visibility = "visible";
+		 	}
+		 	
 		}
 	 	//view location
 		else if(msg == "/location") {
@@ -117,7 +126,24 @@
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
-			else Console.log("too soon bro");
+
+			else{
+				<%
+					rs = gdb.getPlayerInfo(username);
+					if(rs.next()){
+				%>
+				Console.log("");
+				Console.log(font("#009700")+"Character information:");
+				Console.log(font("blue")+"<b>"+'<%=rs.getString("character")%>');
+				Console.log("Level: <b>"+font("orange")+'<%=rs.getString("level")%>');
+				Console.log("Max HP: <b>"+font("orange")+'<%=rs.getString("hp")%>');
+				Console.log("Attack: <b>"+font("orange")+'<%=rs.getString("attack")%>');
+				Console.log("Defense: <b>"+font("orange")+'<%=rs.getString("defense")%>');
+				Console.log("Speed: <b>"+font("orange")+'<%=rs.getString("speed")%>');
+				Console.log("Exp: <b>"+font("orange")+'<%=rs.getString("exp")%>');
+				<% } %>
+			}
+
 		}
 		//If player is new, he must select a character
 		else if (mode=="new" && isNum(msg)){
@@ -128,10 +154,10 @@
 			if(msg > 0 && msg <= <%=numOfChars%>){
 				//Sending data to servlet, to be inserted into DB
 				$.get('gameservlet', { action: "newPlayer", username: '<%=username%>', charName: startChars[msg-1] });				
-				
+
 				//Updating map location
 				<% map.update(username); %>
-				
+
 				Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
 				mode = "started";
 				displayLocation();
@@ -154,7 +180,7 @@
 		//Print selectable chars and add to array
 		<%
 		int i;
-		ResultSet rs = gdb.getChars();
+		rs = gdb.getChars();
 		String character;
 		for(i=1; rs.next(); i++){
 			character = rs.getString(1);
@@ -170,6 +196,7 @@
 	
 	//display available commands
 	function displayCommands(){
+ 		Console.log("");
 		Console.log(font("#009700")+"Below is a list of available commands:");
 		Console.log(font("blue")+"<b>/start</b></font>"+font("#FF69B4")+" : to start the game.");
 		Console.log(font("blue")+"<b>/char</b></font>"+font("#FF69B4")+" : to check your character's information");

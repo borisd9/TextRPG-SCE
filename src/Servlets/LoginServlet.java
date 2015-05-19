@@ -1,10 +1,12 @@
 package Servlets;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.io.PrintWriter;
+=======
+>>>>>>> 2556709bfd0c7ebc2617c47621d08451bd221b5e
 import java.security.NoSuchAlgorithmException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -78,9 +80,13 @@ public class LoginServlet extends HttpServlet {
 		else if(db.doesExist(username, encPassword)==1)
 		{
 			HttpSession session = request.getSession();
+			
+			
 			//session for logout
 			session.setAttribute("user", username);
 			//setting session to expire in 30 mins
+			
+			
 			session.setMaxInactiveInterval(30*60);
 			Cookie userName = new Cookie("user", username);
 			userName.setMaxAge(30*60);

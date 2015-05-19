@@ -25,7 +25,6 @@
 		
 		ResultSet rs;
 		MapDB map = new MapDB();
-		map.update(username);
 	%>
 	 
 	 //returns a colored message
@@ -105,7 +104,8 @@
 					mode = "started";
 				}
 				
-				//Show map
+				//Show and update map
+				map.update(username);
 				document.getElementById("mapDisplay").style.visibility = "visible";
 		 	}
 		 	
@@ -163,7 +163,7 @@
 				displayLocation();
 			}
 			else{
-				Console.log(font("red")+"Characer #"+msg+" does not exist!<br>");
+				Console.log(font("red")+"Character #"+msg+" does not exist!<br>");
 				newPlayer();
 			}
 		}

@@ -36,6 +36,12 @@
 	<%
       		}
       		else if(err.equals("3")){
+	%>   
+	<font color="red"><b>Your account is not activated. Please click the link provided in your mail to activate your account.</b></font>
+	<br><br>
+	<%
+      		}
+      		else if(err.equals("4")){
 	%>
 	<%
 	String user = null;

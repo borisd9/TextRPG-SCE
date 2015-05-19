@@ -9,43 +9,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Database.GameDB;
+
 /**
  * Servlet implementation class GameServlet
  */
-@WebServlet("/GameServlet")
+@WebServlet("/gameservlet")
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	String contextPath;
+	GameDB db;
 
 	/**
      * @see HttpServlet#HttpServlet()
      */
     public GameServlet() {
         super();
+        db = new GameDB();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		contextPath = request.getContextPath();
-		response.sendRedirect(contextPath + "/game_console.jsp");
+		String action = request.getParameter("action");
+		
+		if(action.equals("newPlayer")){
+			String username = request.getParameter("username");
+			String charName = request.getParameter("charName");
+			db.addPlayer(username, charName);
+		}
+		
+	    //response.setContentType("text/plain");  
+	    //response.setCharacterEncoding("UTF-8"); 
+	    //response.getWriter().write(a);       
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String msg = request.getParameter("msg");
-		System.out.println(msg);
 		
-		if(msg == "/start"){}
-		else
-			request.setAttribute("line", "<font color=red>Error: '"+msg+"' is not a valid command.<br>Type /cmd to see the available commands.");
-		//RequestDispatcher dispatcher = request.getRequestDispatcher("/game_console.jsp");
-		//dispatcher.forward(request, response);
-		response.sendRedirect("/text-rpg/game_console.jsp");
 	}
 
 }

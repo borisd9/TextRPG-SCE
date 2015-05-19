@@ -56,14 +56,11 @@ public class GameDB extends DbConnectionAPI
 		return -1;
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 	 * adds new player to database
 	 * @param username
 	 * @param charName
 	 */
->>>>>>> 2556709bfd0c7ebc2617c47621d08451bd221b5e
 	public void addPlayer(String username, String charName){
 		String query1 = "SELECT * FROM characters WHERE name='"+charName+"'";
 		
@@ -84,8 +81,6 @@ public class GameDB extends DbConnectionAPI
 		} catch (SQLException e) {
 			System.out.println("Error in add player query: "+e);
 		}
-<<<<<<< HEAD
-=======
 	}
 	
 	/**
@@ -97,6 +92,5 @@ public class GameDB extends DbConnectionAPI
 		String query = "SELECT * FROM players WHERE username='"+username+"'";
 		ResultSet rs = readFromDatabase(query);
 		return rs;
->>>>>>> 2556709bfd0c7ebc2617c47621d08451bd221b5e
 	}
 }

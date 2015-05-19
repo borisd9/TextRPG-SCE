@@ -9,12 +9,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Game Console</title>
 
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	//Variables
 	window.chat = {};
 	var Console = {};
 	var system = "<font color=red><b>System:</b> </font>";
-	var mode;
+	var mode = "";
 	var startChars = [];
 	
 	//Init GameDB object and MapDB, and get username from session
@@ -51,7 +52,6 @@
 	
 	 //Starts listening for messages
 	 onload = function() {
-	 	mode = "";
 	 	chat.startListen();
 	 };
 	
@@ -95,40 +95,45 @@
 			//If player has already started a game
 			else{
 				Console.log("Welcome back "+username+"!");	
+				mode = "started";
 			}
 			
 			//Show map
 			document.getElementById("mapDisplay").style.visibility = "visible"
 		}
 	 	//view location
-		else if(msg == "/location") 
+		else if(msg == "/location") {
 			//check if game has started
-			if(mode != "start"){
+			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your location before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
 			else displayLocation();
-		
+		}
 	 	//view character information
-		else if(msg == "/char")
+		else if(msg == "/char"){
 			//check if game has started
-			if(mode != "start"){
+			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
 			else Console.log("too soon bro");
+		}
 		//If player is new, he must select a character
-		else if (mode=="new"){
+		else if (mode=="new" && isNum(msg)){
 			<%
 			int numOfChars = gdb.charCount();
 			%>
 			//checking if legal character number has been selected
 			if(msg > 0 && msg <= <%=numOfChars%>){
+				//Sending data to servlet, to be inserted into DB
+				$.get('gameservlet', { action: "newPlayer", username: '<%=username%>', charName: startChars[msg-1] });				
+				
+				//Updating map location
+				<% map.update(username); %>
+				
 				Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
-				
-				
-				
-				mode = "start";
+				mode = "started";
 				displayLocation();
 			}
 			else{
@@ -173,12 +178,9 @@
 	
 	//display current location and options
 	function displayLocation(){
-		<%
-			String locationName = map.getLocation(); 
-		%>
-		Console.log(font("#009700")+"You are now in <b>"+font("blue")+"<%map.getLocation();%>");
+		Console.log(font("#009700")+"You are now in <b>"+font("blue")+"<%=map.getLocation()%>");
 		Console.log(font("#009700")+"What would you like to do?");
-		mode="move";
+		//mode="move";
 	}
     
 </script>
@@ -204,7 +206,7 @@
 	<div id="console-container">
 		<div id="console"></div>
 	</div>
-	<input id='un' type='hidden' value='${sessionScope.username}'/>
+	<input name='un' id='un' type='hidden' value='${sessionScope.username}'/>
 	<p>
 		<input type="text" style="border:2px solid" placeholder="type your commands here." id="chat" name="msg">
 	</p>

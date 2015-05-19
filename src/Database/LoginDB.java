@@ -14,7 +14,7 @@ public class LoginDB extends DbConnectionAPI {
 	}
 	
 	
-	public boolean doesExist(String userName, String password)
+	public int doesExist(String userName, String password)
 	{
 		//Query establishment
 		String query = "SELECT * FROM users WHERE username='"+userName+"' AND password='"+password+"'";		
@@ -22,11 +22,11 @@ public class LoginDB extends DbConnectionAPI {
 		try {			
 			ResultSet rs = readFromDatabase(query);	
 			if(rs.next())
-				return true;
+				return rs.getInt("activated");
 		} catch (SQLException e) {
 			System.out.println("Error in does exists query: "+e);
 		}		
-		return false;
+		return -1;
 	}
 	
 

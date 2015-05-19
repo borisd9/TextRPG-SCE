@@ -38,8 +38,10 @@ public class SendMail {
 		this.message = "New mail from "+name+"!\nEmail: "+from+"\nMessage: "+message;
 	}
 	
-	public void forgotPassword() {
-		
+	public void forgotPassword(String to, String code) {
+		this.to = to;
+		this.subject = "New Password";
+		this.message = "New Password:"+code ;
 	}
 	
 	synchronized public void send() throws MessagingException {

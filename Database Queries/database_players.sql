@@ -26,17 +26,17 @@ CREATE TABLE `players` (
   `username` varchar(20) NOT NULL,
   `location` varchar(45) DEFAULT NULL,
   `character` varchar(45) DEFAULT NULL,
-  `level` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT '1',
   `attack` int(11) DEFAULT NULL,
   `defense` int(11) DEFAULT NULL,
   `speed` int(11) DEFAULT NULL,
   `hp` int(11) DEFAULT NULL,
-  `exp` decimal(5,2) DEFAULT NULL,
-  `money` int(11) DEFAULT NULL,
-  `cash` int(11) DEFAULT NULL,
+  `exp` decimal(5,2) DEFAULT '0.00',
+  `money` int(11) DEFAULT '1000',
+  `cash` int(11) DEFAULT '0',
   `item` varchar(45) DEFAULT NULL,
-  `wins` int(11) DEFAULT NULL,
-  `loses` int(11) DEFAULT NULL,
+  `wins` int(11) DEFAULT '0',
+  `loses` int(11) DEFAULT '0',
   PRIMARY KEY (`username`),
   KEY `mp` (`location`),
   KEY `lp` (`character`),
@@ -66,4 +66,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-17 20:18:13
+-- Dump completed on 2015-05-19  2:35:44

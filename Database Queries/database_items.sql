@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `items`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `items` (
   `item` varchar(45) NOT NULL,
-  `description` varchar(45) DEFAULT NULL,
-  `bonus1` int(11) DEFAULT NULL,
-  `bonus2` int(11) DEFAULT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `bonus1` varchar(20) DEFAULT NULL,
+  `bonus2` varchar(20) DEFAULT NULL,
   `location` varchar(45) NOT NULL,
   `price` int(11) DEFAULT NULL,
   PRIMARY KEY (`item`,`location`)
@@ -39,6 +39,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
+INSERT INTO `items` VALUES ('Starter Kit','An item to help you begin your journey!','5% exp',NULL,'Home',100);
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-25 14:59:51
+-- Dump completed on 2015-05-19  2:35:44

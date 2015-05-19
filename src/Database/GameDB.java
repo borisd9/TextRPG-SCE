@@ -45,7 +45,7 @@ public class GameDB extends DbConnectionAPI
 		return -1;
 	}
 
-	public boolean addPlayer(String username, String charName){
+	public void addPlayer(String username, String charName){
 		String query1 = "SELECT * FROM characters WHERE name='"+charName+"'";
 		
 		ResultSet rs = readFromDatabase(query1);
@@ -57,14 +57,13 @@ public class GameDB extends DbConnectionAPI
 				int hp = rs.getInt("hp");
 				int speed = rs.getInt("speed");
 				
-				String query2 = "INSERT INTO players VALUES ('"+username+"',Home,'"+charName+"',1,'"+attack+"','"+defense+"','"+speed+"','"+hp+"',0,0,0,None,0,0)";
+				String query2 = "INSERT INTO players VALUES ('"+username+"','Home','"+charName+"',1,'"+attack+"','"+defense+"','"+speed+"','"
+								+hp+"',0,1000,0,'Starter Kit',0,0)";
 				
-				return modifyDatabase(query2);
+				modifyDatabase(query2);
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in add player query: "+e);
 		}
-		
-		return false;
 	}
 }

@@ -1,10 +1,6 @@
 package Servlets;
 
 import java.io.IOException;
-<<<<<<< HEAD
-import java.io.PrintWriter;
-=======
->>>>>>> 2556709bfd0c7ebc2617c47621d08451bd221b5e
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;

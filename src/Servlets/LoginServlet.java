@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Database.LoginDB;
+import General.SessionHandler;
 import General.Sha1Hex;
 
 /**
@@ -28,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 	LoginDB db;
 	//URL path
 	String contextPath;
-	
+		
 	/**
 	 * Constructor
 	 */
@@ -76,18 +77,6 @@ public class LoginServlet extends HttpServlet {
 		else if(db.doesExist(username, encPassword)==1)
 		{
 			HttpSession session = request.getSession();
-			
-			
-			//session for logout
-			session.setAttribute("user", username);
-			//setting session to expire in 30 mins
-			
-			
-			session.setMaxInactiveInterval(30*60);
-			Cookie userName = new Cookie("user", username);
-			userName.setMaxAge(30*60);
-			response.addCookie(userName);
-			
 	
 			//Check if user is already logged in, if not - finish process, if yes - display error
 			if(session.getAttribute("loggedIn")!=null && session.getAttribute("loggedIn").equals(true)){

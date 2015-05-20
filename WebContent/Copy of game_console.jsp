@@ -17,7 +17,6 @@
 	var system = "<font color=red><b>System:</b> </font>";
 	var mode = "";
 	var startChars = [];
-	var input = "";
 	
 	//Init GameDB object and MapDB, and get username from session
 	<%
@@ -60,13 +59,8 @@
 	 chat.startListen = function () {
 	 	document.getElementById('chat').onkeydown = function(event) { 		
 	        //Listening for Enter Key 
-	 		if (event.keyCode == 13) {	 	 			
-	 			input = document.getElementById('chat').value;
-	 			
-		 		//clear cmd line
-		 		document.getElementById('chat').value = ""; 	 	
-		 		
-	 			chat.sendMessage();
+	 		if (event.keyCode == 13) {	 		
+	 	 		chat.sendMessage();
 	         }
 	     };
 	 };
@@ -74,6 +68,7 @@
 	 
 	 //Command handler
 	 chat.sendMessage = function () {
+	 	var input = document.getElementById('chat').value;
 	 	var username = document.getElementById('un').value;
 	 	
 		//remove spaces and change input to lowercase	 
@@ -83,9 +78,13 @@
 	 	//command list
 	 	if(msg == "/cmd"){
 	 		displayCommands();
+ 	 		document.getElementById('chat').value = "";
 	 	}
 	 	//Start game
 	 	else if (msg == "/start"){
+	 		
+	 		//clear cmd line
+	 		document.getElementById('chat').value = "";
 	 		
 	 		//if game has already started
 		 	if(mode=="started"){
@@ -110,12 +109,17 @@
 					displayLocation();
 					mode = "started";
 				}
+				
+	 	 		document.getElementById('chat').value = "";
 			
 		 	}
 		 	
 		}
 	 	//view location
 		else if(msg == "/location") {
+			
+	 		//clear cmd line
+	 		document.getElementById('chat').value = "";
 	 		
 			//check if game has started
 			if(mode != "started"){
@@ -126,6 +130,9 @@
 		}
 	 	//view character information
 		else if(msg == "/char"){
+			
+	 		//clear cmd line
+	 		document.getElementById('chat').value = "";
 	 		
 			//check if game has started
 			if(mode != "started"){
@@ -161,6 +168,12 @@
 				//Sending data to servlet, to be inserted into DB
 				$.get('gameservlet', { action: "newPlayer", username: '<%=username%>', charName: startChars[msg-1] });				
 
+				//Updating map location
+				<% map.update(username); %>
+				
+		 		//clear cmd line
+		 		document.getElementById('chat').value = "";
+
 				Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
 				mode = "started";
 				displayLocation();				
@@ -172,6 +185,8 @@
 		}
 		else
 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
+	
+		document.getElementById('chat').value = "";
 	}
 	
 	//Add new player
@@ -206,9 +221,8 @@
 	
 	//display current location and options
 	function displayLocation(){
-		
 	 	//Show and update map
-		<% map.update(username); %>
+		map.update(username);
 		document.getElementById("mapDisplay").style.visibility = "visible";
 		
 		Console.log(font("#009700")+"You are now in <b>"+font("blue")+"<%=map.getLocation()%>");

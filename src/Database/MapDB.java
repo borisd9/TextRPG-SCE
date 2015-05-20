@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class MapDB extends DbConnectionAPI {
 	
-	private String username, location, x, y, up, down, right, left, ac1, ac2, ac3, ac4; 
+	private String username, location, x, y, up, down, right, left; 
 	private String[] actions = new String[4];
 	
 

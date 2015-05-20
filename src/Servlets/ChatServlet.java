@@ -34,14 +34,12 @@ public class ChatServlet extends WebSocketServlet {
 
         @Override
         public void onOpen(WsOutbound outbound){
-            System.out.println("Open Client.");
 			this.myoutbound = outbound;
 			mmiList.add(this);
         }
 
         @Override
         public void onClose(int status){
-            System.out.println("Close Client.");
             mmiList.remove(this);
         }
 

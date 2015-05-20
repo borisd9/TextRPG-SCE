@@ -111,7 +111,6 @@
     <p>
         <input type="text" style="border:2px solid" placeholder="type and press enter to chat." id="chat2">
     </p>
-    <jsp:include page="users.jsp"/>
     <% } %>
 </div>
 </body>

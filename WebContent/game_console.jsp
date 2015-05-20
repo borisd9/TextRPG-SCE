@@ -209,6 +209,7 @@
 		
 	 	//Show and update map
 		<% map.update(username); %>
+		
 		document.getElementById("mapDisplay").style.visibility = "visible";
 		
 		Console.log(font("#009700")+"You are now in <b>"+font("blue")+"<%=map.getLocation()%>");

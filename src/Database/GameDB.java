@@ -56,11 +56,14 @@ public class GameDB extends DbConnectionAPI
 		return -1;
 	}
 
+<<<<<<< HEAD
+=======
 	/**
 	 * adds new player to database
 	 * @param username
 	 * @param charName
 	 */
+>>>>>>> master
 	public void addPlayer(String username, String charName){
 		String query1 = "SELECT * FROM characters WHERE name='"+charName+"'";
 		
@@ -82,6 +85,7 @@ public class GameDB extends DbConnectionAPI
 			System.out.println("Error in add player query: "+e);
 		}
 	}
+
 	
 	/**
 	 * get player information

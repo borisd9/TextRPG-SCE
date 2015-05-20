@@ -17,7 +17,6 @@
 	var system = "<font color=red><b>System:</b> </font>";
 	var mode = "";
 	var startChars = [];
-	var input = "";
 	
 	//Init GameDB object and MapDB, and get username from session
 	<%
@@ -26,6 +25,7 @@
 		
 		ResultSet rs;
 		MapDB map = new MapDB();
+		map.update(username);
 	%>
 	 
 	 //returns a colored message
@@ -58,22 +58,17 @@
 	
 	 //If Enter key has been pressed
 	 chat.startListen = function () {
-	 	document.getElementById('chat').onkeydown = function(event) { 		
+	 	document.getElementById('chat').onkeydown = function(event) {
 	        //Listening for Enter Key 
-	 		if (event.keyCode == 13) {	 	 			
-	 			input = document.getElementById('chat').value;
-	 			
-		 		//clear cmd line
-		 		document.getElementById('chat').value = ""; 	 	
-		 		
-	 			chat.sendMessage();
+	 		if (event.keyCode == 13) {
+	             chat.sendMessage();
 	         }
 	     };
 	 };
 	
-	 
 	 //Command handler
 	 chat.sendMessage = function () {
+	 	var input = document.getElementById('chat').value;
 	 	var username = document.getElementById('un').value;
 	 	
 		//remove spaces and change input to lowercase	 
@@ -86,7 +81,6 @@
 	 	}
 	 	//Start game
 	 	else if (msg == "/start"){
-	 		
 	 		//if game has already started
 		 	if(mode=="started"){
 		 		Console.log(font("red")+"The game has already been started.<br>Type <b>"+font("blue")+"/location</b></font> to check your current whereabouts.")
@@ -110,13 +104,14 @@
 					displayLocation();
 					mode = "started";
 				}
-			
+				
+				//Show map
+				document.getElementById("mapDisplay").style.visibility = "visible";
 		 	}
 		 	
 		}
 	 	//view location
 		else if(msg == "/location") {
-	 		
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your location before you start the game!<br>Type <b>"+
@@ -126,7 +121,6 @@
 		}
 	 	//view character information
 		else if(msg == "/char"){
-	 		
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
@@ -161,17 +155,22 @@
 				//Sending data to servlet, to be inserted into DB
 				$.get('gameservlet', { action: "newPlayer", username: '<%=username%>', charName: startChars[msg-1] });				
 
+				//Updating map location
+				<% map.update(username); %>
+
 				Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
 				mode = "started";
-				displayLocation();				
+				displayLocation();
 			}
 			else{
-				Console.log(font("red")+"Character #"+msg+" does not exist!<br>");
+				Console.log(font("red")+"Characer #"+msg+" does not exist!<br>");
 				newPlayer();
 			}
 		}
 		else
 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
+	
+		document.getElementById('chat').value = "";
 	}
 	
 	//Add new player
@@ -206,11 +205,6 @@
 	
 	//display current location and options
 	function displayLocation(){
-		
-	 	//Show and update map
-		<% map.update(username); %>
-		document.getElementById("mapDisplay").style.visibility = "visible";
-		
 		Console.log(font("#009700")+"You are now in <b>"+font("blue")+"<%=map.getLocation()%>");
 		Console.log(font("#009700")+"What would you like to do?");
 		//mode="move";

@@ -11,20 +11,6 @@
   <div id="content">
     <jsp:include page="sidebar.jsp"/>
     <div id="left">
-    
-    <%
-   		String err = request.getParameter("err");
-      	if(err!=null){
-      		if(err.equals("1")){
-    %>
-    <font color="green"><b>You have successfully logged out!!</b></font>
-    <br>
-    <br>
-	<%  
-      		}
-      	}
-    %>
-  
       <center><h1>Welcome to TextRPG!<br/>A Free Online RPG</h1></center>
       <br/>
       <div>
@@ -35,7 +21,7 @@
 
       </div>
       <br/><br/><br/> 
-      <a style="font-size: 100%" href="register.jsp">New User? Register Here</a>
+      <a style="font-size: 100%" href="Register.jsp">New User? Register Here</a>
     </div>
   </div>
   

@@ -134,20 +134,23 @@
 			}
 
 			else{
-				<%
-					rs = gdb.getPlayerInfo(username);
-					if(rs.next()){
-				%>
 				Console.log("");
 				Console.log(font("#009700")+"Character information:");
-				Console.log(font("blue")+"<b>"+'<%=rs.getString("character")%>');
-				Console.log("Level: <b>"+font("orange")+'<%=rs.getString("level")%>');
-				Console.log("Max HP: <b>"+font("orange")+'<%=rs.getString("hp")%>');
-				Console.log("Attack: <b>"+font("orange")+'<%=rs.getString("attack")%>');
-				Console.log("Defense: <b>"+font("orange")+'<%=rs.getString("defense")%>');
-				Console.log("Speed: <b>"+font("orange")+'<%=rs.getString("speed")%>');
-				Console.log("Exp: <b>"+font("orange")+'<%=rs.getString("exp")%>');
-				<% } %>
+				
+				//Getting Json object containing HashMap with character status
+				$.get('gameservlet', { action: "getCharStatus", username: '<%=username%>'}, 
+				function(responseJson){
+					var i=0;
+					$.each(responseJson, function(key, value){
+						if(i==0){ 
+							i++;
+							Console.log(font("blue")+"<b>"+value);
+						}
+						Console.log(key+": <b>"+font("orange")+value);
+					});
+				}, 
+				'json');
+				
 			}
 
 		}

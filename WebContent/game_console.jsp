@@ -210,7 +210,6 @@
 	
 	//display current location and options
 	function displayLocation(){
-		
 		//TODO//
 	 	//Getting Json object containing HashMap with map info, and inputing info to mapInfo object
 				$.get('gameservlet', { action: "getMapStatus", username: '<%=username%>'}, 

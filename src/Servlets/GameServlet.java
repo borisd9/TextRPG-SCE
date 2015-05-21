@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import Database.GameDB;
 import Database.MapDB;
 
+
 /**
  * Servlet implementation class GameServlet
  */
@@ -27,6 +28,7 @@ public class GameServlet extends HttpServlet {
        
 	GameDB db;
 	MapDB map;
+
 
 	/**
      * @see HttpServlet#HttpServlet()
@@ -73,6 +75,7 @@ public class GameServlet extends HttpServlet {
 			}
 		}
 		
+
 		
 		if(action.equals("getMapStatus")){
 			
@@ -101,8 +104,6 @@ public class GameServlet extends HttpServlet {
 			
 		
 		}
-		
-		
 		
 		
 	    //response.setContentType("text/plain");  

@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import Database.GameDB;
+import Database.MapDB;
+
 
 /**
  * Servlet implementation class GameServlet
@@ -25,6 +27,8 @@ public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	GameDB db;
+	MapDB map;
+
 
 	/**
      * @see HttpServlet#HttpServlet()
@@ -32,6 +36,7 @@ public class GameServlet extends HttpServlet {
     public GameServlet() {
         super();
         db = new GameDB();
+        map = new MapDB();
     }
 
 	/**
@@ -69,6 +74,37 @@ public class GameServlet extends HttpServlet {
 				System.out.println("Error reading char status: "+e);
 			}
 		}
+		
+
+		
+		if(action.equals("getMapStatus")){
+			
+			//get current map location
+			map.update(request.getParameter("username"));
+
+			Map<String, String> mapStatus = new LinkedHashMap<String, String>();
+			
+			mapStatus.put("location", map.getLocation());
+			mapStatus.put("x", map.getx());
+			mapStatus.put("y", map.gety());
+			mapStatus.put("up", map.getUp());
+			mapStatus.put("down", map.getDown());
+			mapStatus.put("left", map.getLeft());
+			mapStatus.put("right", map.getRight());
+			mapStatus.put("act1", map.getAct(1));
+			mapStatus.put("act2", map.getAct(2));
+			mapStatus.put("act3", map.getAct(3));
+			mapStatus.put("act4", map.getAct(4));
+			
+			String json = new Gson().toJson(map);
+			
+			response.setContentType("text/plain");  
+		    response.setCharacterEncoding("UTF-8"); 
+		    response.getWriter().write(json); 
+			
+		
+		}
+		
 		
 	    //response.setContentType("text/plain");  
 	    //response.setCharacterEncoding("UTF-8"); 

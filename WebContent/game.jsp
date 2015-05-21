@@ -15,7 +15,7 @@
             border: 2px solid #CCCCCC;
             border-right-color: #999999;
             border-bottom-color: #999999;
-            height: 270px;
+            height: 350px;
             overflow-y: scroll;
             padding: 5px;
             width: 100%;

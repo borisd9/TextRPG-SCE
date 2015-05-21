@@ -9,6 +9,9 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+   <listener>
+		<listener-class>General.SessionHandler</listener-class>
+	</listener>
   <servlet>
     <servlet-name>ChatServlet</servlet-name>
     <servlet-class>Servlets.ChatServlet</servlet-class>

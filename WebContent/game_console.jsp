@@ -9,21 +9,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Game Console</title>
 
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	//Variables
 	window.chat = {};
 	var Console = {};
 	var system = "<font color=red><b>System:</b> </font>";
-	var mode;
+	var mode = "";
 	var startChars = [];
-	
+	var input = "";
+	var mapInfo = new Map();
+
 	//Init GameDB object and MapDB, and get username from session
 	<%
 	  	GameDB gdb = new GameDB();
 		String username = (String)session.getAttribute("username");
 		
+		ResultSet rs;
 		MapDB map = new MapDB();
-		map.update(username);
 	%>
 	 
 	 //returns a colored message
@@ -41,7 +44,7 @@
 	     var console = document.getElementById('console');
 	     var p = document.createElement('p');
 	     p.style.wordWrap = 'break-word';
-	     p.innerHTML = system+message;
+	     p.innerHTML = (message=="") ? "<br>" : system+message;
 	     console.appendChild(p);
 	     while (console.childNodes.length > 25) {
 	         console.removeChild(console.firstChild);
@@ -51,23 +54,27 @@
 	
 	 //Starts listening for messages
 	 onload = function() {
-	 	mode = "";
 	 	chat.startListen();
 	 };
 	
 	 //If Enter key has been pressed
 	 chat.startListen = function () {
-	 	document.getElementById('chat').onkeydown = function(event) {
+	 	document.getElementById('chat').onkeydown = function(event) { 		
 	        //Listening for Enter Key 
-	 		if (event.keyCode == 13) {
-	             chat.sendMessage();
+	 		if (event.keyCode == 13) {	 	 			
+	 			input = document.getElementById('chat').value;
+	 			
+		 		//clear cmd line
+		 		document.getElementById('chat').value = ""; 	 	
+		 		
+	 			chat.sendMessage();
 	         }
 	     };
 	 };
 	
+	 
 	 //Command handler
 	 chat.sendMessage = function () {
-	 	var input = document.getElementById('chat').value;
 	 	var username = document.getElementById('un').value;
 	 	
 		//remove spaces and change input to lowercase	 
@@ -80,66 +87,95 @@
 	 	}
 	 	//Start game
 	 	else if (msg == "/start"){
-	 	<% 
-			boolean doesExist = false;
-			if(username!=null)
-				doesExist = gdb.doesExist(username);
-		%>
-			
-			//If player has never started a game
-			if(<%=doesExist%>==false){
-				Console.log(font("#009700")+"Welcome <b>"+font("blue")+username+"</font></b>! Get ready to start your journey!");
-				newPlayer(username);
+	 		
+	 		//if game has already started
+		 	if(mode=="started"){
+		 		Console.log(font("red")+"The game has already been started.<br>Type <b>"+font("blue")+"/location</b></font> to check your current whereabouts.")
+		 	}
+		 	else{
+			 	<% 
+					boolean doesExist = false;
+					if(username!=null)
+						doesExist = gdb.doesExist(username);
+				%>
 				
-			}
-			//If player has already started a game
-			else{
-				Console.log("Welcome back "+username+"!");	
-			}
+				//If player has never started a game
+				if(<%=doesExist%>==false){
+					Console.log(font("#009700")+"Welcome <b>"+font("blue")+username+"</font></b>! Get ready to start your journey!");
+					newPlayer(username);
+					
+				}
+				//If player has already started a game
+				else{
+					Console.log("Welcome back <b>"+font("blue")+username+"</b></font>!");
+					displayLocation();
+					mode = "started";
+				}
 			
-			//Show map
-			document.getElementById("mapDisplay").style.visibility = "visible"
+		 	}
+		 	
 		}
 	 	//view location
-		else if(msg == "/location") 
+		else if(msg == "/location") {
+	 		
 			//check if game has started
-			if(mode != "start"){
+			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your location before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
 			else displayLocation();
-		
+		}
 	 	//view character information
-		else if(msg == "/char")
+		else if(msg == "/char"){
+	 		
 			//check if game has started
-			if(mode != "start"){
+			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
-			else Console.log("too soon bro");
+
+			else{
+				Console.log("");
+				Console.log(font("#009700")+"Character information:");
+				
+				//Getting Json object containing HashMap with character status
+				$.get('gameservlet', { action: "getCharStatus", username: '<%=username%>'}, 
+				function(responseJson){
+					var i=0;
+					$.each(responseJson, function(key, value){
+						if(i==0){ 
+							i++;
+							Console.log(font("blue")+"<b>"+value);
+						}
+						Console.log(key+": <b>"+font("orange")+value);
+					});
+				}, 
+				'json');
+				
+			}
+
+		}
 		//If player is new, he must select a character
-		else if (mode=="new"){
+		else if (mode=="new" && isNum(msg)){
 			<%
 			int numOfChars = gdb.charCount();
 			%>
 			//checking if legal character number has been selected
 			if(msg > 0 && msg <= <%=numOfChars%>){
+				//Sending data to servlet, to be inserted into DB
+				$.get('gameservlet', { action: "newPlayer", username: '<%=username%>', charName: startChars[msg-1] });				
+
 				Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
-				
-				
-				
-				mode = "start";
-				displayLocation();
+				mode = "started";
+				displayLocation();				
 			}
 			else{
-				Console.log(font("red")+"Characer #"+msg+" does not exist!<br>");
+				Console.log(font("red")+"Character #"+msg+" does not exist!<br>");
 				newPlayer();
 			}
 		}
 		else
 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
-	
-		document.getElementById('chat').value = "";
 	}
 	
 	//Add new player
@@ -149,7 +185,7 @@
 		//Print selectable chars and add to array
 		<%
 		int i;
-		ResultSet rs = gdb.getChars();
+		rs = gdb.getChars();
 		String character;
 		for(i=1; rs.next(); i++){
 			character = rs.getString(1);
@@ -165,6 +201,7 @@
 	
 	//display available commands
 	function displayCommands(){
+ 		Console.log("");
 		Console.log(font("#009700")+"Below is a list of available commands:");
 		Console.log(font("blue")+"<b>/start</b></font>"+font("#FF69B4")+" : to start the game.");
 		Console.log(font("blue")+"<b>/char</b></font>"+font("#FF69B4")+" : to check your character's information");
@@ -173,12 +210,30 @@
 	
 	//display current location and options
 	function displayLocation(){
-		<%
-			String locationName = map.getLocation(); 
-		%>
-		Console.log(font("#009700")+"You are now in <b>"+font("blue")+"<%map.getLocation();%>");
-		Console.log(font("#009700")+"What would you like to do?");
-		mode="move";
+		//TODO//
+	 	//Getting Json object containing HashMap with map info, and inputing info to mapInfo object
+				$.get('gameservlet', { action: "getMapStatus", username: '<%=username%>'}, 
+				function(responseJson){
+					$.each(responseJson, function(key, value){									
+						mapInfo.set(key,value);												
+					});	
+					
+					//update map pin coordinates
+					document.getElementById('pin').setAttribute('title', mapInfo.get("location"));
+					document.getElementById('pin').style.top = mapInfo.get("y") + "px";
+					document.getElementById('pin').style.left = mapInfo.get("x") + "px";
+					
+					//print to console current location
+					Console.log(font("#009700")+"You are now in <b>"+font("blue") + mapInfo.get("location"));
+					Console.log(font("#009700")+"What would you like to do?");
+					Console.log(font("#009700")+"Type /location for more details on your surroundings <b>");
+				}, 
+				'json');
+		
+		//display map
+		document.getElementById("mapDisplay").style.visibility = "visible";
+		
+		//mode="move";
 	}
     
 </script>
@@ -186,15 +241,14 @@
 </head>
 <body>
 <div id="content">
-	<font color='blue'><b>To start the game, please type <font color='red'>/startGame</font> in the box below.</b><br/>
+	<font color='blue'><b>To start the game, please type <font color='red'>/start</font> in the box below.</b><br/>
 	<b>To see the list of possible commands, type <font color='red'>/cmd</font></b><br/><br/>
 	<b>Enjoy your gaming!</b><br/><br/><br/></font>
 	
 	<div id="right">	
 		<div id="mapDisplay" style="background: url('images/worldMap.png'); width: 300px; height:350px; position: relative; left:-10px; visibility: hidden; ">
-	    <img src="images/pin.gif" title="<%= map.getLocation() %>" style="position: relative; top:<%= map.gety() %>px; left:<%= map.getx() %>px; width:90px; height:70px;">
+	    <img id="pin" src="images/pin.gif" style="position: relative; width:90px; height:70px;">
 		</div>
-	
 	
 	For testing DB connections:<br>
 	<%= map.getDataSourceStats() %>	
@@ -204,7 +258,7 @@
 	<div id="console-container">
 		<div id="console"></div>
 	</div>
-	<input id='un' type='hidden' value='${sessionScope.username}'/>
+	<input name='un' id='un' type='hidden' value='${sessionScope.username}'/>
 	<p>
 		<input type="text" style="border:2px solid" placeholder="type your commands here." id="chat" name="msg">
 	</p>

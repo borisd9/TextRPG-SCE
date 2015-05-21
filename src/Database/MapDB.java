@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class MapDB extends DbConnectionAPI {
 	
-	private String username, location, x, y, up, down, right, left, ac1, ac2, ac3, ac4; 
+	private String username, location, x, y, up, down, right, left; 
 	private String[] actions = new String[4];
 	
 
@@ -47,8 +47,23 @@ public class MapDB extends DbConnectionAPI {
 				actions[1] = rs.getString("act2");
 				actions[2] = rs.getString("act3");
 				actions[3] = rs.getString("act4");					
+			} else{
+				
+				location = null;
+				x = null;
+				y = null;
+				up = null;
+				down = null;
+				right = null;
+				left = null;
+				actions[0] = null;
+				actions[1] = null;
+				actions[2] = null;
+				actions[3] = null;	
+				
+				
 			}
-		} catch (SQLException e) {
+		}	catch (SQLException e) {
 			System.out.println("Error in map query: "+e);
 		}		
 	}
@@ -140,11 +155,11 @@ public class MapDB extends DbConnectionAPI {
 
 	
 	/**
-	 * get the actions possible to be made at this location
+	 * get the action number actionNum, [1-4];
 	 * @return an array of string which contains the actions, max of 4 actions
 	 */
-	public String[] actions() {
-		return actions;
+	public String getAct(int actionNum) {
+		return actions[actionNum-1];
 	}
 
 	

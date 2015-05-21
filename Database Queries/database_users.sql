@@ -38,7 +38,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('admin','admin',NULL,1,1);
+INSERT INTO `users` VALUES ('admin','d033e22ae348aeb5660fc2140aec35850c4da997','yonimv@gmail.com',2,1),('yoni','a9993e364706816aba3e25717850c26c9cd0d89d','yonimv@gmail.com',0,1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-25 14:59:50
+-- Dump completed on 2015-05-19  2:35:44

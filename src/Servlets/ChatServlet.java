@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,9 +20,9 @@ import org.apache.catalina.websocket.WsOutbound;
 
 
 public class ChatServlet extends WebSocketServlet {
-
+		
 	private static ArrayList<MyMessageInbound> mmiList = new ArrayList<MyMessageInbound>();
-
+	
 	@Override
 	protected StreamInbound createWebSocketInbound(String subProtocol,
 			HttpServletRequest request) {
@@ -34,14 +34,12 @@ public class ChatServlet extends WebSocketServlet {
 
         @Override
         public void onOpen(WsOutbound outbound){
-            System.out.println("Open Client.");
 			this.myoutbound = outbound;
 			mmiList.add(this);
         }
 
         @Override
         public void onClose(int status){
-            System.out.println("Close Client.");
             mmiList.remove(this);
         }
 

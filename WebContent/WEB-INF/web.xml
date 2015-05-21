@@ -20,4 +20,37 @@
     <servlet-name>ChatServlet</servlet-name>
     <url-pattern>/ChatServlet</url-pattern>
   </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>CartServlet</servlet-name>
+    <servlet-class>Store.CartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CartServlet</servlet-name>
+    <url-pattern>/servlet/CartServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <servlet-class>Store.CheckoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <url-pattern>/servlet/CheckoutServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  <security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Purchase</web-resource-name>
+        <url-pattern>/ssl/*</url-pattern>
+    </web-resource-collection>
+
+        <user-data-constraint>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+</security-constraint>
+  
+
 </web-app>

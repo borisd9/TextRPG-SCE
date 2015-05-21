@@ -16,32 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `characters`
+-- Table structure for table `authentication`
 --
 
-DROP TABLE IF EXISTS `characters`;
+DROP TABLE IF EXISTS `authentication`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `characters` (
-  `name` varchar(45) NOT NULL,
-  `attack` int(11) DEFAULT NULL,
-  `defense` int(11) DEFAULT NULL,
-  `speed` int(11) DEFAULT NULL,
-  `hp` int(11) DEFAULT NULL,
-  `atk1` varchar(45) DEFAULT NULL,
-  `atk2` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`name`)
+CREATE TABLE `authentication` (
+  `username` varchar(20) NOT NULL,
+  `code` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`username`),
+  CONSTRAINT `ua` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `characters`
+-- Dumping data for table `authentication`
 --
 
-LOCK TABLES `characters` WRITE;
-/*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES ('bulb',49,49,45,45,'leaf','poison'),('char',60,38,65,39,'fire','smoke'),('squir',40,65,35,44,'water','ice');
-/*!40000 ALTER TABLE `characters` ENABLE KEYS */;
+LOCK TABLES `authentication` WRITE;
+/*!40000 ALTER TABLE `authentication` DISABLE KEYS */;
+/*!40000 ALTER TABLE `authentication` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -36,28 +36,14 @@
 	<%
       		}
       		else if(err.equals("3")){
-	%>
+	%>   
+	<font color="red"><b>Your account is not activated. Please click the link provided in your mail to activate your account.</b></font>
+	<br><br>
 	<%
-	String user = null;
-	if(session.getAttribute("user") == null){
-		response.sendRedirect("login.jsp");
-	}else user = (String) session.getAttribute("user");
-	String userName = null;
-	String sessionID = null;
-	Cookie[] cookies = request.getCookies();
-	if(cookies !=null){
-	for(Cookie cookie : cookies){
-		if(cookie.getName().equals("user")) userName = cookie.getValue();
-		if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
-	}
-	}
+      		}
+      		else if(err.equals("4")){
 	%>
-	<font color="red"><b>Hi <%=userName %> you are already logged in!</b></font>
-	
-<br>
-<form action="LogoutServlet" method="post">
-<input type="submit" value="Logout" >
-</form>
+	<font color="red"><b>You are already logged in!</b></font>
 	
 	<% 
       		}

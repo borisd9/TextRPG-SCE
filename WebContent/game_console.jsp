@@ -18,7 +18,8 @@
 	var mode = "";
 	var startChars = [];
 	var input = "";
-	
+	var mapInfo = new Map();
+
 	//Init GameDB object and MapDB, and get username from session
 	<%
 	  	GameDB gdb = new GameDB();
@@ -210,13 +211,29 @@
 	//display current location and options
 	function displayLocation(){
 		
-	 	//Show and update map
-		<% map.update(username); %>
+		//TODO//
+	 	//Getting Json object containing HashMap with map info, and inputing info to mapInfo object
+				$.get('gameservlet', { action: "getMapStatus", username: '<%=username%>'}, 
+				function(responseJson){
+					$.each(responseJson, function(key, value){									
+						mapInfo.set(key,value);												
+					});	
+					
+					//update map pin coordinates
+					document.getElementById('pin').setAttribute('title', mapInfo.get("location"));
+					document.getElementById('pin').style.top = mapInfo.get("y") + "px";
+					document.getElementById('pin').style.left = mapInfo.get("x") + "px";
+					
+					//print to console current location
+					Console.log(font("#009700")+"You are now in <b>"+font("blue") + mapInfo.get("location"));
+					Console.log(font("#009700")+"What would you like to do?");
+					Console.log(font("#009700")+"Type /location for more details on your surroundings <b>");
+				}, 
+				'json');
 		
+		//display map
 		document.getElementById("mapDisplay").style.visibility = "visible";
 		
-		Console.log(font("#009700")+"You are now in <b>"+font("blue")+"<%=map.getLocation()%>");
-		Console.log(font("#009700")+"What would you like to do?");
 		//mode="move";
 	}
     
@@ -225,15 +242,14 @@
 </head>
 <body>
 <div id="content">
-	<font color='blue'><b>To start the game, please type <font color='red'>/startGame</font> in the box below.</b><br/>
+	<font color='blue'><b>To start the game, please type <font color='red'>/start</font> in the box below.</b><br/>
 	<b>To see the list of possible commands, type <font color='red'>/cmd</font></b><br/><br/>
 	<b>Enjoy your gaming!</b><br/><br/><br/></font>
 	
 	<div id="right">	
 		<div id="mapDisplay" style="background: url('images/worldMap.png'); width: 300px; height:350px; position: relative; left:-10px; visibility: hidden; ">
-	    <img src="images/pin.gif" title="<%= map.getLocation() %>" style="position: relative; top:<%= map.gety() %>px; left:<%= map.getx() %>px; width:90px; height:70px;">
+	    <img id="pin" src="images/pin.gif" style="position: relative; width:90px; height:70px;">
 		</div>
-	
 	
 	For testing DB connections:<br>
 	<%= map.getDataSourceStats() %>	

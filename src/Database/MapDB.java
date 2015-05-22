@@ -155,11 +155,11 @@ public class MapDB extends DbConnectionAPI {
 
 	
 	/**
-	 * get the actions possible to be made at this location
+	 * get the action number actionNum, [1-4];
 	 * @return an array of string which contains the actions, max of 4 actions
 	 */
-	public String[] actions() {
-		return actions;
+	public String getAct(int actionNum) {
+		return actions[actionNum-1];
 	}
 
 	

@@ -41,16 +41,33 @@
   </servlet-mapping>
   
   
+  <servlet-mapping>
+    <servlet-name>BuyServlet</servlet-name>
+    <url-pattern>/servlet/BuyServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BuyServlet</servlet-name>
+    <servlet-class>Store.BuyServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>AuthenticationServlet</servlet-name>
+    <url-pattern>/servlet/AuthenticationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AuthenticationServlet</servlet-name>
+    <servlet-class>Servlets.AuthenticationServlet</servlet-class>
+  </servlet>
+  
   <security-constraint>
     <web-resource-collection>
-        <web-resource-name>Purchase</web-resource-name>
-        <url-pattern>/ssl/*</url-pattern>
+      <web-resource-name>Purchase</web-resource-name>
+      <url-pattern>/Checkout.jsp</url-pattern>
     </web-resource-collection>
-
-        <user-data-constraint>
-        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
-</security-constraint>
+  </security-constraint>
   
 
 </web-app>

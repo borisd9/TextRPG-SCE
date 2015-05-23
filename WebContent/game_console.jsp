@@ -115,6 +115,30 @@
 		 	}
 		 	
 		}
+	 	//need to check position
+	 	//Home
+	 	else if (msg == "/act1"){
+	 		//Look For Helping Items
+	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Travel The Garden
+	 		Console.log("<b>"+font("#33aaaa")+"Nothing in the garden");
+	 	}
+	 	
+	 	//The Hawks Cliff
+		else if (msg == "/act1"){
+	 		//Fight a Hawk
+	 		
+	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Travel Around
+	 		
+	 		Console.log("<b>"+font("#33aaaa")+"Nothing in the garden");
+	 	}
+
+	 		
 	 	//view location
 		else if(msg == "/location") {
 	 		
@@ -215,7 +239,7 @@
 				$.get('gameservlet', { action: "getMapStatus", username: '<%=username%>'}, 
 				function(responseJson){
 					$.each(responseJson, function(key, value){									
-						mapInfo.set(key,value);												
+						mapInfo.set(key,value);
 					});	
 					
 					//update map pin coordinates
@@ -226,6 +250,22 @@
 					//print to console current location
 					Console.log(font("#009700")+"You are now in <b>"+font("blue") + mapInfo.get("location"));
 					Console.log(font("#009700")+"What would you like to do?");
+					if(mapInfo.get("up")!= null)
+						Console.log(font("#009700")+"Type /up to go to <b>"+font("blue") + mapInfo.get("up"));
+					if(mapInfo.get("down")!= null)
+						Console.log(font("#009700")+"Type /down to go to <b>"+font("blue") + mapInfo.get("down"));
+					if(mapInfo.get("left")!= null)
+						Console.log(font("#009700")+"Type /left to go to <b>"+font("blue") + mapInfo.get("left"));
+					if(mapInfo.get("right")!= null)
+						Console.log(font("#009700")+"Type /right to go to <b>"+font("blue") + mapInfo.get("right"));
+					if(mapInfo.get("act1")!= null)
+						Console.log(font("#009700")+"Type /act1 to <b>"+font("#cc33cc") + mapInfo.get("act1"));
+					if(mapInfo.get("act2")!= null)
+						Console.log(font("#009700")+"Type /act2 to <b>"+font("#cc33cc") + mapInfo.get("act2"));
+					if(mapInfo.get("act3")!= null)
+						Console.log(font("#009700")+"Type /act3 to <b>"+font("#cc33cc") + mapInfo.get("act3"));
+					if(mapInfo.get("act4")!= null)
+						Console.log(font("#009700")+"Type /act4 to <b>"+font("#cc33cc") + mapInfo.get("act4"));
 					Console.log(font("#009700")+"Type /location for more details on your surroundings <b>");
 				}, 
 				'json');

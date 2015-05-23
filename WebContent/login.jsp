@@ -80,7 +80,21 @@
 	<% } %>
 
 
-        
+
+        <form name="form1" action="LoginServlet" onsubmit="return validateForm()" method="post" >
+ 
+		Username: <br><input type="text" name="user"  style="background-color:#eeeeee; border:1px solid grey"/>
+		<br>
+		Password:<br> <input type="password" name="pwd"  style="background-color:#eeeeee; border:1px solid grey"/>
+		<br><br>
+		<center><input type="submit" value="Login" style="background-color:#eeeeee; border:1px solid grey;"/></center>
+		</form>
+		
+		
+  		
+		<br>
+      <center><a style="font-size: 100%" href="register.jsp">New User? Register Here</a></center>
+
     </div>
     
   </div>

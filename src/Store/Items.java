@@ -1,20 +1,21 @@
 package Store;
 /**
  * Items implementation class 
- *  represent item object from Database
+ *  represent item object that in our store-coins
  */
 public class Items {
-    private String itemNum;
+    private int price;
     private String itemDescription;
-    private double price;
+    private int coin;
     private int Quantity;
-    private double total;
-     
-    public String getPartNumber() {
-        return itemNum;
+    private int totalCoins;
+    private int totalPrice;
+    
+    public int getPrice() {
+        return price;
     }
-    public void setPartNumber(String itemNum) {
-        this.itemNum = itemNum;
+    public void setPrice(int price) {
+        this.price = price;
     }
     public String getitemDescription() {
         return itemDescription;
@@ -22,11 +23,11 @@ public class Items {
     public void setDescription(String description) {
         this.itemDescription = description;
     }
-    public double getUnitCost() {
-        return price;
+    public int getUnitCoin() {
+        return coin;
     }
-    public void setUnitCost(double price) {
-        this.price = price;
+    public void setUnitCost(int coin) {
+        this.coin = coin;
     }
     public int getQuantity() {
         return Quantity;
@@ -34,10 +35,15 @@ public class Items {
     public void setQuantity(int quantity) {
         Quantity = quantity;
     }
-    public double getTotalCost() {
-        return total;
+    public int getTotalCoins() {
+        return totalCoins;
     }
-    public void setTotalCost(double total) {
-        this.total = total;
+    public int getTotalPrice()
+    {
+    	return totalPrice;
+    }
+    public void setTotalCost(int total,int totalPrice) {
+        this.totalCoins = total;
+        this.totalPrice=totalPrice;
     }
 }

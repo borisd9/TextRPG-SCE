@@ -3,8 +3,10 @@ package Store;
 import Store.Cart;
  
 
+
 import java.io.IOException;
  
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,15 +20,14 @@ public class CartServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	/**
 	 * Servlet implementation class CartServlet
-	 *  connects to shoppingcart.jsp and do all actions like add item to cart,delete,update
+	 *  connects to shoppingcart.jsp and do all actions like add coins to cart,delete,update
 	 */
   
  public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
- 
+      
   String strAction = request.getParameter("action");
    
    
@@ -41,7 +42,9 @@ public class CartServlet extends HttpServlet {
   }
   response.sendRedirect("../ShoppingCart.jsp");
  }
-  
+
+ 
+ //delete item of purchase from shopping cart
  protected void deleteCart(HttpServletRequest request) {
   HttpSession session = request.getSession();
   String strItemIndex = request.getParameter("itemIndex");
@@ -56,6 +59,7 @@ public class CartServlet extends HttpServlet {
   cart.deleteCartItem(strItemIndex);
  }
   
+ //update items of purchase in shopping cart -update the coins quantity and  total price
  protected void updateCart(HttpServletRequest request) {
   HttpSession session = request.getSession();
   String strQuantity = request.getParameter("quantity");
@@ -69,14 +73,18 @@ public class CartServlet extends HttpServlet {
   } else {
 	  cart = new Cart();
   }
+ 
   cart.updateCartItem(strItemIndex, strQuantity);
+  cart.SetQuantity(strQuantity);
  }
   
+ //add new items to cart-add new pack of coins
  protected void addToCart(HttpServletRequest request) {
   HttpSession session = request.getSession();
-  String strModelNo = request.getParameter("modelNo");
+  String price = request.getParameter("price");
+  //System.out.println(strModelNo);
   String strDescription = request.getParameter("description");
-  String strPrice = request.getParameter("price");
+  String coins = request.getParameter("coins");
   String strQuantity = request.getParameter("quantity");
    
   Cart cartBean = null;
@@ -90,7 +98,9 @@ public class CartServlet extends HttpServlet {
    session.setAttribute("cart", cartBean);
   }
    
-  cartBean.addCartItem(strModelNo, strDescription, strPrice, strQuantity);
+  cartBean.addCartItem(price, strDescription, coins, strQuantity);
+  cartBean.SetPrice(price);
+  cartBean.SetQuantity(strQuantity);
  }
  
 

@@ -2,7 +2,6 @@ package Store;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class CheckoutServlet
- * connects to checkout.jsp that secured over SSL ,and takes user credit payment details.
+ * connects to checkout.jsp that secured over SSL ,and takes player credit payment details.
  */
 @WebServlet("/CheckoutServlet")
 public class CheckoutServlet extends HttpServlet
@@ -32,8 +31,6 @@ public class CheckoutServlet extends HttpServlet
 
 
         HttpSession session = request.getSession();
-        // Get the cart using session
-        Cart cart =(Cart) session.getAttribute("cart");
         
         //get all credit details from user ,from HTTPS(SSL) page checkout.jsp
         String nameOnCard = request.getParameter("nameOnCard");
@@ -42,27 +39,29 @@ public class CheckoutServlet extends HttpServlet
          contextPath= request.getContextPath();
        //If fields are empty - display error
  		if(creditCardExpiration=="" || creditCardNumber=="" || nameOnCard==""){
- 			response.sendRedirect(contextPath + "/ssl/Checkout.jsp?err=1");
+ 			response.sendRedirect(contextPath + "/Checkout.jsp?err=1");
  		}//if credit card number invalid display error
  		else if(isValidCC(creditCardNumber)==false)
- 			response.sendRedirect(contextPath + "/ssl/Checkout.jsp?err=2");
+ 			response.sendRedirect(contextPath + "/Checkout.jsp?err=2");
  		
  		//if credit card expire date invalid- display error
  		else if(validateCardExpiryDate(creditCardExpiration)==false)
- 			response.sendRedirect(contextPath + "/ssl/Checkout.jsp?err=3");
+ 			response.sendRedirect(contextPath + "/Checkout.jsp?err=3");
 
  		
         PrintWriter out = response.getWriter();
+	  	String user = (String)session.getAttribute("username");
+        Cart cart =(Cart) session.getAttribute("cart");
+	    //String coins = (String)session.getAttribute("coins");
 
  		//send confirmation order number
         try
         {
-        		String confirmation = null ;
             	if(cart.getCartItems().size()!=0)
-            		confirmation = cart.completeOrder();
-            	
-            	// out.println("<html><body><h1>Order Submitted Successfully!</h1><p><br>Thank you for your order. Your order confirmation number is:<pre>");
-            response.sendRedirect(response.encodeRedirectURL("/text-rpg/ssl/ShowConfirmation.jsp"+"?confirmationNumber="+URLEncoder.encode(confirmation))); 
+            	{
+            	  cart.updatePlayerCoins(user);	
+      	    	  response.sendRedirect(contextPath + "/Checkout.jsp?ok=1");
+            	}
         }
         catch (Exception exc)
         {

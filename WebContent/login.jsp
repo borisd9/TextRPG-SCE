@@ -19,8 +19,24 @@
       <br/>
 
 <br>
+<% String loggedIn = (String)session.getAttribute("username");
+		if(loggedIn == null){%>
 
+		<form name="form1" action="LoginServlet" onsubmit="return validateForm()" method="post" >
+ 
+		Username: <br><input type="text" name="user"  style="background-color:#eeeeee; border:1px solid grey"/>
+		<br>
+		Password:<br> <input type="password" name="pwd"  style="background-color:#eeeeee; border:1px solid grey"/>
+		<br><br>
+		<center><input type="submit" value="Login" style="background-color:#eeeeee; border:1px solid grey;"/></center>
+		</form>
+		
+		
+  		
+
+      <center><a style="font-size: 100%" href="register.jsp">New User? Register Here</a></center>
     <%
+    	
    		String err = request.getParameter("err");
       	if(err!=null){
       		if(err.equals("1")){
@@ -48,23 +64,23 @@
 	<% 
       		}
       	}
+      	
     %>
     
+    <% 
+			} else{
+	%>  
+	   
+	<font color="red"><b>You can to log out from the website!<br/>
+	
+	<b> Click :<form action="LogoutServlet" method="post"></b></font>
+	<input type="submit" value="Logout" >
+	</form></b>
+	
+	<% } %>
 
 
-        <form name="form1" action="LoginServlet" onsubmit="return validateForm()" method="post" >
- 
-		Username: <br><input type="text" name="user"  style="background-color:#eeeeee; border:1px solid grey"/>
-		<br>
-		Password:<br> <input type="password" name="pwd"  style="background-color:#eeeeee; border:1px solid grey"/>
-		<br><br>
-		<center><input type="submit" value="Login" style="background-color:#eeeeee; border:1px solid grey;"/></center>
-		</form>
-		
-		
-  		
-
-      <center><a style="font-size: 100%" href="register.jsp">New User? Register Here</a></center>
+        
     </div>
     
   </div>

@@ -1,6 +1,10 @@
 package Store;
  
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import Database.DbConnectionAPI;
  
 /**
  * Shopping Cart implementation class ,the cart represented as ArrayList
@@ -9,9 +13,10 @@ import java.util.ArrayList;
  */
 public class Cart {
  private ArrayList<Items> CartItems ;
- private double TotalOrder ;
-  
- 
+ private int orderTotal ;
+ private int TotalPrice;
+ private int iprice;
+ private int quantity;
  public Cart()
  {
 	 CartItems = new ArrayList<Items>();
@@ -27,7 +32,7 @@ public class Cart {
  /**
   * 
   * function to delete items from cart,
-  * and calculate total price in cart 
+  * and calculate total price of coins in cart 
   */
  public void deleteCartItem(String strItemIndex) {
   int iItemIndex = 0;
@@ -45,11 +50,13 @@ public class Cart {
  /**
   * 
   * function to update items from cart,
-  * and calculate total price in cart according to items price and quantity 
+  * and calculate total coins in cart according to coins price and quantity 
   */
  public void updateCartItem(String strItemIndex, String strQuantity) {
-  double dblTotalCost = 0.0;
-  double dblUnitCost = 0.0;
+  int total = 0;
+  int price=0;
+  int totalPrice=0;
+  int coins = 0;
   int iQuantity = 0;
   int iItemIndex = 0;
   Items cartItem = null;
@@ -58,10 +65,12 @@ public class Cart {
    iQuantity = Integer.parseInt(strQuantity);
    if(iQuantity>0) {
     cartItem = (Items)CartItems.get(iItemIndex-1);
-    dblUnitCost = cartItem.getUnitCost();
-    dblTotalCost = dblUnitCost*iQuantity;
+    coins = cartItem.getUnitCoin();
+    total = coins*iQuantity;
+    price=cartItem.getPrice();
+    totalPrice=price*iQuantity;
     cartItem.setQuantity(iQuantity);
-    cartItem.setTotalCost(dblTotalCost);
+    cartItem.setTotalCost(total,totalPrice);
     calculateOrderTotal();
    }
   } catch (NumberFormatException nfe) {
@@ -70,30 +79,54 @@ public class Cart {
   }
    
  }
-  
+  public void SetPrice(String price){
+	  
+	   iprice=Integer.parseInt(price);
+  }
+ public int getPrice()
+ {
+	 return iprice;
+ }
+ 
+
+ 
+ public int getQuantity(){
+	 return quantity;
+ }
+ 
+ public void SetQuantity(String strQuantity){
+	 this.quantity=Integer.parseInt(strQuantity);
+ }
  /**
   * 
-  * function to add items from cart,
-  * and calculate total price in cart according to items price,quantity
+  * function to add coins to cart,
+  * and calculate total price in cart according to coins price,quantity
   */
- public void addCartItem(String strModelNo, String strDescription,
-String strUnitCost, String strQuantity) {
-  double dblTotalCost = 0.0;
-  double dblUnitCost = 0.0;
+ public void addCartItem(String price, String strDescription,
+String coin, String strQuantity) {
+  int TotalCoins = 0;
+  int totalPrice=0;
+  int iprice=0;
+  int coins = 0;
   int iQuantity = 0;
   Items cartItem = new Items();
   try {
-   dblUnitCost = Double.parseDouble(strUnitCost);
+	  coins = Integer.parseInt(coin);
    iQuantity = Integer.parseInt(strQuantity);
+	iprice=Integer.parseInt(price);   
+
    if(iQuantity>0) {
-    dblTotalCost = dblUnitCost*iQuantity;
-    cartItem.setPartNumber(strModelNo);
+	   TotalCoins = coins*iQuantity;
+	   totalPrice= iprice*iQuantity;
+    cartItem.setPrice(iprice);
+    
     cartItem.setDescription(strDescription);
-    cartItem.setUnitCost(dblUnitCost);
+    cartItem.setUnitCost(coins);
     cartItem.setQuantity(iQuantity);
-    cartItem.setTotalCost(dblTotalCost);
+    cartItem.setTotalCost(TotalCoins,totalPrice);
     CartItems.add(cartItem);
     calculateOrderTotal();
+   
    }
     
   } catch (NumberFormatException nfe) {
@@ -113,47 +146,108 @@ String strUnitCost, String strQuantity) {
   return CartItems;
  }
 
- public double getOrderTotal() {
-  return TotalOrder;
+ public int getOrderTotal() {
+  return orderTotal;
  }
- public void setOrderTotal(double TotalOrder) {
-  this.TotalOrder = TotalOrder;
+ 
+ public int getTotalPrice() {
+	  return this.TotalPrice;
+	 }
+ public void setOrderTotal(int TotalOrder,int totalPrice) {
+  this.orderTotal = TotalOrder;
+  this.TotalPrice=totalPrice;
  }
   
  //calculate total price in cart
- protected void calculateOrderTotal() {
-  double dblTotal = 0;
+ public int calculateOrderTotal() {
+  int TotalCoins = 0,Totalprice=0;
   for(int counter=0;counter<CartItems.size();counter++) {
 	  Items cartItem = (Items) CartItems.get(counter);
-   dblTotal+=cartItem.getTotalCost();
+	  TotalCoins+=cartItem.getTotalCoins();
+   Totalprice+=cartItem.getTotalPrice();
+   //System.out.println(Total);
+  // System.out.println(Totalprice);
+
     
   }
-  setOrderTotal(dblTotal);
+  setOrderTotal(TotalCoins,Totalprice);
+
+  return TotalPrice;
+
  }
  
  
- //order number
- protected static int nextOrderNumber = 1231564;
+ DbConnectionAPI db=new DbConnectionAPI();
 
-/**
- * Submit the order and return a confirmation number.
- * 
- */
- public String completeOrder()  
+ /**
+  * 
+  * @param username
+  * @updated player money in the game according to his purchase 
+  */
+ public boolean updatePlayerMoney(String username)
  {
-     	
-         int orderNumber = 0;
+	 
+	 int money = 0;
+	int orderMoney=0;
 
-//Make sure no other threads can be generating an order number.
-         synchronized (this)
-         {
-             orderNumber = nextOrderNumber;
-             nextOrderNumber = nextOrderNumber + 1;
-         }
-        
-      // Return a confirmation number (the order number as a string in this case).
-         return ""+orderNumber;
-    
+	String query=  "SELECT * FROM players WHERE username='"+username+"'";
+	ResultSet rs= db.readFromDatabase(query);
+	 try {
+		while(rs.next()){
+			  money=rs.getInt("money");
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	  for(int i=0;i<CartItems.size();i++) {
+		  Items cartItem = (Items) CartItems.get(i);
+		  orderMoney+=cartItem.getTotalPrice();
+	 
+	  }
+	  money=money-orderMoney;
+
+	  String qr="UPDATE players SET money='"+money+"'WHERE username='"+username+"'";	  
+	  return db.modifyDatabase(qr);
  }
+ 
+ 
+ /**
+  * 
+  * @param username
+  * @updated player coins in the game according to his purchase 
+  */
+ public boolean updatePlayerCoins(String username)
+ {
+	 int coins = 0;
+	 int TotalCoins = 0;
+
+	String query=  "SELECT * FROM players WHERE username='"+username+"'";
+	ResultSet rs= db.readFromDatabase(query);
+	 try {
+		while(rs.next()){
+			  coins=rs.getInt("cash");
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	  for(int i=0;i<CartItems.size();i++) {
+		  Items cartItem = (Items) CartItems.get(i);
+		  TotalCoins+=cartItem.getTotalCoins();
+	 
+	  }
+
+	  coins=coins+TotalCoins;
+
+	  String qr="UPDATE players SET cash='"+coins+"'WHERE username='"+username+"'";	  
+	  return db.modifyDatabase(qr);
+ }
+ 
+ 
+ 
+ 
  
 }

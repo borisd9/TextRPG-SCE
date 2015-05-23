@@ -63,7 +63,7 @@
 		
 		
   		
-
+		<br>
       <center><a style="font-size: 100%" href="register.jsp">New User? Register Here</a></center>
     </div>
     

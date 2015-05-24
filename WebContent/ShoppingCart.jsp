@@ -16,21 +16,8 @@
 <%@ page language="java" import="java.sql.*" %>
 
  <div id="main">
-  <div id="header"> 
-    <div id="buttons">
-      <ul>
-   		<li class="first">
-        <li><a href="home.jsp">Home</a></li>
-        <li><a href="login.jsp">Login</a></li>
-        <li><a href="view_game.jsp">View Game</a></li>
-        <li><a href="guide.jsp" >Game Guide</a></li>
-        <li><a href="store.jsp" >Store</a></li>
-        <li><a href="about.jsp">About Us</a></li>
-        <li><a href="contact.jsp">Contact Us</a></li>
-        
-      </ul>
-    </div>
-  </div>
+    <jsp:include page="header.jsp"/>
+
   <div id="content">
         <div align="center">
      
@@ -90,11 +77,11 @@
   <tr> 
     <td colspan="2"> </td>
     <td> </td>
-    <td><font size="2" >Subtotal:<br>Coins:<c:out value="${cart.orderTotal}"/><br></font></td>
+    <td><font size="2" >Subtotal:<br>Coins:<c:out value="${cart.orderTotal}"/>,Price:<c:out value="${cart.totalPrice}"/>$ <br></font></td>
   </tr>
 </table>
 
-<c:if test="${counter.count}*${cartItem.partNumber}><%=money %>">
+<c:if test="${cart.lineItemCount==0}">
 
 <form >
        <br><font size="3" color="red">you must enter items to shopping cart to process!</font></br>

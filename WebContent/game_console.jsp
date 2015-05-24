@@ -17,6 +17,7 @@
 	var system = "<font color=red><b>System:</b> </font>";
 	var mode = "";
 	var startChars = [];
+	var itemsChars = [];
 	var input = "";
 	var mapInfo = new Map();
 
@@ -154,6 +155,14 @@
 				
 			}
 
+		}else if(msg=="/store"){
+			
+			//check if game has started
+			if(mode != "started"){
+				Console.log(font("red")+"You can't go to the Store before you start the game!<br>Type <b>"+
+    					font("blue")+"/startGame</font></b> to start the game.")
+			}
+			else	displayStore();
 		}
 		//If player is new, he must select a character
 		else if (mode=="new" && isNum(msg)){
@@ -174,7 +183,31 @@
 				newPlayer();
 			}
 		}
-		else
+	 	//If player wont to buy an item
+		else if (mode=="store" && isNum(msg)){
+	 		<%
+			int numOfItems=gdb.getItemsCount(map.getLocation());
+			%>
+			//checking if legal character number has been selected
+			if(msg > 0 && msg <= <%=numOfItems%>){
+			
+				
+				$.get('gameservlet', { action: "buyFromStore", username: '<%=username%>', itemsChars: itemsChars[msg-1], 
+				function(responseAns){
+					if(ans==1){
+						Console.log(font("#009700")+"</font>!your purchase was successful!");
+					}
+					else{
+						Console.log(font("#009700")+"</font>!You do not have enough money!");
+					}
+				});
+				mode = "started";
+				displayLocation();
+			}
+			else{
+				Console.log(font("red")+"item #"+msg+" does not exist!<br>");
+			}
+		}else
 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
 	}
 	
@@ -206,6 +239,7 @@
 		Console.log(font("blue")+"<b>/start</b></font>"+font("#FF69B4")+" : to start the game.");
 		Console.log(font("blue")+"<b>/char</b></font>"+font("#FF69B4")+" : to check your character's information");
 		Console.log(font("blue")+"<b>/location</b></font>"+font("#FF69B4")+" : to see your current location");
+		Console.log(font("blue")+"<b>/store</b></font>"+font("#FF69B4")+" : to see the items in the store");
 	}
 	
 	//display current location and options
@@ -234,6 +268,42 @@
 		document.getElementById("mapDisplay").style.visibility = "visible";
 		
 		//mode="move";
+	}
+	//display store items
+	function displayStore(){
+		<%
+			rs= gdb.getStoreItems(map.getLocation());
+			
+			String item_name;
+			String item_description;
+			String item_bonus1;
+			String item_bonus2;
+			String item_price;
+			
+			for(i=1; rs.next(); i++){
+				item_name=rs.getString("item");
+				item_description=rs.getString("description");
+				item_bonus1=rs.getString("bonus1");
+				item_bonus2=rs.getString("bonus2");
+				item_price=rs.getString("price");
+				//if ther is tow bonus to the item
+				if(item_bonus2!=null){
+				%>
+				Console.log(font("blue")+"<%=i%></font> - <b><%=item_name%>   bonus1:<%=item_bonus1%>   bonus2:<%=item_bonus2%>  itme_price:<%=item_price%></b>");
+				<%
+				//if ther is one bonus to the item
+				}else{
+				%>
+				Console.log(font("blue")+"<%=i%></font> - <b><%=item_name%>   bonus1:<%=item_bonus1%>   itme_price:<%=item_price%></b>");
+				<%
+				}
+			%>
+			Console.log(font("blue")+"</font><b>     itme description:<%=item_description%>");
+			itemsChars.push("<%=item_name%>");
+		<%
+			}
+		%>
+		mode="store";
 	}
     
 </script>

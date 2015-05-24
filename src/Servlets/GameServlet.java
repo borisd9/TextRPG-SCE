@@ -105,6 +105,28 @@ public class GameServlet extends HttpServlet {
 		
 		}
 		
+		if(action.equals("buyFromStore")){
+			String username = request.getParameter("username");
+			//String location = request.getParameter("location");
+			String itemsChars = request.getParameter("itemsChars");
+			
+			
+			int money= db.getMoney(username);
+			int price= db.getItemPrice(itemsChars);
+			int buy=money-price;
+			if(buy>=0)
+			{
+				db.updatePurchaseItem(username,itemsChars,buy);
+				String ans = "1";
+				response.getWriter().write(ans);
+			}
+			else{
+				String ans = "0";
+				response.getWriter().write(ans);
+			}
+			
+		}
+		
 		
 	    //response.setContentType("text/plain");  
 	    //response.setCharacterEncoding("UTF-8"); 

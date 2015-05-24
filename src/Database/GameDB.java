@@ -3,6 +3,8 @@ package Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 public class GameDB extends DbConnectionAPI
 {
 	/**
@@ -94,4 +96,94 @@ public class GameDB extends DbConnectionAPI
 		ResultSet rs = readFromDatabase(query);
 		return rs;
 	}
+	
+	/**
+	 * get store items
+	 * @param location
+	 * @return relevant row from items database
+	 */
+	public ResultSet getStoreItems(String location){
+		String query = "SELECT * FROM items WHERE location='"+location+"'";
+		ResultSet rs = readFromDatabase(query);
+		return rs;
+	}
+	
+	/**
+	 * get items Count
+	 * @param location
+	 * @return number of items in database, -1 if it's empty
+	 */
+	public int getItemsCount(String location){
+		String query = "SELECT count(*) FROM itmes WHERE location='"+location+"'";
+		
+		ResultSet rs = readFromDatabase(query);
+		try {
+			if(rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("Error in count query: "+e);
+		}
+		return -1;
+	}
+	
+	/**
+	 * get Money
+	 * @param username
+	 * @return player amount of money , -1 if it's empty
+	 */
+	public int getMoney(String username){
+		String query = "SELECT money FROM players WHERE username='"+username+"'";
+		
+		ResultSet rs = readFromDatabase(query);
+		try {
+			if(rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("Error in getMoney query: "+e);
+		}
+		return -1;
+	}
+	
+	/**
+	 * update Purchase Item
+	 * @param username,item,money
+	 * update the amount of money of player and the item
+	 */
+	public void updatePurchaseItem(String username,String item,int money){
+		String query = "UPDATE players SET item='"+item+"' money='"+money+"'  WHERE username='"+username+"'";
+		modifyDatabase(query);
+	}
+	
+	/**
+	 * get Item Price
+	 * @param item
+	 * @return get the price of the item , -1 if it's empty
+	 */
+	public int getItemPrice(String item){
+		String query = "SELECT price FROM items WHERE item='"+item+"'";
+		
+		ResultSet rs = readFromDatabase(query);
+		try {
+			if(rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("Error in getMoney query: "+e);
+		}
+		return -1;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

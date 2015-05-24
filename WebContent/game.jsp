@@ -4,11 +4,11 @@
 <title>TextBased RPG </title>
 <style type="text/css">
         input#chat {
-            width: 450px
+            width: 560px
         }
 
         #console-container {
-            width: 441px;
+            width: 550px;
         }
 
         #console {

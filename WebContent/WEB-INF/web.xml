@@ -59,6 +59,16 @@
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
   </servlet>
   
+  <error-page> 
+    <error-code>500</error-code>
+    <location>/500err.jsp</location>
+  </error-page>
+  
+   <error-page> 
+    <error-code>404</error-code>
+    <location>/404err.jsp</location>
+  </error-page>
+  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Purchase</web-resource-name>
@@ -68,6 +78,8 @@
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
+  
+
   
 
 </web-app>

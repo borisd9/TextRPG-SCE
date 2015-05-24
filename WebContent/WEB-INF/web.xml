@@ -41,16 +41,45 @@
   </servlet-mapping>
   
   
+  <servlet-mapping>
+    <servlet-name>BuyServlet</servlet-name>
+    <url-pattern>/servlet/BuyServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BuyServlet</servlet-name>
+    <servlet-class>Store.BuyServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>AuthenticationServlet</servlet-name>
+    <url-pattern>/servlet/AuthenticationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AuthenticationServlet</servlet-name>
+    <servlet-class>Servlets.AuthenticationServlet</servlet-class>
+  </servlet>
+  
+  <error-page> 
+    <error-code>500</error-code>
+    <location>/500err.jsp</location>
+  </error-page>
+  
+   <error-page> 
+    <error-code>404</error-code>
+    <location>/404err.jsp</location>
+  </error-page>
+  
   <security-constraint>
     <web-resource-collection>
-        <web-resource-name>Purchase</web-resource-name>
-        <url-pattern>/ssl/*</url-pattern>
+      <web-resource-name>Purchase</web-resource-name>
+      <url-pattern>/Checkout.jsp</url-pattern>
     </web-resource-collection>
-
-        <user-data-constraint>
-        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
-</security-constraint>
+  </security-constraint>
+  
+
   
 
 </web-app>

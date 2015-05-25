@@ -96,7 +96,7 @@ public class GameServlet extends HttpServlet {
 			mapStatus.put("act3", map.getAct(3));
 			mapStatus.put("act4", map.getAct(4));
 			
-			String json = new Gson().toJson(map);
+			String json = new Gson().toJson(mapStatus);
 			
 			response.setContentType("text/plain");  
 		    response.setCharacterEncoding("UTF-8"); 

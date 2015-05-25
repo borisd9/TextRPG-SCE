@@ -4,6 +4,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="styles.css" rel="stylesheet" type="text/css" />
 <%@ page language="java" import="java.sql.*" errorPage="" %>
+<%@ page import="General.SessionListener" %>
 
 
 </head>
@@ -71,16 +72,14 @@
 			} else{
 	%>  
 	   
-	<font color="red"><b>You can to log out from the website!<br/>
+	<font color="red"><b>You are currently logged in</b></br>
 	
-	<b> Click :<form action="LogoutServlet" method="post"></b></font>
-	<input type="submit" value="Logout" >
+	<b><form action="LogoutServlet" method="post"></b></font>
+	<input type="submit" value="Logout">
 	</form></b>
 	
 	<% } %>
-
-
-        
+  		
     </div>
     
   </div>

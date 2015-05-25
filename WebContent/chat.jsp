@@ -7,7 +7,7 @@
         }
 
         #chatConsole2-container {
-            width: 391px;
+            width: 600px;
         }
 
         #chatConsole2 {
@@ -17,7 +17,7 @@
             height: 170px;
             overflow-y: scroll;
             padding: 5px;
-            width: 100%;
+            width: 400px;
         }
 
         #chatConsole2 p {
@@ -97,11 +97,30 @@
         chat2.initialize();
 
     </script>
+    
+   <script type="text/javascript">
+        var auto_refresh = setInterval(
+        function ()
+        {
+        $('#chatUsers').load('chat_users.jsp').fadeIn("slow");
+        }, 30000); // autorefresh the content of the div after
+                   //every 1000 milliseconds(1sec)
+        </script>
 </head>
 <body>
 <div>
     <div id="chatConsole2-container">
-        <div id="chatConsole2"></div>
+    <table>
+    <tr>
+    <td>
+    <div id="chatConsole2"></div>
+    </td>
+    <td>
+    <div id= "chatUsers"> <%@ include file= "chat_users.jsp" %> </div>
+    </td>
+    </tr>
+    </table>
+        
     </div>
     <input id='un' type='hidden' value='${sessionScope.username}'/>
     <%

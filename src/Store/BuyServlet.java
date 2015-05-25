@@ -56,9 +56,9 @@ public class BuyServlet extends HttpServlet {
 	      quantity =cartBean.getQuantity();
 	      price= cartBean.getPrice();
 	      Imoney = (int) session.getAttribute("money");
-	      System.out.println(quantity);
-	      System.out.println(price);
-	      System.out.println(Imoney);
+	      //System.out.println(quantity);
+	     // System.out.println(price);
+	      //System.out.println(Imoney);
 
 	      if(price*quantity<=Imoney ){
 	    	  cartBean.updatePlayerMoney(user);

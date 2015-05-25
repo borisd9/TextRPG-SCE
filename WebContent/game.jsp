@@ -60,7 +60,7 @@
 	<br/>
 	<br/><br/><br/><br/><br/>
 	</div>
-	
+	</div>
   <jsp:include page="footer.jsp" />
 </div>
 </body>

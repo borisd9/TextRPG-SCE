@@ -286,8 +286,9 @@
 	<b>Enjoy your gaming!</b><br/><br/><br/></font>
 	
 	<div id="right">	
+	
 		<div id="mapDisplay" style="background: url('images/worldMap.png'); width: 300px; height:350px; position: relative; left:-10px; visibility: hidden; ">
-	    <img id="pin" src="images/pin.gif" style="position: relative; width:90px; height:70px;">
+	    <img id="pin" src="images/pin.gif" style="width:90px; height:70px;position: relative;">
 		</div>
 	
 	For testing DB connections:<br>

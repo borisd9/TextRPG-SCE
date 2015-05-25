@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Database.LoginDB;
-import General.SessionHandler;
+import General.SessionListener;
 import General.Sha1Hex;
 
 /**

@@ -66,13 +66,15 @@ String loggedIn = (String)session.getAttribute("username");
      </tr>
     </form>
    
-   <tr>
+   
   <br>
  
  
   <table width="75%" border="1">
   <tr> 
     <td><form name="f1" method="post" action="servlet/CartServlet">
+    		<img src="images\unnamed.jpg"/><br>
+    
  <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong> Price:</strong> 
        5 dollar</font><input type="hidden" name="price" value="5">
       <p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Description:</strong> 
@@ -86,6 +88,8 @@ String loggedIn = (String)session.getAttribute("username");
       
       <br>
     <td><form name="f2" method="post" action="servlet/CartServlet">
+    		<img src="images\unnamed.jpg"/><br>
+    
  <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong> Price:</strong> 
        25 dollar</font><input type="hidden" name="price" value="25">
       <p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Description:</strong> 
@@ -99,8 +103,10 @@ String loggedIn = (String)session.getAttribute("username");
        
       
       </br>
-      
+      </tr>
       <td><form name="f3" method="post" action="servlet/CartServlet">
+    		<img src="images\unnamed.jpg"/><br>
+      
  <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong> Price:</strong> 
        50 dollar</font><input type="hidden" name="price" value="50">
       <p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Description:</strong> 
@@ -113,10 +119,12 @@ String loggedIn = (String)session.getAttribute("username");
                    </form></td>
        
       
-      </tr></br>
+      </br>
       <br>
       
          <td><form name="f4" method="post" action="servlet/CartServlet">
+    		<img src="images\unnamed.jpg"/><br>
+         
  <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong> Price:</strong> 
        100 dollar</font><input type="hidden" name="price" value="100">
       <p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Description:</strong> 
@@ -126,7 +134,6 @@ String loggedIn = (String)session.getAttribute("username");
        2,000</font><input type="hidden" name="coins" value="2000"></p>
        <input type="hidden" name="action" value="add"><input type="submit" name="addToCart" value="Add To Cart">
                    </form></td>
-         </tr>
        
      
       

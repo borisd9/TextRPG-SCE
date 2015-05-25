@@ -109,7 +109,6 @@ public class GameServlet extends HttpServlet {
 		if(action.equals("moveTo")){
 			
 			String direction = request.getParameter("direction").substring(1);
-			
 			//get current map location and move player
 			if(direction.equals("up"))
 				map.move(map.getUp());
@@ -120,7 +119,6 @@ public class GameServlet extends HttpServlet {
 			if(direction.equals("right"))
 				map.move(map.getRight());
 			
-			System.out.println(map.getLocation());
 		}
 		
 		

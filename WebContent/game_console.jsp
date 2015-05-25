@@ -211,7 +211,7 @@
 	 		
 	 		
 	 	//move left//	
-	 	case "left":
+	 	case "/left":
 	 		//Sending AJAX to update map DB	
 			$.get('gameservlet', { action: "moveTo", direction: msg});
 	 		
@@ -221,7 +221,7 @@
 	 	
 	 		
 	 	//move right//
-	 	case "right":
+	 	case "/right":
 	 		//Sending AJAX to update map DB	
 			$.get('gameservlet', { action: "moveTo", direction: msg});
 	 		

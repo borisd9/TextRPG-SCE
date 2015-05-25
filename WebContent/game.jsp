@@ -4,11 +4,11 @@
 <title>TextBased RPG </title>
 <style type="text/css">
         input#chat {
-            width: 560px
+            width: 450px
         }
 
         #console-container {
-            width: 550px;
+            width: 441px;
         }
 
         #console {
@@ -60,7 +60,7 @@
 	<br/>
 	<br/><br/><br/><br/><br/>
 	</div>
-	
+	</div>
   <jsp:include page="footer.jsp" />
 </div>
 </body>

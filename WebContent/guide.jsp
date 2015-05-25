@@ -46,7 +46,7 @@
     <img src="images/Steel_Sword.jpg" alt="Steel Sword" style="width:250px;height:228px"/> <br>
     <p></p>
     <h3 style="color: black"><u><A NAME=Map>Map:</A></u></h3>
-    <img src="images/worldMapcor.jpg" alt="Map"/> <br>
+    <img src="images/worldMapcor.jpg" alt="Map" /> <br>
     1. This is <b>Home</b>. Your starting point to begin your journey.<br>
     2. This is <b>The Hawks Cliff</b>.<br>
     3. This is <b>The Amaya Throng</b>.<br>

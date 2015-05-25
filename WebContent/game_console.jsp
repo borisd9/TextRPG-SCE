@@ -129,16 +129,197 @@
 	 	//The Hawks Cliff
 		else if (msg == "/act1"){
 	 		//Fight a Hawk
-	 		
-	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	 				
+	 		//rand function
+	 		Console.log("<b>"+font("#33aaaa")+"No helping item has been found at the house");	 				
 	 	}
 	 	else if (msg == "/act2"){
 	 		//Travel Around
-	 		
-	 		Console.log("<b>"+font("#33aaaa")+"Nothing in the garden");
+	 		//rand function
+	 		//if(rand>100)
+	 		Console.log("<b>"+font("#33aaaa")+"You found the <b>"+font("blue") +"The Blue Ring!");
+	 		//else
+	 		Console.log("<b>"+font("#33aaaa")+"Nothing has been found around");
 	 	}
-
-	 		
+		
+	 	//The Amaya Throng
+	 	else if (msg == "/act1"){
+	 		//Cross The River
+	 		Console.log("<b>"+font("#33aaaa")+"Having fun? Why won't you try that again?");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Fight The Amaya Manster
+	 		//rand function
+	 		//if(rand>200)
+	 		Console.log("<b>"+font("#33aaaa")+"You Won The Manster!");
+	 		Console.log("<b>"+font("#33aaaa")+"You earned 35 exp and 15 HP");
+	 		Console.log("<b>"+font("#33aaaa")+"Your character earned 15 attack skill, 5 defense and 5 speed");
+	 		//need to update the DB
+	 		//else
+	 		Console.log("<b>"+font("#33aaaa")+"Oh No! You could not beat the Manster!");
+	 		Console.log("<b>"+font("#33aaaa")+"You lost 15 exp and your character lost 25 defense!");
+	 		Console.log("<b>"+font("#33aaaa")+"You has been send to the hospital to patch your character's injuries");
+	 		Console.log("<b>"+font("#33aaaa")+"The treatment cost you 100 coins. Don't warry - if you didn't have that sum - nothing won't be taken from you. Take Care!");
+	 		//need to update the DB
+	 	}
+	 	else if (msg == "/act3"){
+	 		//Jump To The Throng
+	 		Console.log("<b>"+font("#33aaaa")+"You lost 1 life. You should not try it again.");
+	 		//need to update the DB
+	 	}
+	 	0
+	 	//Green City
+	 	else if (msg == "/act1"){
+	 		//Go To Greenvas Store
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Visit Fortune A  Teller
+	 		//rand function
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act3"){
+	 		//Visit The Local Casino
+	 		//rand function
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+	 	//Torchwood
+	 	else if (msg == "/act1"){
+	 		//Go To Torch Hotel
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Go To Woodens Store
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act3"){
+	 		//Go To Yammi Restaurant
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+	 	//The Silent Woods
+	 	else if (msg == "/act1"){
+	 		//Walk Slowly Around
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Walk Loudly Around
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act3"){
+	 		//Fight The Trees
+	 		//rand function
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act4"){
+	 		//Try To Find The Treasure
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+	 	//The Zygons Tribe
+	 	else if (msg == "/act1"){
+	 		//Fight A Zygon
+	 		//rand function
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Talk To The Tribe Chief
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+	 	//Seamol City
+	 	else if (msg == "/act1"){
+	 		//Consult The Mayer
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Help The Poor People Of The City
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act3"){
+	 		//Go To Pak Store
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act4"){
+	 		//Kill Some People Around
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+	 	//Crocodile Bridge
+	 	else if (msg == "/act1"){
+	 		//Jump From The Bridge
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Fight The Enormous Crocodile
+	 		//rand function
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act3"){
+	 		//Swim Around
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+	 	//Coconut Forest
+	 	else if (msg == "/act1"){
+	 		//Fight The Coco Manster
+	 		//rand function
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Travel Around
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+		//Chimaki Hospital
+	 	else if (msg == "/act1"){
+	 		if location == map.getlaspfk && act1.ispossible
+	 		print khaflksahfla
+	 		//Return To The Last Place You've Been
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Get An Injection
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act3"){
+	 		//Buy A Potion
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act4"){
+	 		//Take A pill
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+	 	//The Ghosts Casle
+	 	else if (msg == "/act1"){
+	 		//Fight A Ghost
+	 		//rand function
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Scare The Ghosts
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	
+		//The Screamers Prison
+	 	else if (msg == "/act1"){
+	 		//Return To The Last Place You've Been
+	 		Console.log("<b>"+font("#33aaaa")+"");	 				
+	 	}
+	 	else if (msg == "/act2"){
+	 		//Clean Your Cell
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act3"){
+	 		//Do What The Screamers Tells You
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 	else if (msg == "/act4"){
+	 		//Ask For Pardon
+	 		Console.log("<b>"+font("#33aaaa")+"");
+	 	}
+	 
 	 	//view location
 		else if(msg == "/location") {
 	 		

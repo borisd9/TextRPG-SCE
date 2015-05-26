@@ -104,7 +104,8 @@
         {
         $('#chatUsers').load('chat_users.jsp').fadeIn("slow");
         }, 30000); // autorefresh the content of the div after
-                   //every 1000 milliseconds(1sec)
+                   //every 30000 milliseconds(30sec)
+        
         </script>
 </head>
 <body>
@@ -116,7 +117,12 @@
     <div id="chatConsole2"></div>
     </td>
     <td>
+    <%
+    	String loggedIn = (String)session.getAttribute("username");
+    	if(loggedIn != null){
+    %>
     <div id= "chatUsers"> <%@ include file= "chat_users.jsp" %> </div>
+        <% } %>
     </td>
     </tr>
     </table>
@@ -124,7 +130,6 @@
     </div>
     <input id='un' type='hidden' value='${sessionScope.username}'/>
     <%
-    	String loggedIn = (String)session.getAttribute("username");
     	if(loggedIn != null){
     %>
     <p>

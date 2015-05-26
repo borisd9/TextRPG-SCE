@@ -62,10 +62,12 @@
         });
 
         chat2.initialize = function() {
+        	var path = location.hostname+(location.port ? ':'+location.port: '');
+
             if (window.location.protocol == 'http:') {
-                chat2.connect('ws://localhost:80/text-rpg/ChatServlet');
+                chat2.connect('ws://'+path+'/text-rpg/ChatServlet');
             } else {
-                chat2.connect('ws://localhost:80/text-rpg/ChatServlet');   
+                chat2.connect('ws://'+path+'/text-rpg/ChatServlet');   
             }
         };
 

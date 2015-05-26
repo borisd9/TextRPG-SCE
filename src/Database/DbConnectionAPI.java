@@ -7,6 +7,8 @@ import java.sql.Statement;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
+import General.PathURL;
+
 
 public class DbConnectionAPI {
 
@@ -38,7 +40,7 @@ public class DbConnectionAPI {
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
 		ds.setUsername("root");
 		ds.setPassword("root");
-		ds.setUrl("jdbc:mysql://localhost/database");
+		ds.setUrl("jdbc:mysql://"+PathURL.path+"/database");
 		
 		
 		

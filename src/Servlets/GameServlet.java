@@ -106,6 +106,24 @@ public class GameServlet extends HttpServlet {
 		}
 		
 		
+		if(action.equals("moveTo")){
+			
+			String direction = request.getParameter("direction").substring(1);
+			//get current map location and move player
+			if(direction.equals("up"))
+				map.move(map.getUp());
+			if(direction.equals("down"))
+				map.move(map.getDown());
+			if(direction.equals("left"))
+				map.move(map.getLeft());
+			if(direction.equals("right"))
+				map.move(map.getRight());
+			
+		}
+		
+		
+		
+		
 	    //response.setContentType("text/plain");  
 	    //response.setCharacterEncoding("UTF-8"); 
 	    //response.getWriter().write(a);       

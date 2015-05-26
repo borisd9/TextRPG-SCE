@@ -10,7 +10,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 <title>Chat Users</title>
 
@@ -38,7 +42,11 @@ document.onmousedown = mouseDown;
 
 function mouseDown(e) {
     if (e.which==3) {//righClick
-    	var myWindow = window.open("http://localhost:80/text-rpg/menu.jsp", "", "width=200, height=100, top= 300, left= 300");
+    	
+    	var context_menu = new Control.ContextMenu();
+    	context_menu.addItem({"kick", "ban", "battle"});
+    
+    	//var myWindow = window.open("http://localhost:80/text-rpg/menu.jsp", "", "width=200, height=100, top= 300, left= 300");
     }
 }
 
@@ -55,10 +63,22 @@ function RightMouseDown() { return false; }
 	List<String> users = sl.getList();
 	if(users!=null){
 		for(String u: users){
+			String Logout = "LogoutServlet?param="+u+"";
 %>
 
-<button id="usersbtn" type="button" onclick="RightMouseDown()"><%= u %></button>
+  <ul class="nav nav-tabs">
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%=u %><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Kick</a></li>
+        <li><a href="#">Ban</a></li>
+        <li><a href="#">Battle</a></li>                        
+      </ul>
+    </li>
+  </ul>
 
+<%-- <button id="usersbtn" type="button" onclick="RightMouseDown()"><%= u %></button>
+--%>
 <%
 		}
 	}

@@ -63,9 +63,9 @@
 
         chat2.initialize = function() {
             if (window.location.protocol == 'http:') {
-                chat2.connect('ws://localhost:80/text-rpg/ChatServlet');
+                chat2.connect('ws://localhost:80/text-rpg/Servlets/ChatServlet');
             } else {
-                chat2.connect('ws://localhost:80/text-rpg/ChatServlet');   
+                chat2.connect('ws://localhost:80/text-rpg/Servlets/ChatServlet');   
             }
         };
 

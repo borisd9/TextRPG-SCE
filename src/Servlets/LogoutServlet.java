@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+import General.SessionListener;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,17 +19,16 @@ public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		
     	response.setContentType("text/html");
-    	Cookie[] cookies = request.getCookies();
-    	if(cookies != null){
-    	for(Cookie cookie : cookies){
-    		if(cookie.getName().equals("JSESSIONID")){
-    			break;
-    		}
-    	}
-    	}
+    	//log out
+    	session.setAttribute("loggedIn", false);
+		session.setAttribute("username", null);
+    	
+    	
     	//invalidate the session if exists
-    	HttpSession session = request.getSession(false);
+    	 session = request.getSession(false);
     	if(session != null){
     		session.invalidate();
     	}

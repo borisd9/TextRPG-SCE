@@ -31,10 +31,8 @@
 
 </style>
 
-
-<body>
-
 </head>
+
 <body>
 <div id = "online">
 <%

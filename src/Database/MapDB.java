@@ -77,7 +77,7 @@ public class MapDB extends DbConnectionAPI {
 	public boolean move(String moveTo)
 	{	
 		String query1 = "SELECT * FROM map WHERE location='" + moveTo + "'";
-		String query2 = "UPDATE players SET location='" + moveTo + "WHERE username='" + username + "'";
+		String query2 = "UPDATE players SET location='" + moveTo + "' WHERE username='" + username + "'";
 			
 		//check if moveTo parameter exists in map table
 		try {			

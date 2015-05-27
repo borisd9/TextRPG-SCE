@@ -31,7 +31,7 @@
 	 
 	 //returns a colored message
 	 function font(color, msg){
-	 	return "<font color="+color+">";
+		 return "<font color="+color+">";
 	 }
 	 
 	//IsNumber
@@ -75,30 +75,33 @@
 	 
 	 //Command handler
 	 chat.sendMessage = function () {
-	 	var username = document.getElementById('un').value;
+		 var username = document.getElementById('un').value;
 	 	
 		//remove spaces and change input to lowercase	 
-		msg = input.replace(/ /g,'').toLowerCase();
-	 	
-	 	///////////////////////////////////////
-	 	//command list
-	 	if(msg == "/cmd"){
-	 		displayCommands();
-	 	}
-	 	//Start game
-	 	else if (msg == "/start"){
-	 		
+		var msg = input.replace(/ /g,'').toLowerCase();
+	
+		
+	 	///////////////////////////////////////	 	
+		switch(msg){
+		
+		//command list//
+		case "/cmd": 
+			displayCommands();
+			break;
+			
+			
+			
+		//Start game//
+		case "/start":			
 	 		//if game has already started
-		 	if(mode=="started"){
-		 		Console.log(font("red")+"The game has already been started.<br>Type <b>"+font("blue")+"/location</b></font> to check your current whereabouts.")
-		 	}
-		 	else{
+	 		if(mode == "started"){
+			 	Console.log(font("red")+"The game has already been started.<br>Type <b>"+font("blue")+"/location</b></font> to check your current whereabouts."); 		
 			 	<% 
 					boolean doesExist = false;
 					if(username!=null)
 						doesExist = gdb.doesExist(username);
 				%>
-				
+	 		} else {
 				//If player has never started a game
 				if(<%=doesExist%>==false){
 					Console.log(font("#009700")+"Welcome <b>"+font("blue")+username+"</font></b>! Get ready to start your journey!");
@@ -111,54 +114,62 @@
 					displayLocation();
 					mode = "started";
 				}
-			
-		 	}
+	 		}
+	 		break;
+		 		
+	 		
 		 	
-		}
 	 	//need to check position
 	 	//Home
-	 	else if (msg == "/act1"){
+		case "/act1":
 	 		//Look For Helping Items
-	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	 				
-	 	}
-	 	else if (msg == "/act2"){
+	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	
+	 		break;
+	 		
+	 	
+	 		
+		case "/act2":
 	 		//Travel The Garden
 	 		Console.log("<b>"+font("#33aaaa")+"Nothing in the garden");
-	 	}
+	 		break;
 	 	
+	 		
+	 		
 	 	//The Hawks Cliff
-		else if (msg == "/act1"){
-	 		//Fight a Hawk
+		case "/act3":
+	 		//Fight a Hawk		
+	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	 		
+	 		break;
 	 		
-	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	 				
-	 	}
-	 	else if (msg == "/act2"){
-	 		//Travel Around
 	 		
+	 	
+		case "/act4":
+	 		//Travel Around		
 	 		Console.log("<b>"+font("#33aaaa")+"Nothing in the garden");
-	 	}
-
+	 		break;
+	 	
+	
 	 		
 	 	//view location
-		else if(msg == "/location") {
-	 		
+		case "/location":	
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your location before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
 			}
 			else displayLocation();
-		}
-	 	//view character information
-		else if(msg == "/char"){
-	 		
+			break;
+			
+		
+			
+	 	//view character information//
+	 	case "/char":
+	 
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
 	    					font("blue")+"/startGame</font></b> to start the game.")
-			}
-
-			else{
+			} else{
 				Console.log("");
 				Console.log(font("#009700")+"Character information:");
 				
@@ -174,34 +185,78 @@
 						Console.log(key+": <b>"+font("orange")+value);
 					});
 				}, 
-				'json');
+				'json');			
+			} 
+			
+			break;
 				
-			}
-
-		}
-		//If player is new, he must select a character
-		else if (mode=="new" && isNum(msg)){
-			<%
-			int numOfChars = gdb.charCount();
-			%>
-			//checking if legal character number has been selected
-			if(msg > 0 && msg <= <%=numOfChars%>){
-				//Sending data to servlet, to be inserted into DB
-				$.get('gameservlet', { action: "newPlayer", username: '<%=username%>', charName: startChars[msg-1] });				
-
-				Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
-				mode = "started";
-				displayLocation();				
-			}
-			else{
-				Console.log(font("red")+"Character #"+msg+" does not exist!<br>");
-				newPlayer();
-			}
-		}
-		else
-			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
-	}
+			
+			
+		//move up//	
+	 	case "/up":
+	 		//Sending AJAX to update map DB	
+			$.get('gameservlet', { action: "moveTo", direction: msg});
+	 		
+	 		displayLocation()
+	 		break;
+	 		
+	 	//move down//	
+	 	case "/down":
+	 		//Sending AJAX to update map DB	
+			$.get('gameservlet', { action: "moveTo", direction: msg});
+	 		
+	 		displayLocation()
+	 		break;
+	 		
+	 		
+	 		
+	 	//move left//	
+	 	case "/left":
+	 		//Sending AJAX to update map DB	
+			$.get('gameservlet', { action: "moveTo", direction: msg});
+	 		
+	 		displayLocation()
+	 		break;
+	 		
+	 	
+	 		
+	 	//move right//
+	 	case "/right":
+	 		//Sending AJAX to update map DB	
+			$.get('gameservlet', { action: "moveTo", direction: msg});
+	 		
+	 		displayLocation()
+	 		break;
 	
+	 		
+		
+		default: 
+			//If player is new, he must select a character
+			if(mode=="new" && isNum(msg)){
+				<%
+				int numOfChars = gdb.charCount();
+				%>
+				//checking if legal character number has been selected
+				if(msg > 0 && msg <= <%=numOfChars%>){
+					//Sending data to servlet, to be inserted into DB
+					$.get('gameservlet', { action: "newPlayer", username: '<%=username%>', charName: startChars[msg-1] });				
+	
+					Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
+					mode = "started";
+					displayLocation();				
+				}
+				else{
+					Console.log(font("red")+"Character #"+msg+" does not exist!<br>");
+					newPlayer();
+				}
+	 		} else 
+	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
+	
+		}//switch
+		
+	 }//chat.sendMessage
+	
+		
 	//Add new player
 	function newPlayer(username){
 		Console.log("First, you must select one of the following characters:");
@@ -222,7 +277,7 @@
 		Console.log("You can select it by typing the relevant number");
 		mode="new";
 	}
-	
+
 	//display available commands
 	function displayCommands(){
  		Console.log("");
@@ -235,46 +290,45 @@
 	//display current location and options
 	function displayLocation(){
 		//TODO//
-	 	//Getting Json object containing HashMap with map info, and inputing info to mapInfo object
-				$.get('gameservlet', { action: "getMapStatus", username: '<%=username%>'}, 
-				function(responseJson){
-					$.each(responseJson, function(key, value){									
-						mapInfo.set(key,value);
-					});	
-					
-					//update map pin coordinates
-					document.getElementById('pin').setAttribute('title', mapInfo.get("location"));
-					document.getElementById('pin').style.top = mapInfo.get("y") + "px";
-					document.getElementById('pin').style.left = mapInfo.get("x") + "px";
-					
-					//print to console current location
-					Console.log(font("#009700")+"You are now in <b>"+font("blue") + mapInfo.get("location"));
-					Console.log(font("#009700")+"What would you like to do?");
-					if(mapInfo.get("up")!= null)
-						Console.log(font("#009700")+"Type /up to go to <b>"+font("blue") + mapInfo.get("up"));
-					if(mapInfo.get("down")!= null)
-						Console.log(font("#009700")+"Type /down to go to <b>"+font("blue") + mapInfo.get("down"));
-					if(mapInfo.get("left")!= null)
-						Console.log(font("#009700")+"Type /left to go to <b>"+font("blue") + mapInfo.get("left"));
-					if(mapInfo.get("right")!= null)
-						Console.log(font("#009700")+"Type /right to go to <b>"+font("blue") + mapInfo.get("right"));
-					if(mapInfo.get("act1")!= null)
-						Console.log(font("#009700")+"Type /act1 to <b>"+font("#cc33cc") + mapInfo.get("act1"));
-					if(mapInfo.get("act2")!= null)
-						Console.log(font("#009700")+"Type /act2 to <b>"+font("#cc33cc") + mapInfo.get("act2"));
-					if(mapInfo.get("act3")!= null)
-						Console.log(font("#009700")+"Type /act3 to <b>"+font("#cc33cc") + mapInfo.get("act3"));
-					if(mapInfo.get("act4")!= null)
-						Console.log(font("#009700")+"Type /act4 to <b>"+font("#cc33cc") + mapInfo.get("act4"));
-					Console.log(font("#009700")+"Type /location for more details on your surroundings <b>");
-				}, 
-				'json');
+ 		//Getting Json object containing HashMap with map info, and inputing info to mapInfo object
+		$.get('gameservlet', { action: "getMapStatus", username: '<%=username%>'}, 
+		function(responseJson){
+			$.each(responseJson, function(key, value){									
+				mapInfo.set(key,value);
+			});	
+			
+			//update map pin coordinates and pin title
+			document.getElementById('pin').setAttribute('title', mapInfo.get("location"));
+			document.getElementById('pin').style.top = mapInfo.get("y") + "px";
+			document.getElementById('pin').style.left = mapInfo.get("x") + "px";
+			
+			//print to console current location
+			Console.log(font("#009700")+"You are now in <b>"+font("blue") + mapInfo.get("location"));
+			Console.log(font("#009700")+"What would you like to do?");
+			if(mapInfo.get("up")!= null)
+				Console.log(font("#009700")+"Type /up to go to <b>"+font("blue") + mapInfo.get("up"));
+			if(mapInfo.get("down")!= null)
+				Console.log(font("#009700")+"Type /down to go to <b>"+font("blue") + mapInfo.get("down"));
+			if(mapInfo.get("left")!= null)
+				Console.log(font("#009700")+"Type /left to go to <b>"+font("blue") + mapInfo.get("left"));
+			if(mapInfo.get("right")!= null)
+				Console.log(font("#009700")+"Type /right to go to <b>"+font("blue") + mapInfo.get("right"));
+			if(mapInfo.get("act1")!= null)
+				Console.log(font("#009700")+"Type /act1 to <b>"+font("#cc33cc") + mapInfo.get("act1"));
+			if(mapInfo.get("act2")!= null)
+				Console.log(font("#009700")+"Type /act2 to <b>"+font("#cc33cc") + mapInfo.get("act2"));
+			if(mapInfo.get("act3")!= null)
+				Console.log(font("#009700")+"Type /act3 to <b>"+font("#cc33cc") + mapInfo.get("act3"));
+			if(mapInfo.get("act4")!= null)
+				Console.log(font("#009700")+"Type /act4 to <b>"+font("#cc33cc") + mapInfo.get("act4"));
+			Console.log(font("#009700")+"Type /location for more details on your surroundings <b>");
 		
+		}, 'json');
+
 		//display map
 		document.getElementById("mapDisplay").style.visibility = "visible";
 		
-		//mode="move";
-	}
+	}//display location
     
 </script>
     

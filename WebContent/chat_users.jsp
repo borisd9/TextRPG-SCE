@@ -44,7 +44,7 @@ function mouseDown(e) {
     if (e.which==3) {//righClick
     	
     	var context_menu = new Control.ContextMenu();
-    	//context_menu.addItem({"kick", "ban", "battle"});
+    	context_menu.addItem({"kick", "ban", "battle"});
     
     	//var myWindow = window.open("http://localhost:80/text-rpg/menu.jsp", "", "width=200, height=100, top= 300, left= 300");
     }

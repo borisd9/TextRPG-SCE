@@ -89,8 +89,7 @@
 			displayCommands();
 			break;
 			
-			
-			
+				
 		//Start game//
 		case "/start":			
 	 		//if game has already started
@@ -118,44 +117,225 @@
 	 		break;
 		 		
 	 		
-		 	
-	 	//need to check position
-	 	//Home
+
 		case "/act1":
-	 		//Look For Helping Items
-	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	
-	 		break;
-	 		
-	 	
+			if(mapInfo.get("act1")!= null){
+				switch (mapInfo.get("location")){
+					case "Home":
+						//Look For Helping Items
+				 		Console.log("<b>"+font("#33aaaa")+"No item has been found");
+						break;
+					case "The Hawks Cliff":
+						//Fight a Hawk
+				 		//rand function
+				 		Console.log("<b>"+font("#33aaaa")+"No helping item has been found at the house");	
+						break;
+					case "The Amaya Throng":
+						//Cross The River
+				 		Console.log("<b>"+font("#33aaaa")+"Having fun? Why won't you try that again?");	
+						break;
+					case "Green City":
+						//Go To Greenvas Store
+						
+				 		Console.log("<b>"+font("#33aaaa")+"");	 
+						break;
+					case "Torchwood":
+						//Go To Torch Hotel
+				 		Console.log("<b>"+font("#33aaaa")+"");	 
+						break;
+					case "The Silent Woods":
+						//Walk Slowly Around
+				 		Console.log("<b>"+font("#33aaaa")+"");	
+						break;
+					case "The Zygons Tribe":
+						//Fight A Zygon
+				 		//rand function
+				 		Console.log("<b>"+font("#33aaaa")+"");
+						break;
+					case "Seamol City":
+						//Consult The Mayer
+				 		Console.log("<b>"+font("#33aaaa")+"");	
+						break;
+					case "Crocodile Bridge":
+						//Jump From The Bridge
+				 		Console.log("<b>"+font("#33aaaa")+"");
+						break;
+					case "Coconut Forest":
+						//Fight The Coco Manster
+				 		//rand function
+				 		Console.log("<b>"+font("#33aaaa")+"");	
+						break;
+					case "Chimaki Hospital":
+						//Return To The Last Place You've Been
+				 		Console.log("<b>"+font("#33aaaa")+"");	
+						break;
+					case "The Ghosts Casle":
+						//Fight A Ghost
+				 		//rand function
+				 		Console.log("<b>"+font("#33aaaa")+"");	 
+						break;
+					case "The Screamers Prison":
+						//Return To The Last Place You've Been
+				 		Console.log("<b>"+font("#33aaaa")+"");	
+						break;
+				}
+				break;
+			}else 
+	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
+	 			 			
 	 		
 		case "/act2":
-	 		//Travel The Garden
-	 		Console.log("<b>"+font("#33aaaa")+"Nothing in the garden");
-	 		break;
-	 	
+			if(mapInfo.get("act2")!= null){
+				switch (mapInfo.get("location")){
+				case "Home":
+					//Travel The Garden
+			 		Console.log("<b>"+font("#33aaaa")+"Nothing in the garden");
+					break;
+				case "The Hawks Cliff":
+					//Travel Around
+			 		//rand function
+			 		//if(rand>100)
+			 		Console.log("<b>"+font("#33aaaa")+"You found the <b>"+font("blue") +"The Blue Ring!");
+			 		//else
+			 		Console.log("<b>"+font("#33aaaa")+"Nothing has been found around");
+					break;
+				case "The Amaya Throng":
+					//Fight The Amaya Manster
+			 		//rand function
+			 		//if(rand>200)
+			 		Console.log("<b>"+font("#33aaaa")+"You Won The Manster!");
+			 		Console.log("<b>"+font("#33aaaa")+"You earned 35 exp and 15 HP");
+			 		Console.log("<b>"+font("#33aaaa")+"Your character earned 15 attack skill, 5 defense and 5 speed");
+			 		//need to update the DB
+			 		//else
+			 		Console.log("<b>"+font("#33aaaa")+"Oh No! You could not beat the Manster!");
+			 		Console.log("<b>"+font("#33aaaa")+"You lost 15 exp and your character lost 25 defense!");
+			 		Console.log("<b>"+font("#33aaaa")+"You has been send to the hospital to patch your character's injuries");
+			 		Console.log("<b>"+font("#33aaaa")+"The treatment cost you 100 coins. Don't warry - if you didn't have that sum - nothing won't be taken from you. Take Care!");
+			 		//need to update the DB
+					break;
+				case "Green City":
+					//Visit Fortune A  Teller
+			 		//rand function
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Torchwood":
+					//Go To Woodens Store
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "The Silent Woods":
+					//Walk Loudly Around
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "The Zygons Tribe":
+					//Talk To The Tribe Chief
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Seamol City":
+					//Help The Poor People Of The City
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Crocodile Bridge":
+					//Fight The Enormous Crocodile
+			 		//rand function
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Coconut Forest":
+					//Travel Around
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Chimaki Hospital":
+					//Get An Injection
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "The Ghosts Casle":
+					//Scare The Ghosts
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "The Screamers Prison":
+					//Clean Your Cell
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+			
+			}
+			break;
+			}else 
+	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
 	 		
-	 		
-	 	//The Hawks Cliff
 		case "/act3":
-	 		//Fight a Hawk		
-	 		Console.log("<b>"+font("#33aaaa")+"No item has been found");	 		
-	 		break;
-	 		
-	 		
-	 	
+			if(mapInfo.get("act3")!= null){
+				switch (mapInfo.get("location")){
+				case "The Amaya Throng":
+					//Jump To The Throng
+			 		Console.log("<b>"+font("#33aaaa")+"You lost 1 life. You should not try it again.");
+			 		//need to update the DB
+					break;
+				case "Green City":
+					//Visit The Local Casino
+			 		//rand function
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Torchwood":
+					//Go To Yammi Restaurant
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "The Silent Woods":
+					//Fight The Trees
+			 		//rand function
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Seamol City":
+					//Go To Pak Store
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Crocodile Bridge":
+					//Swim Around
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "Chimaki Hospital":
+					//Buy A Potion
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+				case "The Screamers Prison":
+					//Do What The Screamers Tells You
+			 		Console.log("<b>"+font("#33aaaa")+"");
+					break;
+			}
+			break;
+			}else 
+	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
+	 			 		 		
 		case "/act4":
-	 		//Travel Around		
-	 		Console.log("<b>"+font("#33aaaa")+"Nothing in the garden");
-	 		break;
-	 	
-	
+			if(mapInfo.get("act4")!= null){
+				switch (mapInfo.get("location")){
+					case "The Silent Woods":
+						//Try To Find The Treasure
+				 		Console.log("<b>"+font("#33aaaa")+"");
+						break;
+					case "Seamol City":
+						//Kill Some People Around
+				 		Console.log("<b>"+font("#33aaaa")+"");
+						break;
+					case "Chimaki Hospital":
+						//Take A pill
+				 		Console.log("<b>"+font("#33aaaa")+"");
+						break;
+					case "The Screamers Prison":
+						//Ask For Pardon
+				 		Console.log("<b>"+font("#33aaaa")+"");
+						break;
+			}
+			break;
+			}else 
+	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
+ 			
 	 		
 	 	//view location
 		case "/location":	
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your location before you start the game!<br>Type <b>"+
-	    					font("blue")+"/startGame</font></b> to start the game.")
+	    					font("blue")+"/startGame</font></b> to start the game.");
 			}
 			else displayLocation();
 			break;
@@ -168,7 +348,7 @@
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
-	    					font("blue")+"/startGame</font></b> to start the game.")
+	    					font("blue")+"/startGame</font></b> to start the game.");
 			} else{
 				Console.log("");
 				Console.log(font("#009700")+"Character information:");
@@ -190,46 +370,50 @@
 			
 			break;
 				
-			
-			
+	
 		//move up//	
 	 	case "/up":
-	 		//Sending AJAX to update map DB	
-			$.get('gameservlet', { action: "moveTo", direction: msg});
-	 		
-	 		displayLocation()
-	 		break;
+	 		if(mapInfo.get("up")!= null){
+		 		//Sending AJAX to update map DB	
+				$.get('gameservlet', { action: "moveTo", direction: msg});
+		 		
+		 		displayLocation();
+		 		break;
+	 		}
 	 		
 	 	//move down//	
 	 	case "/down":
-	 		//Sending AJAX to update map DB	
-			$.get('gameservlet', { action: "moveTo", direction: msg});
-	 		
-	 		displayLocation()
-	 		break;
-	 		
+	 		if(mapInfo.get("down")!= null){
+		 		//Sending AJAX to update map DB	
+				$.get('gameservlet', { action: "moveTo", direction: msg});
+		 		
+		 		displayLocation();
+		 		break;
+	 		}
 	 		
 	 		
 	 	//move left//	
 	 	case "/left":
-	 		//Sending AJAX to update map DB	
-			$.get('gameservlet', { action: "moveTo", direction: msg});
+	 		if(mapInfo.get("left")!= null){
+		 		//Sending AJAX to update map DB	
+				$.get('gameservlet', { action: "moveTo", direction: msg});
+		 		
+		 		displayLocation();
+		 		break;
+	 		}
 	 		
-	 		displayLocation()
-	 		break;
-	 		
-	 	
-	 		
+	 		 		
 	 	//move right//
 	 	case "/right":
-	 		//Sending AJAX to update map DB	
-			$.get('gameservlet', { action: "moveTo", direction: msg});
-	 		
-	 		displayLocation()
-	 		break;
+	 		if(mapInfo.get("right")!= null){
+		 		//Sending AJAX to update map DB	
+				$.get('gameservlet', { action: "moveTo", direction: msg});
+		 		
+		 		displayLocation();
+		 		break;
+	 		}
 	
-	 		
-		
+	 				
 		default: 
 			//If player is new, he must select a character
 			if(mode=="new" && isNum(msg)){
@@ -322,6 +506,7 @@
 			if(mapInfo.get("act4")!= null)
 				Console.log(font("#009700")+"Type /act4 to <b>"+font("#cc33cc") + mapInfo.get("act4"));
 			Console.log(font("#009700")+"Type /location for more details on your surroundings <b>");
+			Console.log("");
 		
 		}, 'json');
 

@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1" %>
     
 <%@ page import = "General.SessionListener"%>
-<%@ page import="java.util.List" %>
+<%@ page import= "java.util.List" %>
 
 
 
@@ -30,7 +30,6 @@
         }
 
 </style>
-
 </head>
 
 <body>

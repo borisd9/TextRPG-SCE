@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Database.LoginDB;
-import General.SessionHandler;
+import General.SessionListener;
 import General.Sha1Hex;
 
 /**
@@ -83,10 +84,8 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect(contextPath + "/login.jsp?err=4");
 			}
 			else{
-				String rank=Integer.toString(db.rank_check(username));
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("username", username);
-				session.setAttribute("rank_check",rank);
 				response.sendRedirect(request.getContextPath()+"/home.jsp");
 			}
 		}

@@ -2,6 +2,7 @@ package Database;
 
 
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
 
 
@@ -28,21 +29,6 @@ public class LoginDB extends DbConnectionAPI {
 		return -1;
 	}
 	
-	
-	public int rank_check(String userName)
-	{
-		//Query establishment
-		String query = "SELECT rank FROM users WHERE username='"+userName+"'";		
-		
-		try {			
-			ResultSet rs = readFromDatabase(query);	
-			if(rs.next())
-				return rs.getInt("rank");
-		} catch (SQLException e) {
-			System.out.println("Error in does exists query: "+e);
-		}		
-		return -1;
-	}
 
 
 	

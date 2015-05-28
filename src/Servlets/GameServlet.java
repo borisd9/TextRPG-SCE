@@ -105,27 +105,23 @@ public class GameServlet extends HttpServlet {
 		
 		}
 		
-		if(action.equals("buyFromStore")){
-			String username = request.getParameter("username");
-			//String location = request.getParameter("location");
-			String itemsChars = request.getParameter("itemsChars");
+		
+		if(action.equals("moveTo")){
 			
-			
-			int money= db.getMoney(username);
-			int price= db.getItemPrice(itemsChars);
-			int buy=money-price;
-			if(buy>=0)
-			{
-				db.updatePurchaseItem(username,itemsChars,buy);
-				String ans = "1";
-				response.getWriter().write(ans);
-			}
-			else{
-				String ans = "0";
-				response.getWriter().write(ans);
-			}
+			String direction = request.getParameter("direction").substring(1);
+			//get current map location and move player
+			if(direction.equals("up"))
+				map.move(map.getUp());
+			if(direction.equals("down"))
+				map.move(map.getDown());
+			if(direction.equals("left"))
+				map.move(map.getLeft());
+			if(direction.equals("right"))
+				map.move(map.getRight());
 			
 		}
+		
+		
 		
 		
 	    //response.setContentType("text/plain");  

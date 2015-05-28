@@ -4,6 +4,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="styles.css" rel="stylesheet" type="text/css" />
 <%@ page language="java" import="java.sql.*" errorPage="" %>
+<%@ page import="General.SessionListener" %>
 
 
 </head>
@@ -71,31 +72,14 @@
 			} else{
 	%>  
 	   
-	<font color="red"><b>You can to log out from the website!<br/>
+	<font color="red"><b>You are currently logged in</b></br>
 	
-	<b> Click :<form action="LogoutServlet" method="post"></b></font>
-	<input type="submit" value="Logout" >
+	<b><form action="LogoutServlet" method="post"></b></font>
+	<input type="submit" value="Logout">
 	</form></b>
 	
 	<% } %>
-
-
-
-        <form name="form1" action="LoginServlet" onsubmit="return validateForm()" method="post" >
- 
-		Username: <br><input type="text" name="user"  style="background-color:#eeeeee; border:1px solid grey"/>
-		<br>
-		Password:<br> <input type="password" name="pwd"  style="background-color:#eeeeee; border:1px solid grey"/>
-		<br><br>
-		<a style="font-size: 100%" href="ForgotPassword.jsp">forgot password</a>
-		<center><input type="submit" value="Login" style="background-color:#eeeeee; border:1px solid grey;"/></center>
-		</form>
-		
-		
   		
-		<br>
-      <center><a style="font-size: 100%" href="register.jsp">New User? Register Here</a></center>
-
     </div>
     
   </div>

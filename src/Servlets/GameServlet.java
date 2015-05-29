@@ -75,7 +75,7 @@ public class GameServlet extends HttpServlet {
 			}
 		}
 		
-
+		
 		
 		if(action.equals("getMapStatus")){
 			

@@ -94,4 +94,72 @@ public class GameDB extends DbConnectionAPI
 		ResultSet rs = readFromDatabase(query);
 		return rs;
 	}
+	
+	
+	public int getatk(String username){
+		String atk = "SELECT attack FROM players WHERE username='"+username+"'";
+		ResultSet rs = readFromDatabase(atk);
+		try {
+			if(rs.next())
+				return rs.getInt("attack");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public int getdefense(String username){
+		String defense = "SELECT defense FROM players WHERE username='"+username+"'";
+		ResultSet rs = readFromDatabase(defense);
+		try {
+			if(rs.next())
+				return rs.getInt("defense");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public int getspeed(String username){
+		String speed = "SELECT speed FROM players WHERE username='"+username+"'";
+		ResultSet rs = readFromDatabase(speed);
+		try {
+			if(rs.next())
+				return rs.getInt("speed");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	public int gethp(String username){
+		String hp = "SELECT hp FROM players WHERE username='"+username+"'";
+		ResultSet rs = readFromDatabase(hp);
+		try {
+			if(rs.next())
+				return rs.getInt("hp");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	public int getexp(String username){
+		String exp = "SELECT exp FROM players WHERE username='"+username+"'";
+		ResultSet rs = readFromDatabase(exp);
+		try {
+			if(rs.next())
+				return rs.getInt("exp");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	
+	
+	
+	
+	
+	
 }

@@ -7,7 +7,7 @@
               <li><a href="Items.jsp">Items</a> 
               <li><a href="Characters.jsp">Characters</a> 
               <li><a href="players.jsp">Users/Players</a>
-               <li><a href=changePassword.jsp">Change password</a>
+               <li><a href="changePassword.jsp">Change password</a>
             </ul>
           </li>
           

@@ -1,4 +1,4 @@
-<%@ page import="Database.BattleDB" %>
+<%@ page import="Database.GameDB" %>
 <%@ page import="java.sql.ResultSet"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -53,10 +53,10 @@
 	var turn = 1;
 	
 	<%
-  	BattleDB bdb = new BattleDB();
+	GameDB gdb = new GameDB();
 	String username = (String)session.getAttribute("username");
 	ResultSet rs;
-	String opponent = bdb.getOpponent(username);
+	String opponent = gdb.getOpponent(username);
 	String my_char="", opp_char="";
 	%>
 	
@@ -110,7 +110,7 @@
 	function initChars() {
 		//player 1 character
 		<%
-		rs = bdb.getCharacterInfo(username);
+		rs = gdb.getCharacterInfo(username);
 		if(rs.next()){
 			my_char = rs.getString("character");
 		%>
@@ -123,7 +123,7 @@
 		p1["exp"] = <%=rs.getString("exp")%>;
 		<%
 		}
-		rs = bdb.getCharAttacks(my_char);
+		rs = gdb.getCharAttacks(my_char);
 		if(rs.next()){
 		%>
 		p1["atk1"] = '<%=rs.getString("atk1")%>';
@@ -132,7 +132,7 @@
 		
 		//player 2 character
 		<%
-		rs = bdb.getCharacterInfo(opponent);
+		rs = gdb.getCharacterInfo(opponent);
 		if(rs.next()){
 			opp_char = rs.getString("character");
 		%>
@@ -145,7 +145,7 @@
 		p2["exp"] = <%=rs.getString("exp")%>;
 		<%
 		}
-		rs = bdb.getCharAttacks(opp_char);
+		rs = gdb.getCharAttacks(opp_char);
 		if(rs.next()){
 		%>
 		p2["atk1"] = '<%=rs.getString("atk1")%>';

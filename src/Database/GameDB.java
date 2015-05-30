@@ -94,4 +94,17 @@ public class GameDB extends DbConnectionAPI
 		ResultSet rs = readFromDatabase(query);
 		return rs;
 	}
+	
+	/**
+	 * update battle results
+	 * @param winner
+	 * @param loser
+	 * @param exp
+	 */
+	public void updateBattleResults(String winner, String loser, float exp, String levelup) {
+		String query = "UPDATE players SET loses=loses+1 WHERE username='"+loser+"'";
+		modifyDatabase(query);
+		query = "UPDATE players SET wins=wins+1,exp=exp+"+exp+( (levelup.equals("true")) ? ",level=level+1" : "" )+" WHERE username='"+winner+"'";
+		modifyDatabase(query);
+	}
 }

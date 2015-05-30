@@ -41,7 +41,8 @@
 	            margin: 0;
 	        }
 		</style>
-		
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>		
 <script type="text/javascript">
 	window.chat = {};
 	var battle = {};
@@ -49,6 +50,7 @@
 	var p1 = {};
 	var p2 = {};
 	var phase = "";
+	var turn = 1;
 	
 	<%
   	BattleDB bdb = new BattleDB();
@@ -58,12 +60,24 @@
 	String my_char="", opp_char="";
 	%>
 	
+	var opponent = '<%=opponent%>';
+	var username = '<%=username%>';
+	
 	
 	//open/close battle popup
 	function toggle_visibility(id) {
 		var e = document.getElementById(id);
-		if(e.style.display == 'block')
-			e.style.display = 'none';
+		//If battle window is open
+		if(e.style.display == 'block'){
+			if(phase=="over") 
+				e.style.display = 'none';
+			else{
+				var exit_text = "Closing the game will count as a lose.\nAre you sure you want to exit?";
+				if(window.confirm(exit_text))
+					e.style.display = 'none';
+			}	
+		}
+		//If battle window is closed
 		else
 			e.style.display = 'block';
 	}
@@ -86,7 +100,7 @@
 		battle.scrollTop = battle.scrollHeight;
 	});
 	
-	 //Starts listening for messages
+	//Starts listening for messages
 	onload = function() {
 		chat.startListen();
 		startBattle();
@@ -129,7 +143,6 @@
 		p2["speed"] = <%=rs.getString("speed")%>;
 		p2["hp"] = <%=rs.getString("hp")%>;
 		p2["exp"] = <%=rs.getString("exp")%>;
-		
 		<%
 		}
 		rs = bdb.getCharAttacks(opp_char);
@@ -145,22 +158,17 @@
 	function startBattle() {
 		initChars();
 		battle.log(font("#551A8B")+"<b>The battle is starting!");
-		battle.log("Your opponent is <b>"+font("blue")+'<%=opponent%>');
-		battle.log("Your character <b>"+font("blue")+'<%=my_char%>'+"</b></font> will be facing <b>"+
-				font("blue")+'<%=opponent%>'+"</b></font>'s <b>"+font("blue")+'<%=opp_char%>');
-		battle.log("<b>In each turn, you have to select an attack. First one to reach 0 HP loses.");
+		battle.log("Your opponent is <b>"+font("blue")+opponent);
+		battle.log("Your <b>"+font("blue")+'<%=my_char%>'+"</font> "+font("orange")+"(Level "+p1["level"]+")</font></b> VS <b>"+
+				font("blue")+opponent+"</b></font>'s <b>"+font("blue")+'<%=opp_char%>'+"</font> "+font("orange")+"(Level "+p2["level"]+")");
+		battle.log("<b>In each turn, you must select an attack.");
+		battle.log("<b>First one to reach 0 HP loses.")
 		battle.log("");
-		myTurn();
+		//battle.log("")
+		//wait for 1.8 seconds and start player1's turn
+		setTimeout(myTurn, 1800);
 	}
 	
-	//player 1's turn
-	function myTurn(){
-		phase="turn";
-		battle.log(font("#009700")+"<b>Your move!")
-		battle.log("Select one of your available attacks by typing its number.");
-		battle.log(font("blue")+"1</font> - <b>"+font("#FF69B4")+p1["atk1"]);
-		battle.log(font("blue")+"2</font> - <b>"+font("#FF69B4")+p1["atk2"]);
-	}
 	
 	//If Enter key has been pressed
 	chat.startListen = function () {
@@ -177,24 +185,113 @@
 		};
 	};
 	
-	 
 	//Command handler
 	chat.sendMessage = function () { 
 		var msg = input.replace(/ /g,'').toLowerCase();
 		
 		if(phase=="turn"){
-			var attack;
-			
-			if(msg=="1")
-				attack = p1["atk1"];
-			else if(msg==2)
-				attack = p1["atk2"];
+			var move;	
+			if(msg=="1"){
+				move = p1["atk1"];
+				Attack(move, username);
+			}
+			else if(msg==2){
+				move = p1["atk2"];
+				Attack(move, username);
+			}
 			else
-				Console.log(font("red")+"'"+input+"' is not a valid attack.");	
-			
+				battle.log(font("red")+"'"+input+"' is not a valid attack.");	
 		}
+		else if(phase=="over")
+			battle.log(font("red")+"The game has already ended!");
+		else
+			battle.log(font("red")+"'"+input+"' is not a valid command.");
 	};
+	
+	//player 1's turn
+	function myTurn(){
+		phase="turn";
+		battle.log(font("#009700")+"<b>Your move!")
+		battle.log("Select one of your available attacks by typing its number.");
+		battle.log(font("blue")+"1</font> - <b>"+font("#FF69B4")+p1["atk1"]);
+		battle.log(font("blue")+"2</font> - <b>"+font("#FF69B4")+p1["atk2"]);
+	}
+	
+	//unleash an attack
+	function Attack(move, attacker){
+		battle.log(font("#009700")+"<b>Turn #" + turn++);
+		if(attacker == username){
+			battle.log(username+"'s <b>"+font("blue")+'<%=my_char%>'+"</b></font> used <b>"+font("blue")+move+"</b></font> on "+
+						opponent+"'s <b>"+font("blue")+'<%=opp_char%>');
+			Damage('<%=opp_char%>');
+			var rand = Math.floor(Math.random() * 100) + 1;
+			if(phase!="over") 
+				Attack(rand, opponent);
+		}
+		else{
+			if(move%2==0)
+				move = p2["atk1"];
+			else move = p2["atk2"];
+			battle.log(opponent+"'s <b>"+font("blue")+'<%=opp_char%>'+"</b></font> used <b>"+font("blue")+move+"</b></font> on "+
+					username+"'s <b>"+font("blue")+'<%=my_char%>');
+			Damage('<%=my_char%>');
+			if(phase!="over") 
+				myTurn();
+		}	
+	}
+	
+	//Damage function
+	function Damage(target){
+		var me,opp;
+		
+		//initialization
+		if(target=='<%=my_char%>'){
+			me = p2;
+			opp = p1;
+		}
+		else{
+			me = p1;
+			opp = p2;
+		}
+		
+		//Calculating damage formula
+		var rand = (Math.random() * 100) + 1;
+		var critical = (rand <= 8) ? 2 : 1;
+		rand = (Math.random() * 1) + 0.85;
+		var modifier = rand * critical;
+		var damage_formula = Math.floor((((2 * me["level"] + 10) / 250) * (me["attack"]/opp["defense"]) * 50 + 2) * modifier);	
+		
+		//Printing battle log
+		if(critical == 2) battle.log(font("red")+"<b>Critical hit!");
+		battle.log("The attack has dealt <b>"+font("red")+damage_formula+"</b></font> damage to <b>"+font("blue")+target);
+		opp["hp"]-=damage_formula;
+		battle.log("<b>"+font("blue")+target+"</b></font>'s current HP is <b>"+font("orange")+Math.max(opp["hp"],0));
+		battle.log("");
+		
+		//If battle is over
+		if(opp["hp"] <= 0){
+			var winner = (target=='<%=my_char%>') ? opponent : username;
+			var loser = (target=='<%=my_char%>') ? username : opponent;
+			battle.log(font("blue")+"<b>"+target+"</font> has no HP left."); 
+			battle.log("<b>"+font("#009700")+winner+"</font> is the winner!");
+			battle.log("");
+			var exp = (100/(opp["level"] * me["level"])).toFixed(2);
+			var levelup;
+			if(me["exp"] + exp >= 100){
+				levelup = "true";
+				exp = 100 - exp;
+			}
+			else levelup = "false";
+			phase="over";
+			endGame(winner,loser,exp,levelup);
+		}
+	}
 	    
+	//End of game, updating databases
+	function endGame(win,lose,exp,lvlup){
+		document.getElementById("exit").value = "Exit";
+		$.get('gameservlet', { action: "battleOver", winner: win, loser: lose, exp: exp, levelup: lvlup});
+	}
 </script>
 		
 	</head>
@@ -212,16 +309,13 @@
 					<p>
 						<input type="text" style="border:2px solid" placeholder="type your commands here." id="battleMsg">
 					</p>
-					<p>Click <a href="javascript:void(0)" onclick="toggle_visibility('battleBoxPosition');">here</a> to close.</p>
+					<p><input id="exit" type="button" onclick="toggle_visibility('battleBoxPosition');" value="Forfeit"/></p>
 				</div>
 			</div>
 		</div>
 
 		<div id="wrapper">
-
-			<center><p>Click <a href="javascript:void(0)" onclick="toggle_visibility('battleBoxPosition');">here</a> to open the battle window.</p>
-			</center>
-			
+			<center><input type="button" onclick="toggle_visibility('battleBoxPosition');" value="Battle!"/></center>
 		</div><!-- wrapper end -->
 
 	</body>

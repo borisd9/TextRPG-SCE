@@ -121,7 +121,13 @@ public class GameServlet extends HttpServlet {
 			
 		}
 		
-		
+		if(action.equals("battleOver")){
+			String winner = request.getParameter("winner");
+			String loser = request.getParameter("loser");
+			float exp = Float.parseFloat(request.getParameter("exp"));
+			String levelup = request.getParameter("levelup");
+			db.updateBattleResults(winner, loser, exp, levelup);
+		}
 		
 		
 	    //response.setContentType("text/plain");  

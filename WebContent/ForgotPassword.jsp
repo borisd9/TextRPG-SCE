@@ -5,7 +5,7 @@
 <title>TextBased RPG </title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="styles.css" rel="stylesheet" type="text/css" />
-
+<%@ page language="java" import="java.sql.*" errorPage="" %>
 
 
 </head>

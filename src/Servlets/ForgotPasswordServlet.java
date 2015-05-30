@@ -8,7 +8,7 @@ import java.util.Random;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Database.ForgotPasswordDB;
-import Database.RegisterDB;
 import General.SendMail;
 import General.Sha1Hex;
 
@@ -100,7 +99,7 @@ public class ForgotPasswordServlet extends HttpServlet{
 		{
 			int value = rand.nextInt(26)+65; 
 			pas+=(char)value;
-			System.out.println(pas);
+			//System.out.println(pas);
 		}
 		System.out.println("wow2= "+pas);
 		return pas;

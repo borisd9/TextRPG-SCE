@@ -84,6 +84,8 @@ public class GameDB extends DbConnectionAPI
 	}
 
 	
+
+	
 	/**
 	 * get player information
 	 * @param username
@@ -94,4 +96,125 @@ public class GameDB extends DbConnectionAPI
 		ResultSet rs = readFromDatabase(query);
 		return rs;
 	}
+	
+	
+	
+	
+	/**
+	 * @return all premium items from database
+	 */
+	public ResultSet getPremiumItems(){
+		String query = "SELECT item FROM items WHERE premium='"+1+"'";
+		ResultSet rs = readFromDatabase(query);	
+		return rs;
+	}
+
+
+
+
+
+
+/**
+	 * @return number of premiumItems in database, -1 if it's empty
+	 */
+	public int PremiumItemsCount(){
+		String query = "SELECT count(*) FROM items WHERE premium='"+1+"'";
+		
+		ResultSet rs = readFromDatabase(query);
+		try {
+			if(rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("Error in count query: "+e);
+		}
+		return -1;
+	}
+
+
+
+
+/**
+ * 
+ * @param playerName
+ * @param cash
+ * updates player money after he buy an item from premium store 
+ */
+	public void updatePlayerMoney(String playerName, String price){
+		String query1 = "SELECT * FROM players WHERE username='"+playerName+"'";
+		ResultSet rs = readFromDatabase(query1);
+		try {
+			if(rs.next()){
+				int money = rs.getInt("money");
+				money=money-Integer.parseInt(price);
+				String qr="UPDATE players SET money='"+money+"'WHERE username='"+playerName+"'";	  
+
+				
+				modifyDatabase(qr);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in update player coins query: "+e);
+		}
+}
+	
+	
+	/**
+	 * 
+	 * @param playerName, item
+	 * updates player item field with itemName that he buy
+	 */
+	public void updatePlayerItem(String playerName, String item){
+		String query1 = "SELECT * FROM players WHERE username='"+playerName+"'";
+		ResultSet rs = readFromDatabase(query1);
+		try {
+			if(rs.next()){
+				String qr="UPDATE players SET item='"+item+"'WHERE username='"+playerName+"'";	  
+
+				
+				modifyDatabase(qr);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in update player item query: "+e);
+		}
+}
+	
+	
+	/**
+	 * 
+	 * @param playerName
+	 * @return player coins for buy items
+	 */
+	public int getPlayerMoney(String playerName){
+		String query = "SELECT * FROM players WHERE username='"+playerName+"'";
+		int coins=0;
+		ResultSet rs = readFromDatabase(query);
+		try {
+			if(rs.next()){
+				 coins = rs.getInt("money");}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return coins;
+	
+	}
+
+	
+	/**
+	 * @return price of  items from database
+	 */
+	public int getItemPrice(String item){
+		String query = "SELECT * FROM items WHERE item='"+item+"'";
+		int price=0;
+		ResultSet rs = readFromDatabase(query);
+		try {
+			if(rs.next()){
+				 price = rs.getInt("price");}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return price;
+	
+	}
+	
 }

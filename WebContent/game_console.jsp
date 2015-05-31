@@ -20,13 +20,17 @@
 	var startChars = [];
 	var input = "";
 	var mapInfo = new Map();
+	var premItemsPrice=[];
+	var premItems=[];
+	var flag="";
+
 	//Init GameDB object and MapDB, and get username from session
 	<%
 	  	GameDB gdb = new GameDB();
 		String username = (String)session.getAttribute("username");
-		
 		ResultSet rs;
 		MapDB map = new MapDB();
+	 	 
 	%>
 	 
 	 //returns a colored message
@@ -106,6 +110,7 @@
 					Console.log(font("#009700")+"Welcome <b>"+font("blue")+username+"</font></b>! Get ready to start your journey!");
 					newPlayer(username);
 					
+					
 				}
 				//If player has already started a game
 				else{
@@ -114,6 +119,7 @@
 					mode = "started";
 				}
 	 		}
+	 		
 	 		break;
 		 		
 	 		
@@ -414,9 +420,14 @@
 				}
 				);
 	 		}
-	 		break;
-	
-	 				
+
+		
+	 	//buy premium items
+	 	case "/premium":
+	 		newItem();
+			break;
+	 		
+
 		default: 
 			//If player is new, he must select a character
 			if(mode=="new" && isNum(msg)){
@@ -436,14 +447,87 @@
 					Console.log(font("red")+"Character #"+msg+" does not exist!<br>");
 					newPlayer();
 				}
-	 		} else 
+	 		}
+			//if player pressed for premium store
+			else if(mode=="premium" && isNum(msg)){     
+				<%
+				int itemsCount = gdb.PremiumItemsCount();
+				int price=0;
+				rs = gdb.getPremiumItems();
+				String itemName=null;
+				for(int j=1; rs.next(); j++){
+					itemName = rs.getString(1);
+					 price=gdb.getItemPrice(itemName);
+				}
+				%>
+				
+				//checking if legal character number has been selected
+				if(msg > 0 && msg <= <%=itemsCount%>){
+				
+				    //read updated coins of user after buying using ajax
+					 $.get('gameservlet', { action: "getMoney", username: '<%=username%>',price: premItemsPrice[msg-1]}, 
+					function(responseJson){
+						$.each(responseJson, function(key, value){
+							if(value=="1"){
+								Console.log(font("red")+key+"<b>");	
+							}
+							
+							else if(value!="1"){
+					            Console.log(font("#009700")+"You have selected <b>" + font("blue") + premItems[msg-1] + "</b></font>! ");
+								//Sending data to servlet, to be inserted into DB
+								$.get('gameservlet', { action: "premItem", price: premItemsPrice[msg-1], username: '<%=username%>' ,item:premItems[msg-1] });
+								Console.log(font("red")+key+" <b>"+font("orange")+value+"$");
+							}
+						});
+					}, 
+					'json');		
+					mode="started";
+					 
+				}
+				else
+					Console.log(font("red")+"Item #"+msg+" does not exist!<br>");
+					
+				
+			}
+			else 
 	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
+			
 	
 		}//switch
 		
 	 }//chat.sendMessage
 	
 		
+	 
+	//function Add new item from premium store
+	 function  newItem(){
+	     <%int cash=gdb.getPlayerMoney(username); %>
+		 Console.log("you can select one of the following premium items:");
+		 if(flag=="")
+		 	Console.log(font("red")+"Money you have: "+" <b>"+font("orange")+<%= cash%>+"$");
+		 flag="1";
+								 
+		//Print premium items and price from DB and add to arrays
+		<%
+		rs = gdb.getPremiumItems();
+		for(int i=1; rs.next(); i++){
+			String item = rs.getString(1);
+			int Price=gdb.getItemPrice(item);
+		%>
+		 
+		Console.log(font("blue")+"<%=i%></font> - <b> <%=item%> ,price=<%= Price%> $</b>");
+		premItemsPrice.push("<%=Price%>");
+		premItems.push("<%=item%>");
+		
+		<%
+		}
+		%>
+		Console.log("You can select  item by typing the relevant number");
+		mode="premium";
+	}
+	 
+	 
+	 
 	//Add new player
 	function newPlayer(username){
 		Console.log("First, you must select one of the following characters:");
@@ -464,6 +548,10 @@
 		Console.log("You can select it by typing the relevant number");
 		mode="new";
 	}
+
+
+
+
 	//display available commands
 	function displayCommands(){
  		Console.log("");
@@ -471,6 +559,8 @@
 		Console.log(font("blue")+"<b>/start</b></font>"+font("#FF69B4")+" : to start the game.");
 		Console.log(font("blue")+"<b>/char</b></font>"+font("#FF69B4")+" : to check your character's information");
 		Console.log(font("blue")+"<b>/location</b></font>"+font("#FF69B4")+" : to see your current location");
+		Console.log(font("blue")+"<b>/premium</b></font>"+font("#FF69B4")+" : to buy items from premium store");
+
 	}
 	
 	//display current location and options

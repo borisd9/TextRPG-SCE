@@ -128,12 +128,12 @@
 				switch (mapInfo.get("location")){
 					case "Home":
 						//Look For Helping Items
-				 		Console.log("<b>"+font("#33aaaa")+"No item has been found");
+				 		Console.log("<b>"+font("#33aaaa")+"No helping item has been found at the house");
 						break;
 					case "The Hawks Cliff":
 						//Fight a Hawk
 				 		//rand function
-				 		Console.log("<b>"+font("#33aaaa")+"No helping item has been found at the house");	
+				 		Console.log("<b>"+font("#33aaaa")+"");	
 						break;
 					case "The Amaya Throng":
 						//Cross The River
@@ -349,7 +349,6 @@
 			
 	 	//view character information//
 	 	case "/char":
-	 
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
@@ -372,52 +371,56 @@
 				}, 
 				'json');			
 			} 
-			
 			break;
-				
-	
+					
 		//move up//	
 	 	case "/up":
 	 		if(mapInfo.get("up")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveTo", direction: msg});
-		 		
-		 		displayLocation();
-		 		break;
+				$.get('gameservlet', { action: "moveTo", direction: msg}, 
+						function(responseJson){
+					displayLocation();
+				}
+				);
 	 		}
+	 		break;
 	 		
 	 	//move down//	
 	 	case "/down":
 	 		if(mapInfo.get("down")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveTo", direction: msg});
-		 		
-		 		displayLocation();
-		 		break;
+				$.get('gameservlet', { action: "moveTo", direction: msg}, 
+						function(responseJson){
+					displayLocation();
+				}
+				);
 	 		}
-	 		
+	 		break;
 	 		
 	 	//move left//	
 	 	case "/left":
 	 		if(mapInfo.get("left")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveTo", direction: msg});
-		 		
-		 		displayLocation();
-		 		break;
+				$.get('gameservlet', { action: "moveTo", direction: msg}, 
+						function(responseJson){
+					displayLocation();
+				}
+				);
 	 		}
+	 		break;
 	 		
 	 		 		
 	 	//move right//
 	 	case "/right":
 	 		if(mapInfo.get("right")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveTo", direction: msg});
-		 		
-		 		displayLocation();
-		 		break;
+				$.get('gameservlet', { action: "moveTo", direction: msg}, 
+						function(responseJson){
+					displayLocation();
+				}
+				);
 	 		}
-		
+
 		
 	 	//buy premium items
 	 	case "/premium":

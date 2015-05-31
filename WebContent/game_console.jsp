@@ -613,6 +613,7 @@
 <div id="content">
 	<font color='blue'><b>To start the game, please type <font color='red'>/start</font> in the box below.</b><br/>
 	<b>To see the list of possible commands, type <font color='red'>/cmd</font></b><br/><br/>
+	<b>To access the premium store, type <font color='red'>/premium</font></b>
 	<b>Enjoy your gaming!</b><br/><br/><br/></font>
 	
 	<div id="right">	

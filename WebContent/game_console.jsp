@@ -291,7 +291,7 @@
 					            Console.log(font("#009700")+"You have selected <b>" + font("blue") + premItems[msg-1] + "</b></font>! ");
 								//Sending data to servlet, to be inserted into DB
 								$.get('gameservlet', { action: "premItem", price: premItemsPrice[msg-1], username: '<%=username%>' ,item:premItems[msg-1] });
-								Console.log(font("red")+key+" <b>"+font("orange")+value);
+								Console.log(font("red")+key+" <b>"+font("orange")+value+"$");
 							}
 						});
 					}, 
@@ -319,7 +319,7 @@
 	     <%int cash=gdb.getPlayerMoney(username); %>
 		 Console.log("you can select one of the following premium items:");
 		 if(flag=="")
-		 	Console.log(font("red")+"Money you have: "+" <b>"+font("orange")+<%= cash%>);
+		 	Console.log(font("red")+"Money you have: "+" <b>"+font("orange")+<%= cash%>+"$");
 		 flag="1";
 								 
 		//Print premium items and price from DB and add to arrays
@@ -375,7 +375,7 @@
 		Console.log(font("blue")+"<b>/start</b></font>"+font("#FF69B4")+" : to start the game.");
 		Console.log(font("blue")+"<b>/char</b></font>"+font("#FF69B4")+" : to check your character's information");
 		Console.log(font("blue")+"<b>/location</b></font>"+font("#FF69B4")+" : to see your current location");
-		Console.log(font("blue")+"<b>/premium</b></font>"+font("#FF69B4")+" : to see items from premium store");
+		Console.log(font("blue")+"<b>/premium</b></font>"+font("#FF69B4")+" : to buy items from premium store");
 
 	}
 	

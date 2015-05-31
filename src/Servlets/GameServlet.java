@@ -25,7 +25,7 @@ import Database.MapDB;
 @WebServlet("/gameservlet")
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	ResultSet rs;   
 	GameDB db;
 	MapDB map;
 
@@ -51,9 +51,13 @@ public class GameServlet extends HttpServlet {
 			db.addPlayer(username, charName);
 		}
 		
+		
+				
+		 
+		
 		if(action.equals("getCharStatus")){
 			String username = request.getParameter("username");
-			ResultSet rs = db.getPlayerInfo(username);
+			 rs = db.getPlayerInfo(username);
 			Map<String, String> status = new LinkedHashMap<String, String>();
 			try {
 				if(rs.next()){
@@ -76,14 +80,12 @@ public class GameServlet extends HttpServlet {
 		}
 		
 
-		
 		if(action.equals("getMapStatus")){
 			
 			//get current map location
 			map.update(request.getParameter("username"));
 
-			Map<String, String> mapStatus = new LinkedHashMap<String, String>();
-			
+			Map<String, String> mapStatus = new LinkedHashMap<String, String>();	
 			mapStatus.put("location", map.getLocation());
 			mapStatus.put("x", map.getx());
 			mapStatus.put("y", map.gety());
@@ -95,19 +97,16 @@ public class GameServlet extends HttpServlet {
 			mapStatus.put("act2", map.getAct(2));
 			mapStatus.put("act3", map.getAct(3));
 			mapStatus.put("act4", map.getAct(4));
-			
 			String json = new Gson().toJson(mapStatus);
-			
 			response.setContentType("text/plain");  
-		    response.setCharacterEncoding("UTF-8"); 
-		    response.getWriter().write(json); 
-			
-		
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);    
+	
 		}
 		
 		
-		if(action.equals("moveTo")){
-			
+		
+			if(action.equals("moveTo")){
 			String direction = request.getParameter("direction").substring(1);
 			//get current map location and move player
 			if(direction.equals("up"))
@@ -122,13 +121,50 @@ public class GameServlet extends HttpServlet {
 		}
 		
 		
+			
+			
+			
+			
+			
+	
 		
-		
-	    //response.setContentType("text/plain");  
-	    //response.setCharacterEncoding("UTF-8"); 
-	    //response.getWriter().write(a);       
-	}
+		 if(action.equals("premItem")){
+			 
+				String playername = request.getParameter("username");
+				String price = request.getParameter("price");
+				String item=request.getParameter("item");
+				db.updatePlayerMoney(playername, price);
+				db.updatePlayerItem(playername, item);
+			 
+			 
+			 }
+			 if(action.equals("getMoney")){
+					String playername = request.getParameter("username");
+					String price=request.getParameter("price");
+				 	int cash=db.getPlayerMoney(playername);
+					Map<String, String> coins = new LinkedHashMap<String, String>();
+					int iPrice=Integer.parseInt(price);
+					
+						
+							if(cash<iPrice)
+								coins.put("this item is too expensive for you", "1");
+							
+							else{
+								int update=cash-iPrice;
+								String strUpdate= ""+update;
+								coins.put("Money you have:",strUpdate );
+							}
+							String json = new Gson().toJson(coins);
 
+							
+
+							response.setContentType("text/plain");  
+						    response.setCharacterEncoding("UTF-8"); 
+						    response.getWriter().write(json); 
+				 }
+					
+
+		 }
 	/**
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -60,7 +60,9 @@ public class ChangePasswordServlet extends HttpServlet{
 		final String oldPass = request.getParameter("oldPass");
 		final String newpass = request.getParameter("newpass");
 		final String newpassR = request.getParameter("newpassR");
+		contextPath = request.getContextPath();
 		
+		//System.out.println("~~~~"+contextPath);
 		
 		if(oldPass=="" || newpass=="" || newpassR=="")
 			response.sendRedirect(contextPath + "/changePassword.jsp?err=1");
@@ -80,9 +82,11 @@ public class ChangePasswordServlet extends HttpServlet{
 				response.sendRedirect(contextPath + "/changePassword.jsp?err=2");
 			else if(newpass.equals(newpassR)){
 				
+				
 				final String newpassword =newpass;
 				String newhashedpassword = null;
 				Sha1Hex sha2 = new Sha1Hex();
+				
 				try {
 					newhashedpassword = sha2.makeSHA1Hash(newpassword);
 				} catch (NoSuchAlgorithmException e) {

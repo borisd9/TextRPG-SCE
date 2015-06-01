@@ -40,27 +40,26 @@
 		    %>
 		    <font color="blue"><b>your password has been changed successfully.</b></font>
 			<br><br>
-		    <% } } %>
-		    <%
+		    <% } }
     	
    		String err = request.getParameter("err");
       	if(err!=null){
       		if(err.equals("1")){
     %>
-    <font color="red"><b>Fields cannot be empty!</b></font>
-    <br><br>
+		    <font color="red"><b>Fields cannot be empty!</b></font>
+		    <br><br>
 	<%
       		}
       		else if(err.equals("2")){
 	%>   
-	<font color="red"><b>The old Password you've entered is incorrect!</b></font>
-	<br><br>
+			<font color="red"><b>The old Password you've entered is incorrect!</b></font>
+			<br><br>
 	<%
       		}
       		else if(err.equals("3")){
 	%>   
-	<font color="red"><b>The new Password doesn't match!</b></font>
-	<br><br>
+			<font color="red"><b>The new Password doesn't match!</b></font>
+			<br><br>
 	<% 
       		}
       	}

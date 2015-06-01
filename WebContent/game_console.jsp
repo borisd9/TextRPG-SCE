@@ -622,8 +622,6 @@
 	    <img id="pin" src="images/pin.gif" style="width:90px; height:70px;position: relative;">
 		</div>
 	
-	For testing DB connections:<br>
-	<%= map.getDataSourceStats() %>	
 	</div>
 
 	

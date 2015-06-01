@@ -11,7 +11,7 @@
 <title>Game Console</title>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
+<script async="async">
 	//Variables
 	window.chat = {};
 	var Console = {};

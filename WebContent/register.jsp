@@ -38,7 +38,7 @@
 			<br><br>
 			<% } } %>   
 			
-	        <form name="form1"  action="RegisterServlet" onsubmit="return validateForm()"   method="post">
+	        <form name="form1"  action="RegisterServlet" method="post">
 				User name:<br> <input type="text" name="user"  style="background-color:#eeeeee; border:1px solid grey" />
 				<br>
 				Password:<br><input type="password" name="pwd"  style="background-color:#eeeeee; border:1px solid grey"/>

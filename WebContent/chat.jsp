@@ -1,30 +1,7 @@
 <html>
 <head>
     <title>chat2</title>
-    <style type="text/css">
-        input#chat2 {
-            width: 400px
-        }
 
-        #chatConsole2-container {
-            width: 600px;
-        }
-
-        #chatConsole2 {
-            border: 2px solid #CCCCCC;
-            border-right-color: #999999;
-            border-bottom-color: #999999;
-            height: 170px;
-            overflow-y: scroll;
-            padding: 5px;
-            width: 400px;
-        }
-
-        #chatConsole2 p {
-            padding: 0;
-            margin: 0;
-        }
-    </style>
     <script type="text/javascript">
     
         var chat2 = {};
@@ -42,7 +19,7 @@
             }
 
             chat2.socket.onopen = function () {
-                document.getElementById('chat2').onkeydown = function(event) {
+                document.getElementById('chat2').onkeydown = function(event) {                  	
                     if (event.keyCode == 13) {
                         chat2.sendMessage();
                     }
@@ -54,23 +31,25 @@
             };
 
             chat2.socket.onmessage = function (message) {
-            	var username = document.getElementById('un').value;
+            	//var username = document.getElementById('un').value;
 				var date = new Date();
 				var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-                chatConsole2.log("<font color='blue'>("+ time + ") " + username + ": </font>" + message.data);
+                chatConsole2.log("<font color='blue'>("+ time + ") " + " </font>" + message.data);
             };
         });
 
         chat2.initialize = function() {
+        	//var path = location.hostname+(location.port ? ':'+location.port: '');
+
             if (window.location.protocol == 'http:') {
-                chat2.connect('ws://' + window.location.hostname + '/text-rpg/ChatServlet');
+                chat2.connect('ws://' + window.location.host + '/text-rpg/ChatServlet');
             } else {
-                chat2.connect('ws://' + window.location.hostname + '/text-rpg/ChatServlet');   
+                chat2.connect('wss://' + window.location.host + '/text-rpg/ChatServlet');   
             }
         };
 
         chat2.sendMessage = (function() {
-            var message = document.getElementById('chat2').value;
+            var message = "<font color='blue'>"+ document.getElementById('un').value+ ":   </font>" + document.getElementById('chat2').value;
             if (message != '') {
                 chat2.socket.send(message);
                 document.getElementById('chat2').value = '';
@@ -133,7 +112,7 @@
     	if(loggedIn != null){
     %>
     <p>
-        <input type="text" style="border:2px solid" placeholder="type and press enter to chat." id="chat2">
+        <input type="text" style="border:2px solid" placeholder="type and press enter to chat." id="chat2" vlaue="">
     </p>
     <% } %>
 </div>

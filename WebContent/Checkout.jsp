@@ -54,7 +54,7 @@
 	%>
 	 
 	 <font color="red"><b>Success to buy coins!</b></font><br>
-	<b> Click <a href="enterStore.jsp">here</a> to back to store.</b>   
+	<b> Click <a href="http://localhost/text-rpg/enterStore.jsp">here</a> to back to store.</b>   
 	    <br><br>
 	    <%}
 			}%>

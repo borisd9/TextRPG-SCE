@@ -618,7 +618,7 @@
 	
 	<div id="right">	
 	
-		<div id="mapDisplay" style="background: url('images/worldMap.png'); width: 300px; height:350px; position: relative; left:-10px; visibility: hidden; ">
+		<div id="mapDisplay" style="background: url('images/worldMap.png'); width: 280px; height:360px; border:thick; border-style: dotted solid; border-color:black; position: relative; left:-10px; visibility: hidden; ">
 	    <img id="pin" src="images/pin.gif" style="width:90px; height:70px;position: relative;">
 		</div>
 	

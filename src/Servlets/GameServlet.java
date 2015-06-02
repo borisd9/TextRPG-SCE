@@ -144,17 +144,23 @@ public class GameServlet extends HttpServlet {
 			
 			int money= db.getMoney(username);
 			int price= db.getItemPrice(itemsChars);
+			System.out.println("price"+price);
+			System.out.println("money"+money);
 			int buy=money-price;
+			System.out.println("buy"+buy);
+			String ans;
+			
 			if(buy>=0)
-			{
+			{	
 				db.updatePurchaseItem(username,itemsChars,buy);
-				String ans = "1";
-				response.getWriter().write(ans);
+				ans = "1";
 			}
 			else{
-				String ans = "0";
-				response.getWriter().write(ans);
+				ans = "0";	
 			}
+			response.setContentType("text/plain");  
+		    response.setCharacterEncoding("UTF-8"); 
+		    response.getWriter().write(ans);
 			
 		}
 		

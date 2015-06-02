@@ -98,7 +98,7 @@ public class GameDB extends DbConnectionAPI
 				if(rs.next()){
 					intcheck = rs.getInt("exp");
 					intcoins = rs.getInt("money");
-					System.out.println(intcoins);
+					
 				}
 			} catch (SQLException e) {
 				System.out.println("Error in add player query: "+e);
@@ -134,9 +134,7 @@ public class GameDB extends DbConnectionAPI
 	public ResultSet getStoreItems(String username){
 		
 		String location=playerLocation(username);
-		
 		String query = "SELECT * FROM items WHERE location='"+location+"'";
-		//String query = "SELECT * FROM items WHERE location='"+username+"'";
 		ResultSet rs = readFromDatabase(query);
 		return rs;
 	}
@@ -150,7 +148,6 @@ public class GameDB extends DbConnectionAPI
 	public int getItemsCount(String username){
 		
 		String location=playerLocation(username);
-		//String location=username;
 		if(location!="-1")
 		{
 		String query = "SELECT count(*) FROM items WHERE location='"+location+"'";
@@ -158,7 +155,6 @@ public class GameDB extends DbConnectionAPI
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if(rs.next()){
-				System.out.println("getItemsCount:"+rs.getString(1));
 				return rs.getInt(1);
 			}
 		} catch (SQLException e) {
@@ -175,7 +171,6 @@ public class GameDB extends DbConnectionAPI
 	 */
 	public int getMoney(String username){
 		String query = "SELECT money FROM players WHERE username='"+username+"'";
-		
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if(rs.next())
@@ -192,7 +187,7 @@ public class GameDB extends DbConnectionAPI
 	 * update the amount of money of player and the item
 	 */
 	public void updatePurchaseItem(String username,String item,int money){
-		String query = "UPDATE players SET item='"+item+"' money='"+money+"'  WHERE username='"+username+"'";
+		String query = "UPDATE players SET item='"+item+"' , money="+money+"  WHERE username='"+username+"'";
 		modifyDatabase(query);
 	}
 	
@@ -203,7 +198,6 @@ public class GameDB extends DbConnectionAPI
 	 */
 	public int getItemPrice(String item){
 		String query = "SELECT price FROM items WHERE item='"+item+"'";
-		
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if(rs.next())
@@ -226,9 +220,7 @@ public class GameDB extends DbConnectionAPI
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if(rs.next()){
-				System.out.println("playerLocation:"+rs.getString(1));
 				return rs.getString(1);
-				
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in count query: "+e);

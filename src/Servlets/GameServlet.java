@@ -121,13 +121,62 @@ public class GameServlet extends HttpServlet {
 			
 		}
 		
+		if(action.equals("moveto")){
+			
+			String direction = request.getParameter("direction").substring(0);
+			System.out.println(direction);
+			//get current map location and move player
+			if(direction.equals("Home"))
+				map.move("Home");
+			else if(direction.equals("Chimaki Hospital"))
+				map.move("Chimaki Hospital");
+			else if(direction.equals("The Screamers Prison"))
+				map.move("The Screamers Prison");
+			
+		}
 		
+
+		if(action.equals("buyFromStore")){
+			String username = request.getParameter("username");
+			//String location = request.getParameter("location");
+			String itemsChars = request.getParameter("itemsChars");
 			
 			
+			int money= db.getMoney(username);
+			int price= db.getItemPrice(itemsChars);
+			int buy=money-price;
+			if(buy>=0)
+			{
+				db.updatePurchaseItem(username,itemsChars,buy);
+				String ans = "1";
+				response.getWriter().write(ans);
+			}
+			else{
+				String ans = "0";
+				response.getWriter().write(ans);
+			}
 			
-			
-			
+		}
+		
+		if(action.equals("updatefight")){
+			int flag = Integer.parseInt(request.getParameter("flag"));
+			if(flag==1){
+				int exp = Integer.parseInt(request.getParameter("expto"));
+				int coins = Integer.parseInt(request.getParameter("coinsto"));
+				String username = request.getParameter("username");
 	
+				db.updatefight(username, exp, coins,flag);
+			}
+			else {
+				int exp = Integer.parseInt(request.getParameter("expto"));
+				int coins = Integer.parseInt(request.getParameter("coinsto"));
+				String username = request.getParameter("username");
+	
+				db.updatefight(username, exp, coins,flag);
+			}
+		}
+
+
 		
 		 if(action.equals("premItem")){
 			 

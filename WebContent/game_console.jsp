@@ -1,9 +1,8 @@
-
 <%@ page import="Database.GameDB"%>
-<%@ page import="Database.MapDB" %>
+<%@ page import="Database.MapDB"%>
 <%@ page import="java.sql.ResultSet"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 
 <html>
 <head>
@@ -31,22 +30,34 @@
 	var premItemsPrice=[];
 	var premItems=[];
 	var flag="";
+	window.battlechat = {};
+	var battle = {};
+	var system = "<font color=red><b>System:</b> </font>";
+	var p1 = {};
+	var p2 = {};
+	var phase = "";
+	var turn = 1;
 
 	//Init GameDB object and MapDB, and get username from session
 	<%
-		int atk;
-		int defense;
-		int speed;
-		int hp;
-		int exp;
-	
-	  	GameDB gdb = new GameDB();
-		String username = (String)session.getAttribute("username");
-		ResultSet rs;
-		MapDB map = new MapDB();
-	 	 
+			int atk;
+			int defense;
+			int speed;
+			int hp;
+			int exp;
+
+			GameDB gdb = new GameDB();
+			String username = (String) session.getAttribute("username");
+			ResultSet rs;
+			MapDB map = new MapDB();
+
+			String opponent = gdb.getOpponent(username);
+			String my_char = "", opp_char = "";
 	%>
-	 
+	
+	var opponent = '<%=opponent%>';
+	var username = '<%=username%>';
+	
 	 //returns a colored message
 	 function font(color, msg){
 		 return "<font color="+color+">";
@@ -72,7 +83,7 @@
 	
 	 //Starts listening for messages
 	 onload = function() {
-	 	chat.startListen();
+		 chat.startListen();
 	 };
 	
 	 //If Enter key has been pressed
@@ -90,7 +101,6 @@
 	     };
 	 };
 	
-	 
 	 //Command handler
 	 chat.sendMessage = function () {
 		 var username = document.getElementById('un').value;
@@ -113,11 +123,9 @@
 	 		//if game has already started
 	 		if(mode == "started"){
 			 	Console.log(font("red")+"The game has already been started.<br>Type <b>"+font("blue")+"/location</b></font> to check your current whereabouts."); 		
-			 	<% 
-					boolean doesExist = false;
-					if(username!=null)
-						doesExist = gdb.doesExist(username);
-				%>
+			 	<%boolean doesExist = false;
+			if (username != null)
+				doesExist = gdb.doesExist(username);%>
 	 		} else {
 				//If player has never started a game
 				if(<%=doesExist%>==false){
@@ -524,14 +532,14 @@
 	 	case "/premium":
 	 		newItem();
 			break;
-	
-	 				
+		
+	 	case "/battle":
+	 		toggle_visibility('battleBoxPosition');
+	 		break;		
 		default:
 			if (isNum(msg) && mode=="store"){
-	 		<%
-	 		System.out.println("test");
-			int numOfItems=gdb.getItemsCount(username);
-			%>
+	 		<%System.out.println("test");
+			int numOfItems = gdb.getItemsCount(username);%>
 			
 			//checking if legal character number has been selected
 			if(msg > 0 && msg <= <%=numOfItems%> && <%=numOfItems%>!=-1){
@@ -558,9 +566,7 @@
 
 			//If player is new, he must select a character
 			else if(mode=="new" && isNum(msg)){
-				<%
-				int numOfChars = gdb.charCount();
-				%>
+				<%int numOfChars = gdb.charCount();%>
 				//checking if legal character number has been selected
 				if(msg > 0 && msg <= <%=numOfChars%>){
 					//Sending data to servlet, to be inserted into DB
@@ -577,16 +583,14 @@
 	 		}
 			//if player pressed for premium store
 			else if(mode=="premium" && isNum(msg)){     
-				<%
-				int itemsCount = gdb.PremiumItemsCount();
-				int price=0;
-				rs = gdb.getPremiumItems();
-				String itemName=null;
-				for(int j=1; rs.next(); j++){
-					itemName = rs.getString(1);
-					 price=gdb.getItemPrice(itemName);
-				}
-				%>
+				<%int itemsCount = gdb.PremiumItemsCount();
+			int price = 0;
+			rs = gdb.getPremiumItems();
+			String itemName = null;
+			for (int j = 1; rs.next(); j++) {
+				itemName = rs.getString(1);
+				price = gdb.getItemPrice(itemName);
+			}%>
 				
 				//checking if legal character number has been selected
 				if(msg > 0 && msg <= <%=itemsCount%>){
@@ -609,7 +613,6 @@
 					}, 
 					'json');		
 					mode="started";
-					 
 				}
 				else
 					Console.log(font("red")+"Item #"+msg+" does not exist!<br>");
@@ -628,27 +631,23 @@
 	 
 	//function Add new item from premium store
 	 function  newItem(){
-	     <%int cash=gdb.getPlayerMoney(username); %>
+	     <%int cash = gdb.getPlayerMoney(username);%>
 		 Console.log("you can select one of the following premium items:");
 		 if(flag=="")
-		 	Console.log(font("red")+"Money you have: "+" <b>"+font("orange")+<%= cash%>+"$");
+		 	Console.log(font("red")+"Money you have: "+" <b>"+font("orange")+<%=cash%>+"$");
 		 flag="1";
 								 
 		//Print premium items and price from DB and add to arrays
-		<%
-		rs = gdb.getPremiumItems();
-		for(int i=1; rs.next(); i++){
-			String item = rs.getString(1);
-			int Price=gdb.getItemPrice(item);
-		%>
+		<%rs = gdb.getPremiumItems();
+			for (int i = 1; rs.next(); i++) {
+				String item = rs.getString(1);
+				int Price = gdb.getItemPrice(item);%>
 		 
-		Console.log(font("blue")+"<%=i%></font> - <b> <%=item%> ,price=<%= Price%> $</b>");
+		Console.log(font("blue")+"<%=i%></font> - <b> <%=item%> ,price=<%=Price%> $</b>");
 		premItemsPrice.push("<%=Price%>");
 		premItems.push("<%=item%>");
 		
-		<%
-		}
-		%>
+		<%}%>
 		Console.log("You can select  item by typing the relevant number");
 		mode="premium";
 	}
@@ -660,18 +659,14 @@
 		Console.log("First, you must select one of the following characters:");
 	
 		//Print selectable chars and add to array
-		<%
-		int i;
-		rs = gdb.getChars();
-		String character;
-		for(i=1; rs.next(); i++){
-			character = rs.getString(1);
-		%>
+		<%int i;
+			rs = gdb.getChars();
+			String character;
+			for (i = 1; rs.next(); i++) {
+				character = rs.getString(1);%>
 		Console.log(font("blue")+"<%=i%></font> - <b><%=character%></b>");
 		startChars.push("<%=character%>");
-		<%
-		}
-		%>
+		<%}%>
 		Console.log("You can select it by typing the relevant number");
 		mode="new";
 	}
@@ -737,44 +732,33 @@
 	
 	function displayStore(){
 		itemsChars=[];
-		<%
-		
-			rs= gdb.getStoreItems(username);
-			
+		<%rs = gdb.getStoreItems(username);
+
 			String item_name;
 			String item_description;
 			String item_bonus1;
 			String item_bonus2;
 			String item_price;
-			
-			for(i=1; rs.next(); i++){
-				item_name=rs.getString("item");
-				item_description=rs.getString("description");
-				item_bonus1=rs.getString("bonus1");
-				item_bonus2=rs.getString("bonus2");
-				item_price=rs.getString("price");
+
+			for (i = 1; rs.next(); i++) {
+				item_name = rs.getString("item");
+				item_description = rs.getString("description");
+				item_bonus1 = rs.getString("bonus1");
+				item_bonus2 = rs.getString("bonus2");
+				item_price = rs.getString("price");
 				//if ther is two bonus to the item
-				
-				if(item_bonus2!=null){
-				%>
+
+				if (item_bonus2 != null) {%>
 				
 				Console.log(font("blue")+"<%=i%></font> - <b><%=item_name%> &nbsp;&nbsp;  bonus1: <%=item_bonus1%> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bonus2: <%=item_bonus2%> &nbsp;&nbsp; itme_price: <%=item_price%><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item description: <%=item_description%></b>");
 				
-				<%
-				//if ther is one bonus to the item
-				}
-				else{
-		
-					%>
+				<%//if ther is one bonus to the item
+				} else {%>
 				Console.log(font("blue")+"<%=i%></font> - <b><%=item_name%> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bonus1: <%=item_bonus1%> &nbsp;&nbsp; itme_price: <%=item_price%><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item description: <%=item_description%></b>");
-				<%
-				}
-			%>
+				<%}%>
 
 			itemsChars.push("<%=item_name%>");
-		<%
-			}
-		%>
+		<%}%>
 		
 		mode="store";
 	}
@@ -782,13 +766,11 @@
 	
 	function fightmanster(min,max,value,name,exptoadd,coinstoadd,exptolose,coinstolose)
 	{
-		<%
-		atk=gdb.getatk(username);
-		defense=gdb.getdefense(username);
-		speed=gdb.getspeed(username);
-		hp=gdb.gethp(username);
-		exp=gdb.getexp(username);
-		%>
+		<%atk = gdb.getatk(username);
+			defense = gdb.getdefense(username);
+			speed = gdb.getspeed(username);
+			hp = gdb.gethp(username);
+			exp = gdb.getexp(username);%>
 		
 		//rand function
 		var randomNum = Math.floor((Math.random() * max) + min); 
@@ -814,41 +796,295 @@
 			);
 		
 			//update DB
-			$.get('gameservlet', { action: "updatefight", username: '<%=username%>',expto: exptolose, coinsto: coinstolose, flag: 0});
-		
-		
+			$.get('gameservlet', { action: "updatefight", username: '<%=username%>',
+				expto : exptolose,
+				coinsto : coinstolose,
+				flag : 0
+			});
+
 		}
 	}
+	
+	//////////////////
+	//Battle Section//
+	/////////////////
+	
+	//open/close battle popup
+	function toggle_visibility(id) {
+		var e = document.getElementById(id);
+		//If battle window is open
+		if(e.style.display == 'block'){
+			if(phase=="over") 
+				e.style.display = 'none';
+			else{
+				var exit_text = "Closing the game will count as a lose.\nAre you sure you want to exit?";
+				if(window.confirm(exit_text))
+					e.style.display = 'none';
+			}	
+		}
+		//If battle window is closed
+		else{
+			e.style.display = 'block';
+			battlechat.startListen();
+			startBattle();
+		}
+	}
+	
+	//Writes messages into battle
+	battle.log = (function(message) {
+		var battle = document.getElementById('battle');
+		var p = document.createElement('p');
+		p.style.wordWrap = 'break-word';
+		p.innerHTML = (message=="") ? "<br>" : system+message;
+		battle.appendChild(p);
+		while (battle.childNodes.length > 25) {
+			battle.removeChild(battle.firstChild);
+		}
+		battle.scrollTop = battle.scrollHeight;
+	});
+	 
+	//initializing character information
+	function initChars() {
+		//player 1 character
+		<%
+		rs = gdb.getCharacterInfo(username);
+		if(rs.next()){
+			my_char = rs.getString("character");
+		%>
+		p1["char"] = '<%=my_char%>';
+		p1["level"] = <%=rs.getString("level")%>;
+		p1["attack"] = <%=rs.getString("attack")%>;
+		p1["defense"] = <%=rs.getString("defense")%>;
+		p1["speed"] = <%=rs.getString("speed")%>;
+		p1["hp"] = <%=rs.getString("hp")%>;
+		p1["exp"] = <%=rs.getString("exp")%>;
+		<%
+		}
+		rs = gdb.getCharAttacks(my_char);
+		if(rs.next()){
+		%>
+		p1["atk1"] = '<%=rs.getString("atk1")%>';
+		p1["atk2"] = '<%=rs.getString("atk2")%>';
+		<% } %>
 		
+		//player 2 character
+		<%
+		rs = gdb.getCharacterInfo(opponent);
+		if(rs.next()){
+			opp_char = rs.getString("character");
+		%>
+		p2["char"] = '<%=opp_char%>';
+		p2["level"] = <%=rs.getString("level")%>;
+		p2["attack"] = <%=rs.getString("attack")%>;
+		p2["defense"] = <%=rs.getString("defense")%>;
+		p2["speed"] = <%=rs.getString("speed")%>;
+		p2["hp"] = <%=rs.getString("hp")%>;
+		p2["exp"] = <%=rs.getString("exp")%>;
+		<%
+		}
+		rs = gdb.getCharAttacks(opp_char);
+		if(rs.next()){
+		%>
+		p2["atk1"] = '<%=rs.getString("atk1")%>';
+		p2["atk2"] = '<%=rs.getString("atk2")%>';
+		<% } %>
+		
+	}
+	
+	//starting battle mode
+	function startBattle() {
+		initChars();
+		battle.log(font("#551A8B")+"<b>The battle is starting!");
+		battle.log("Your opponent is <b>"+font("blue")+opponent);
+		battle.log("Your <b>"+font("blue")+'<%=my_char%>'+"</font> "+font("orange")+"(Level "+p1["level"]+")</font></b> VS <b>"+
+				font("blue")+opponent+"</b></font>'s <b>"+font("blue")+'<%=opp_char%>'+"</font> "+font("orange")+"(Level "+p2["level"]+")");
+		battle.log("<b>In each turn, you must select an attack.");
+		battle.log("<b>First one to reach 0 HP loses.")
+		battle.log("");
+		//battle.log("")
+		//wait for 1.8 seconds and start player1's turn
+		setTimeout(myTurn, 1800);
+	}
+	
+	
+	//If Enter key has been pressed
+	battlechat.startListen = function () {
+		document.getElementById('battleMsg').onkeydown = function(event) { 		
+			//Listening for Enter Key 
+			if (event.keyCode == 13) {	 	 			
+				input = document.getElementById('battleMsg').value;
+				
+				//clear cmd line
+				document.getElementById('battleMsg').value = ""; 	 	
+				
+				battlechat.sendMessage();
+			}
+		};
+	};
+	
+	//Command handler
+	battlechat.sendMessage = function () { 
+		var msg = input.replace(/ /g,'').toLowerCase();
+		
+		if(phase=="turn"){
+			var move;	
+			if(msg=="1"){
+				move = p1["atk1"];
+				Attack(move, username);
+			}
+			else if(msg==2){
+				move = p1["atk2"];
+				Attack(move, username);
+			}
+			else
+				battle.log(font("red")+"'"+input+"' is not a valid attack.");	
+		}
+		else if(phase=="over")
+			battle.log(font("red")+"The game has already ended!");
+		else
+			battle.log(font("red")+"'"+input+"' is not a valid command.");
+	};
+	
+	//player 1's turn
+	function myTurn(){
+		phase="turn";
+		battle.log(font("#009700")+"<b>Your move!")
+		battle.log("Select one of your available attacks by typing its number.");
+		battle.log(font("blue")+"1</font> - <b>"+font("#FF69B4")+p1["atk1"]);
+		battle.log(font("blue")+"2</font> - <b>"+font("#FF69B4")+p1["atk2"]);
+	}
+	
+	//unleash an attack
+	function Attack(move, attacker){
+		battle.log(font("#009700")+"<b>Turn #" + turn++);
+		if(attacker == username){
+			battle.log(username+"'s <b>"+font("blue")+'<%=my_char%>'+"</b></font> used <b>"+font("blue")+move+"</b></font> on "+
+						opponent+"'s <b>"+font("blue")+'<%=opp_char%>');
+			Damage('<%=opp_char%>');
+			var rand = Math.floor(Math.random() * 100) + 1;
+			if(phase!="over") 
+				Attack(rand, opponent);
+		}
+		else{
+			if(move%2==0)
+				move = p2["atk1"];
+			else move = p2["atk2"];
+			battle.log(opponent+"'s <b>"+font("blue")+'<%=opp_char%>'+"</b></font> used <b>"+font("blue")+move+"</b></font> on "+
+					username+"'s <b>"+font("blue")+'<%=my_char%>');
+			Damage('<%=my_char%>');
+			if(phase!="over") 
+				myTurn();
+		}	
+	}
+	
+	//Damage function
+	function Damage(target){
+		var me,opp;
+		
+		//initialization
+		if(target=='<%=my_char%>'){
+			me = p2;
+			opp = p1;
+		}
+		else{
+			me = p1;
+			opp = p2;
+		}
+		
+		//Calculating damage formula
+		var rand = (Math.random() * 100) + 1;
+		var critical = (rand <= 8) ? 2 : 1;
+		rand = (Math.random() * 1) + 0.85;
+		var modifier = rand * critical;
+		var damage_formula = Math.floor((((2 * me["level"] + 10) / 250) * (me["attack"]/opp["defense"]) * 50 + 2) * modifier);	
+		
+		//Printing battle log
+		if(critical == 2) battle.log(font("red")+"<b>Critical hit!");
+		battle.log("The attack has dealt <b>"+font("red")+damage_formula+"</b></font> damage to <b>"+font("blue")+target);
+		opp["hp"]-=damage_formula;
+		battle.log("<b>"+font("blue")+target+"</b></font>'s current HP is <b>"+font("orange")+Math.max(opp["hp"],0));
+		battle.log("");
+		
+		//If battle is over
+		if(opp["hp"] <= 0){
+			var winner = (target=='<%=my_char%>') ? opponent : username;
+			var loser = (target=='<%=my_char%>') ? username : opponent;
+			battle.log(font("blue")+"<b>"+target+"</font> has no HP left."); 
+			battle.log("<b>"+font("#009700")+winner+"</font> is the winner!");
+			battle.log("");
+			var exp = (100/(opp["level"] * me["level"])).toFixed(2);
+			var levelup;
+			if(me["exp"] + exp >= 100){
+				levelup = "true";
+				exp = 100 - exp;
+			}
+			else levelup = "false";
+			phase="over";
+			endGame(winner,loser,exp,levelup);
+		}
+	}
+	    
+	//End of game, updating databases
+	function endGame(win,lose,exp,lvlup){
+		document.getElementById("exit").value = "Exit";
+		$.get('gameservlet', { action: "battleOver", winner: win, loser: lose, exp: exp, levelup: lvlup});
+	}
+	
 </script>
-    
+
 </head>
 <body>
-<div id="content">
-	<font color='blue'><b>To start the game, please type <font color='red'>/start</font> in the box below.</b><br/>
-	<b>To see the list of possible commands, type <font color='red'>/cmd</font></b><br/><br/>
-	<b>To access the premium store, type <font color='red'>/premium</font></b>
-	<b>Enjoy your gaming!</b><br/><br/><br/></font>
-	
-	<div id="right">	
-	
-		<div id="mapDisplay" style="background: url('images/worldMap.png'); width: 280px; height:360px; border:thick; border-style: dotted solid; border-color:black; position: relative; left:-10px; visibility: hidden; ">
-	    <img id="pin" src="images/pin.gif" style="width:90px; height:70px;position: relative;">
+	<div id="content">
+		<font color='blue'><b>To start the game, please type <font
+				color='red'>/start</font> in the box below.
+		</b><br /> <b>To see the list of possible commands, type <font
+				color='red'>/cmd</font></b><br /> <br /> <b>To access the premium
+				store, type <font color='red'>/premium</font>
+		</b><br /> <b>Enjoy your gaming!</b><br /> <br /> <br /></font>
+
+		<div id="right">
+
+			<div id="mapDisplay"
+				style="background: url('images/worldMap.png'); width: 280px; height: 360px; border: thick; border-style: dotted solid; border-color: black; position: relative; left: -10px; visibility: hidden;">
+				<img id="pin" src="images/pin.gif"
+					style="width: 90px; height: 70px; position: relative;">
+			</div>
+
 		</div>
-	
-	</div>
 
-	
-	<div id="console-container">
-		<div id="console"></div>
-	</div>
-	<input name='un' id='un' type='hidden' value='${sessionScope.username}'/>
-	<p>
-		<input type="text" style="border:2px solid" placeholder="type your commands here." id="chat" name="msg">
-	</p>
+		<div id="battleBoxPosition">
+			<div class="battleBoxWrapper">
+				<div class="battleBoxContent">
+					<h3>Battle Scene</h3>
+					<div id="battle-container">
+						<div id="battle"></div>
+					</div>
+					<input name='un' id='un' type='hidden'
+						value='${sessionScope.username}' />
+					<p>
+						<input type="text" style="border: 2px solid"
+							placeholder="type your commands here." id="battleMsg">
+					</p>
+					<p>
+						<input id="exit" type="button"
+							onclick="toggle_visibility('battleBoxPosition');" value="Forfeit" />
+					</p>
+				</div>
+			</div>
+		</div>
 
-	
-</div>
+		<div id="console-container">
+			<div id="console"></div>
+		</div>
+		<input name='un' id='un' type='hidden'
+			value='${sessionScope.username}' />
+		<p>
+			<input type="text" style="border: 2px solid"
+				placeholder="type your commands here." id="chat" name="msg">
+		</p>
+
+
+	</div>
 
 </body>
 </html>

@@ -24,7 +24,7 @@ import Database.MapDB;
  */
 @WebServlet("/gameservlet")
 public class GameServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+
 	ResultSet rs;   
 	GameDB db;
 	MapDB map;

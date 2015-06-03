@@ -23,20 +23,14 @@ public class ChatServlet extends WebSocketServlet {
 		
 	private static ArrayList<MyMessageInbound> mmiList = new ArrayList<MyMessageInbound>();
 	
+	
 	@Override
-	protected StreamInbound createWebSocketInbound(String subProtocol,
-			HttpServletRequest request) {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) {
 		return new MyMessageInbound();
 	}
 
 	private class MyMessageInbound extends MessageInbound{
-        WsOutbound myoutbound;
+		WsOutbound myoutbound;
 
         @Override
         public void onOpen(WsOutbound outbound){

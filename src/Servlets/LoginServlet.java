@@ -18,14 +18,8 @@ import General.Sha1Hex;
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	//Database handler
+	
 	LoginDB db;
-	//URL path
 	String contextPath;
 		
 	/**

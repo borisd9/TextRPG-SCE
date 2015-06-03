@@ -23,6 +23,7 @@ import com.google.gson.Gson;
  */
 @WebServlet("/gameservlet")
 public class GameServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 	ResultSet rs;   
 	GameDB db;

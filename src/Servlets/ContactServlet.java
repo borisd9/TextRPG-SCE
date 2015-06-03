@@ -28,9 +28,7 @@ public class ContactServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +40,7 @@ public class ContactServlet extends HttpServlet {
 		final String message = request.getParameter("message");
 		contextPath = request.getContextPath();
 
-		
+		//Checking if fields are empty
 		if(email=="" || message==""){
 			response.sendRedirect(contextPath + "/contact.jsp?err=1");
 		}

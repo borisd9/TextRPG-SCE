@@ -19,20 +19,20 @@ public class ChatServlet extends WebSocketServlet {
 	private static final long serialVersionUID = 1L;
 	private static ArrayList<MyMessageInbound> mmiList = new ArrayList<MyMessageInbound>();
 	
+	
 	@Override
-	protected StreamInbound createWebSocketInbound(String subProtocol,
-			HttpServletRequest request) {
+	protected StreamInbound createWebSocketInbound(String subProtocol,HttpServletRequest request) {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return new MyMessageInbound();
 	}
 
 	private class MyMessageInbound extends MessageInbound{
-        WsOutbound myoutbound;
+		WsOutbound myoutbound;
 
         @Override
         public void onOpen(WsOutbound outbound){

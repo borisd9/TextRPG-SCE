@@ -55,10 +55,9 @@
 
 	//Sending message
 	chat2.sendMessage = (function() {
-		var message = "<font color='blue'>"
-				+ document.getElementById('un').value + ":   </font>"
-				+ document.getElementById('chat2').value;
-		if (message != '') {
+		//check if message is not empty
+		if (document.getElementById('chat2').value != '') {
+			var message = "<font color='blue'>"	+ document.getElementById('un').value + ":   </font>"+ document.getElementById('chat2').value;
 			chat2.socket.send(message);
 			document.getElementById('chat2').value = '';
 		}

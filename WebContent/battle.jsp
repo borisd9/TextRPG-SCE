@@ -44,7 +44,7 @@
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>		
 <script type="text/javascript">
-	window.chat = {};
+	window.battlechat = {};
 	var battle = {};
 	var system = "<font color=red><b>System:</b> </font>";
 	var p1 = {};
@@ -102,7 +102,7 @@
 	
 	//Starts listening for messages
 	onload = function() {
-		chat.startListen();
+		battlechat.startListen();
 		startBattle();
 	};
 	 
@@ -171,7 +171,7 @@
 	
 	
 	//If Enter key has been pressed
-	chat.startListen = function () {
+	battlechat.startListen = function () {
 		document.getElementById('battleMsg').onkeydown = function(event) { 		
 			//Listening for Enter Key 
 			if (event.keyCode == 13) {	 	 			
@@ -180,13 +180,13 @@
 				//clear cmd line
 				document.getElementById('battleMsg').value = ""; 	 	
 				
-				chat.sendMessage();
+				battlechat.sendMessage();
 			}
 		};
 	};
 	
 	//Command handler
-	chat.sendMessage = function () { 
+	battlechat.sendMessage = function () { 
 		var msg = input.replace(/ /g,'').toLowerCase();
 		
 		if(phase=="turn"){

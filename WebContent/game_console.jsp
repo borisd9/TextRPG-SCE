@@ -814,12 +814,16 @@
 		var e = document.getElementById(id);
 		//If battle window is open
 		if(e.style.display == 'block'){
-			if(phase=="over") 
+			if(phase=="over") {
 				e.style.display = 'none';
+				clearBattleLog();
+			}
 			else{
 				var exit_text = "Closing the game will count as a lose.\nAre you sure you want to exit?";
-				if(window.confirm(exit_text))
+				if(window.confirm(exit_text)){
 					e.style.display = 'none';
+					clearBattleLog();
+				}
 			}	
 		}
 		//If battle window is closed
@@ -828,6 +832,13 @@
 			battlechat.startListen();
 			startBattle();
 		}
+	}
+	
+	//Cleans the battle window
+	function clearBattleLog(){
+		var battle = document.getElementById('battle');
+		while (battle.firstChild)
+			battle.removeChild(battle.firstChild);
 	}
 	
 	//Writes messages into battle

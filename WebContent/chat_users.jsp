@@ -44,20 +44,15 @@
 		for(String u: users){
 			String Logout = "LogoutServlet?param="+u+"";
 %>
-
   <ul class="nav nav-tabs">
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%=u %><span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li><a href="#">Kick</a></li>
         <li><a href="#">Ban</a></li>
-        <li><a href="#">Battle</a></li>                        
       </ul>
     </li>
   </ul>
-
-<%-- <button id="usersbtn" type="button" onclick="RightMouseDown()"><%= u %></button>
---%>
 <%
 		}
 	}

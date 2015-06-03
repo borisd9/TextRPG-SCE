@@ -26,6 +26,12 @@ public class ChatServlet extends WebSocketServlet {
 	@Override
 	protected StreamInbound createWebSocketInbound(String subProtocol,
 			HttpServletRequest request) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new MyMessageInbound();
 	}
 
@@ -34,7 +40,7 @@ public class ChatServlet extends WebSocketServlet {
 
         @Override
         public void onOpen(WsOutbound outbound){
-			this.myoutbound = outbound;
+        	this.myoutbound = outbound;
 			mmiList.add(this);
         }
 

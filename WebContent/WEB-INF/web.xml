@@ -69,6 +69,7 @@
     <location>/404err.jsp</location>
   </error-page>
   
+  <!-- SSL for credit card payment page -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Purchase</web-resource-name>
@@ -79,7 +80,26 @@
     </user-data-constraint>
   </security-constraint>
   
-
   
+<!-- ADMIN BASIC Authenitacion-Declarative Security -->
+  
+  <security-role>
+	<role-name>administrator</role-name>
+    </security-role>
+  
+  <security-constraint>
+   <web-resource-collection>
+      <web-resource-name>Admin Panel</web-resource-name>
+      <url-pattern>/admin_panel.jsp</url-pattern>
+   </web-resource-collection>
+   <auth-constraint>
+      <role-name>administrator</role-name>
+   </auth-constraint>
+</security-constraint>
+
+<login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>ADMIN</realm-name>
+</login-config>
 
 </web-app>

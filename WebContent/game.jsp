@@ -4,11 +4,11 @@
 <title>TextBased RPG </title>
 <style type="text/css">
         input#chat {
-            width: 450px
+            width: 560px
         }
 
         #console-container {
-            width: 441px;
+            width: 550px;
         }
 
         #console {
@@ -25,7 +25,41 @@
             padding: 0;
             margin: 0;
         }
-    </style>
+    
+		#battleBoxPosition{
+			top: 0; left: 0; position: fixed; width: 100%; height: 120%;
+			background-color: rgba(0,0,0,0.7); display: none;
+		}
+		.battleBoxWrapper{
+			width: 550px; margin: 50px auto; text-align: left;
+		}
+		.battleBoxContent{
+			background-color: #FFF; padding: 15px;
+		}
+		input#battleMsg {
+           	width: 450px
+        }
+
+        #battle-container {
+            width: 441px;
+        }
+
+        #battle {
+            border: 2px solid #CCCCCC;
+            border-right-color: #999999;
+            border-bottom-color: #999999;
+            height: 300px;
+            overflow-y: scroll;
+            padding: 5px;
+            width: 100%;
+        }
+
+        #battle p {
+            padding: 0;
+            margin: 0;
+        }
+	</style>
+	
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="styles.css" rel="stylesheet" type="text/css" />
 </head>
@@ -35,13 +69,14 @@
   <div id="content">
   	<%
     	String loggedIn = (String)session.getAttribute("username");
-    	if(loggedIn != null){
+  		if(loggedIn != null){
     %>
     <div id="left">
     <b> Game </b>
     <br/><br/>
     <div>
 		<jsp:include page="game_console.jsp" />
+		<% Thread.sleep(1000); %>
 	</div>
     <br/><b> Chat </b>
     <br/><br/>
@@ -60,8 +95,8 @@
 	<br/>
 	<br/><br/><br/><br/><br/>
 	</div>
+	  <jsp:include page="footer.jsp" />
 	</div>
-  <jsp:include page="footer.jsp" />
 </div>
 </body>
 

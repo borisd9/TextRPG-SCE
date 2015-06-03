@@ -535,6 +535,7 @@
 		
 	 	case "/battle":
 	 		toggle_visibility('battleBoxPosition');
+	 		document.getElementById("exit").value = "Forfeit";
 	 		break;		
 		default:
 			if (isNum(msg) && mode=="store"){
@@ -823,6 +824,7 @@
 				if(window.confirm(exit_text)){
 					e.style.display = 'none';
 					clearBattleLog();
+					endGame(opponent, username, 0, false);
 				}
 			}	
 		}
@@ -1023,13 +1025,21 @@
 			battle.log(font("blue")+"<b>"+target+"</font> has no HP left."); 
 			battle.log("<b>"+font("#009700")+winner+"</font> is the winner!");
 			battle.log("");
-			var exp = (100/(opp["level"] * me["level"])).toFixed(2);
+			var exp = (100/(opp["level"] * me["level"]));
 			var levelup;
-			if(me["exp"] + exp >= 100){
+			battle.log("exp gain: "+exp+" current exp: "+me["exp"]);
+			var new_exp = exp + me["exp"];
+			battle.log("new exp: "+ new_exp);
+			if(new_exp >= 100){
 				levelup = "true";
-				exp = 100 - exp;
+				exp = new_exp - 100;
+				me["exp"] = exp;
+				me["level"]++;
 			}
-			else levelup = "false";
+			else{
+				levelup = "false";
+				me["exp"] += exp;
+			}
 			phase="over";
 			endGame(winner,loser,exp,levelup);
 		}

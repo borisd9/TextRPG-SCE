@@ -28,7 +28,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CartServlet</servlet-name>
-    <url-pattern>/servlet/CartServlet</url-pattern>
+    <url-pattern>/Store/CartServlet</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -37,13 +37,13 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CheckoutServlet</servlet-name>
-    <url-pattern>/servlet/CheckoutServlet</url-pattern>
+    <url-pattern>/Store/CheckoutServlet</url-pattern>
   </servlet-mapping>
   
   
   <servlet-mapping>
     <servlet-name>BuyServlet</servlet-name>
-    <url-pattern>/servlet/BuyServlet</url-pattern>
+    <url-pattern>/Store/BuyServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>BuyServlet</servlet-name>
@@ -52,7 +52,7 @@
   
   <servlet-mapping>
     <servlet-name>AuthenticationServlet</servlet-name>
-    <url-pattern>/servlet/AuthenticationServlet</url-pattern>
+    <url-pattern>/Servlets/AuthenticationServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>AuthenticationServlet</servlet-name>

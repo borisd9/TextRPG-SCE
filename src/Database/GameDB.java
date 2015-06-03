@@ -340,7 +340,7 @@ public class GameDB extends DbConnectionAPI
 	/**
 	 * @return price of  items from database
 	 */
-	public int getItemPrice(String item){
+	/*public int getItemPrice(String item){
 		String query = "SELECT * FROM items WHERE item='"+item+"'";
 		int price=0;
 		ResultSet rs = readFromDatabase(query);
@@ -353,7 +353,7 @@ public class GameDB extends DbConnectionAPI
 		}
 		return price;
 	
-	}
+	}*/
 
 
 
@@ -417,6 +417,60 @@ public class GameDB extends DbConnectionAPI
 		return -1;
 	}
 	
-
-
+	//////////////////////////
+	//Battle related methods//
+	//////////////////////////
+	
+	/**
+	 * update battle results
+	 * @param winner
+	 * @param loser
+	 * @param exp
+	 */
+	public void updateBattleResults(String winner, String loser, float exp, String levelup) {
+		String query = "UPDATE players SET loses=loses+1 WHERE username='"+loser+"'";
+		modifyDatabase(query);
+		query = "UPDATE players SET wins=wins+1,exp=exp+"+exp+( (levelup.equals("true")) ? ",level=level+1" : "" )+" WHERE username='"+winner+"'";
+		modifyDatabase(query);
+	}
+	
+	/**
+	 * get an opponent for username
+	 * @param username
+	 * @return name of opponent
+	 */
+	public String getOpponent(String username)
+	{
+		String query = "SELECT username FROM players WHERE username<>'"+username+"'";
+		ResultSet rs = readFromDatabase(query);
+		try {
+			if(rs.next())
+				return rs.getString("username");
+		} catch (SQLException e) {
+			System.out.println("Error in get opponent query: "+e);	
+		}
+		return null;
+	}
+	
+	/**
+	 * get character information
+	 * @param username
+	 * @return relevant row from players database
+	 */
+	public ResultSet getCharacterInfo(String username){
+		String query = "SELECT * FROM players WHERE username='"+username+"'";
+		ResultSet rs = readFromDatabase(query);
+		return rs;
+	}
+	
+	/**
+	 * get character attacks
+	 * @param username
+	 * @return relevant row from players database
+	 */
+	public ResultSet getCharAttacks(String character){
+		String query = "SELECT atk1,atk2 FROM characters WHERE name='"+character+"'";
+		ResultSet rs = readFromDatabase(query);
+		return rs;
+	}
 }

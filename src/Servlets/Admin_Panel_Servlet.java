@@ -2,29 +2,17 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.StyledEditorKit.BoldAction;
 import javax.servlet.http.HttpSession;
-
 //import java.util.ArrayList;
-
-
-
-import com.mysql.fabric.xmlrpc.base.Data;
-
-
-
-
 import Database.AdminDB;
 
 

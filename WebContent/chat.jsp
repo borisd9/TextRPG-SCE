@@ -1,5 +1,6 @@
 <html>
 <head>
+
 <title>chat2</title>
 
 <script type="text/javascript">
@@ -20,6 +21,7 @@
 			return;
 		}
 
+
 		//Once the socket is opened
 		chat2.socket.onopen = function() {
 			document.getElementById('chat2').onkeydown = function(event) {
@@ -29,10 +31,12 @@
 			};
 		};
 
+
 		//Once the socket is closed
 		chat2.socket.onclose = function() {
 			document.getElementById('chat2').onkeydown = null;
 		};
+
 
 		//Once a message has been sent through the socket
 		chat2.socket.onmessage = function(message) {
@@ -44,29 +48,25 @@
 		};
 	});
 
-	//Chat initialization
-	chat2.initialize = function() {
-		if (window.location.protocol == 'http:') {
-			chat2.connect('ws://' + window.location.host
-					+ '/text-rpg/ChatServlet');
-		} else {
-			chat2.connect('wss://' + window.location.host
-					+ '/text-rpg/ChatServlet');
-		}
-	};
 
-	//Sending message
-	chat2.sendMessage = (function() {
-		var message = "<font color='blue'>"
-				+ document.getElementById('un').value + ":   </font>"
-				+ document.getElementById('chat2').value;
-		if (message != '') {
-			chat2.socket.send(message);
-			document.getElementById('chat2').value = '';
-		}
-	});
+        chat2.initialize = function() {
+        	//var path = location.hostname+(location.port ? ':'+location.port: '');
 
-	var chatConsole2 = {};
+            if (window.location.protocol == 'http:') {
+                chat2.connect('ws://' + window.location.host + '/text-rpg/ChatServlet');
+            } else {
+                chat2.connect('wss://' + window.location.host + '/text-rpg/ChatServlet');   
+            }
+        };
+
+        chat2.sendMessage = (function() {
+            var message = "<font color='blue'>"+ document.getElementById('un').value+ ":   </font>" + document.getElementById('chat2').value;
+            if (message != '') {
+                chat2.socket.send(message);
+                document.getElementById('chat2').value = '';
+            }
+        });
+
 
 	//Adding the message to the console
 	chatConsole2.log = (function(message) {
@@ -92,6 +92,7 @@
 </script>
 </head>
 <body>
+
 	<div>
 		<div id="chatConsole2-container">
 			<table>
@@ -125,5 +126,6 @@
 			}
 		%>
 	</div>
+
 </body>
 </html>

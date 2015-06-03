@@ -52,7 +52,7 @@ public class SendMail {
 	public void forgotPassword(String to, String code) {
 		this.to = to;
 		this.subject = "New Password";
-		this.message = "New Password:"+code ;
+		this.message = "New Password:  "+code;
 	}
 	
 	/**

@@ -533,10 +533,13 @@
 	 		newItem();
 			break;
 		
+
 	 	case "/battle":
 	 		toggle_visibility('battleBoxPosition');
 	 		document.getElementById("exit").value = "Forfeit";
 	 		break;		
+
+
 		default:
 			if (isNum(msg) && mode=="store"){
 	 		<%System.out.println("test");
@@ -809,6 +812,7 @@
 	//////////////////
 	//Battle Section//
 	/////////////////
+
 	
 	//open/close battle popup
 	function toggle_visibility(id) {
@@ -1051,6 +1055,7 @@
 		$.get('gameservlet', { action: "battleOver", winner: win, loser: lose, exp: exp, levelup: lvlup});
 	}
 	
+
 </script>
 
 </head>

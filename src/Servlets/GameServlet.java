@@ -6,17 +6,16 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import Database.GameDB;
 import Database.MapDB;
+
+import com.google.gson.Gson;
 
 
 /**
@@ -25,6 +24,7 @@ import Database.MapDB;
 @WebServlet("/gameservlet")
 public class GameServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
 	ResultSet rs;   
 	GameDB db;
 	MapDB map;

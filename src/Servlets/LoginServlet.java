@@ -86,6 +86,7 @@ public class LoginServlet extends HttpServlet {
 			else{
 				session.setAttribute("loggedIn", true);
 				session.setAttribute("username", username);
+				session.setAttribute("rank_check",db.rank_check(username));
 				response.sendRedirect(request.getContextPath()+"/home.jsp");
 			}
 		}

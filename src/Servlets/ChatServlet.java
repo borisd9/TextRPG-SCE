@@ -22,12 +22,6 @@ public class ChatServlet extends WebSocketServlet {
 	
 	@Override
 	protected StreamInbound createWebSocketInbound(String subProtocol,HttpServletRequest request) {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return new MyMessageInbound();
 	}
 

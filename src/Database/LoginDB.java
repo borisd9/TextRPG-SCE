@@ -40,24 +40,8 @@ public class LoginDB extends DbConnectionAPI {
 		} catch (SQLException e) {
 			System.out.println("Error in does exists query: "+e);
 		}		
-		return "-1";	
-				
-				
-				
+		return "-1";			
 	}
-	
-
-
-	
-
-	
-	
-
-	
-	
-
-	
-	
 }
 
 

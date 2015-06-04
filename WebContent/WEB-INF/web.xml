@@ -10,8 +10,8 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
    <listener>
-		<listener-class>General.SessionListener</listener-class>
-	</listener>
+    <listener-class>General.SessionListener</listener-class>
+  </listener>
   <servlet>
     <servlet-name>ChatServlet</servlet-name>
     <servlet-class>Servlets.ChatServlet</servlet-class>
@@ -20,7 +20,14 @@
     <servlet-name>ChatServlet</servlet-name>
     <url-pattern>/ChatServlet</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>CartServlet</servlet-name>
     <servlet-class>Store.CartServlet</servlet-class>
@@ -58,6 +65,15 @@
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
   </servlet>
   
+    <servlet-mapping>
+    <servlet-name>MuteServlet</servlet-name>
+    <url-pattern>/servlet/MuteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MuteServlet</servlet-name>
+    <servlet-class>Servlets.MuteServlet</servlet-class>
+  </servlet>
+  
   <error-page> 
     <error-code>500</error-code>
     <location>/500err.jsp</location>
@@ -83,7 +99,7 @@
 <!-- ADMIN BASIC Authenitacion-Declarative Security -->
   
   <security-role>
-	<role-name>administrator</role-name>
+  <role-name>administrator</role-name>
     </security-role>
   
   <security-constraint>

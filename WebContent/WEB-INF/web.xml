@@ -21,6 +21,14 @@
     <url-pattern>/ChatServlet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>CartServlet</servlet-name>
@@ -39,8 +47,6 @@
     <servlet-name>CheckoutServlet</servlet-name>
     <url-pattern>/servlet/CheckoutServlet</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet-mapping>
     <servlet-name>BuyServlet</servlet-name>
     <url-pattern>/servlet/BuyServlet</url-pattern>
@@ -49,7 +55,6 @@
     <servlet-name>BuyServlet</servlet-name>
     <servlet-class>Store.BuyServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>AuthenticationServlet</servlet-name>
     <url-pattern>/servlet/AuthenticationServlet</url-pattern>
@@ -58,7 +63,6 @@
     <servlet-name>AuthenticationServlet</servlet-name>
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
   </servlet>
-  
   <servlet>
     <servlet-name>ChangePasswordServlet</servlet-name>
     <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
@@ -67,6 +71,15 @@
     <servlet-name>ChangePasswordServlet</servlet-name>
     <url-pattern>/servlet/ChangePasswordServlet</url-pattern>
   </servlet-mapping>
+
+    <servlet-mapping>
+    <servlet-name>MuteServlet</servlet-name>
+    <url-pattern>/servlet/MuteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MuteServlet</servlet-name>
+    <servlet-class>Servlets.MuteServlet</servlet-class>
+  </servlet>
   
   <error-page> 
     <error-code>500</error-code>

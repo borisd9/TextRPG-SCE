@@ -76,7 +76,6 @@
     <br/><br/>
     <div>
 		<jsp:include page="game_console.jsp" />
-		<% Thread.sleep(1000); %>
 	</div>
     <br/><b> Chat </b>
     <br/><br/>

@@ -26,7 +26,7 @@ public class SessionListener implements HttpSessionAttributeListener{
 
 	@Override
 	public void attributeRemoved(HttpSessionBindingEvent event) {
-		String attr = (String) event.getValue();
+		String attr = event.getValue().toString();
 		if(attr != null && users.contains(attr)){
 			users.remove(attr);
 		}

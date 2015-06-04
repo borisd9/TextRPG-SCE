@@ -11,6 +11,7 @@ public class ChangePasswordDB extends DbConnectionAPI{
 	
 	public Boolean doesExist(String userName, String password)
 	{
+		System.out.println("doesExist +");
 		//Query establishment
 		String query = "SELECT * FROM users WHERE username='"+userName+"' AND password='"+password+"'";		
 		
@@ -25,7 +26,7 @@ public class ChangePasswordDB extends DbConnectionAPI{
 	}
 	
 	public boolean UpdatePassword(String username,String Password){
-		//System.out.println(username);
+		System.out.println("UpdatePassword +");
 		String query = "UPDATE users SET password='"+Password+"' WHERE username='"+username+"'";
 		return modifyDatabase(query);
 	}

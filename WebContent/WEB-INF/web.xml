@@ -21,6 +21,14 @@
     <url-pattern>/ChatServlet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>CartServlet</servlet-name>

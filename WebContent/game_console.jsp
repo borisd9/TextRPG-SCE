@@ -596,9 +596,18 @@
 				price = gdb.getItemPrice(itemName);
 			}%>
 				
-				//checking if legal character number has been selected
-				if(msg > 0 && msg <= <%=itemsCount%>){
 				
+				
+				
+					
+				//checking if legal character number has been selected
+				 if(msg > 0 && msg <= <%=itemsCount%>+1){
+					
+					if(msg==<%=itemsCount%>+1){
+						mode="started";
+						displayLocation();
+					}
+					else{
 				    //read updated coins of user after buying using ajax
 					 $.get('gameservlet', { action: "getMoney", username: '<%=username%>',price: premItemsPrice[msg-1]}, 
 					function(responseJson){
@@ -608,7 +617,7 @@
 							}
 							
 							else if(value!="1"){
-					            Console.log(font("#009700")+"You have selected <b>" + font("blue") + premItems[msg-1] + "</b></font>! ");
+					            Console.log(font("#009700")+"You have purchased <b>" + font("blue") + premItems[msg-1] + "</b></font>! ");
 								//Sending data to servlet, to be inserted into DB
 								$.get('gameservlet', { action: "premItem", price: premItemsPrice[msg-1], username: '<%=username%>' ,item:premItems[msg-1] });
 								Console.log(font("red")+key+" <b>"+font("orange")+value+"$");
@@ -617,15 +626,19 @@
 					}, 
 					'json');		
 					mode="started";
+					displayLocation();
+					}
 				}
 				else
 					Console.log(font("red")+"Item #"+msg+" does not exist!<br>");
 					
 				
+				
+				
 			}
 			else 
 	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
-			
+				
 	
 		}//switch
 		

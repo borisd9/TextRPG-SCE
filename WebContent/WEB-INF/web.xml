@@ -21,6 +21,14 @@
     <url-pattern>/ChatServlet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>CartServlet</servlet-name>
@@ -57,6 +65,15 @@
   <servlet>
     <servlet-name>AuthenticationServlet</servlet-name>
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
+  </servlet>
+  
+    <servlet-mapping>
+    <servlet-name>MuteServlet</servlet-name>
+    <url-pattern>/servlet/MuteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MuteServlet</servlet-name>
+    <servlet-class>Servlets.MuteServlet</servlet-class>
   </servlet>
   
   <error-page> 

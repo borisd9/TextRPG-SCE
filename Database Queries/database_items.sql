@@ -29,7 +29,7 @@ CREATE TABLE `items` (
   `bonus2` varchar(20) DEFAULT NULL,
   `location` varchar(45) NOT NULL,
   `price` int(11) DEFAULT NULL,
-    `premium` int(11) DEFAULT NULL,
+  `premium` int(11) DEFAULT NULL,
   PRIMARY KEY (`item`,`location`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

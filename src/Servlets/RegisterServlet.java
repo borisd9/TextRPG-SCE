@@ -1,13 +1,11 @@
 package Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,6 +57,7 @@ public class RegisterServlet extends HttpServlet {
 		else if(!isValidEmail(email))
 			response.sendRedirect(contextPath + "/register.jsp?err=2");
 		else{
+			//encrypt password & username
 			String hashedUsername = null, hashedPassword = null;
 			Sha1Hex sha1 = new Sha1Hex();
 			try {
@@ -71,9 +70,11 @@ public class RegisterServlet extends HttpServlet {
 			final String auth_code = hashedUsername;
 			final String encPassword = hashedPassword;
 			
+			//check if user already exists
 			if(!db.insert(username, encPassword, email))
 				response.sendRedirect(contextPath + "/register.jsp?err=3");
 			else{
+				//insert user to DB
 				db.insert(username, auth_code);
 				
 				//Send mail

@@ -4,14 +4,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.Session;
 
 import org.apache.catalina.websocket.MessageInbound;
 import org.apache.catalina.websocket.StreamInbound;
@@ -21,11 +15,13 @@ import org.apache.catalina.websocket.WsOutbound;
 
 public class ChatServlet extends WebSocketServlet {
 		
+
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<MyMessageInbound> mmiList = new ArrayList<MyMessageInbound>();
 	
+	
 	@Override
-	protected StreamInbound createWebSocketInbound(String subProtocol,
-			HttpServletRequest request) {
+	protected StreamInbound createWebSocketInbound(String subProtocol,HttpServletRequest request) {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -36,7 +32,7 @@ public class ChatServlet extends WebSocketServlet {
 	}
 
 	private class MyMessageInbound extends MessageInbound{
-        WsOutbound myoutbound;
+		WsOutbound myoutbound;
 
         @Override
         public void onOpen(WsOutbound outbound){

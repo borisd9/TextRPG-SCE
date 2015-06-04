@@ -3,6 +3,9 @@
     
 <%@ page import = "General.SessionListener"%>
 <%@ page import= "java.util.List" %>
+<%@ page import= "java.util.ArrayList" %>
+<%@ page import= "General.MuteList" %>
+<%@ page import= "Database.MuteDB" %>
 
 
 
@@ -32,39 +35,67 @@
         }
 
 </style>
+
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+    $('.mutebtn').click(function() {
+        var name = ($(this).attr("value"));
+        $.get("MuteServlet", {name : name});
+       
+
+    });
+});
+
+
+
+</script>
 </head>
 
 <body>
+
 <div id = "online">
 <%
-
+	MuteDB md = new MuteDB();
 	SessionListener sl = (SessionListener) session.getAttribute("online");
 	List<String> users = sl.getList();
 	if(users!=null){
-		for(String u: users){
-			String Logout = "LogoutServlet?param="+u+"";
+		if(md.isAdmin(session.getAttribute("username").toString())){
+			for(String u: users){
 %>
-
   <ul class="nav nav-tabs">
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%=u %><span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="#">Kick</a></li>
-        <li><a href="#">Ban</a></li>
-        <li><a href="#">Battle</a></li>                        
+      <ul class="dropdown-menu">     
+        <li><form>
+			<button id="un" class="mutebtn" value='<%=u %>' onclick="return false;">mute</button>
+			</form> </li>
       </ul>
     </li>
   </ul>
-
-<%-- <button id="usersbtn" type="button" onclick="RightMouseDown()"><%= u %></button>
---%>
 <%
+			}
+		}
+		else{
+			for(String u: users){
+%>
+		<div><%=u %></div><br>
+<%
+			}
 		}
 	}
 	
 %>
 </div>
 
+
+<% Thread.sleep(1000);
+ArrayList<String> test = MuteList.getList();
+for(String s : test){
+	out.println("~~~~~~"+s);
+}	
+	%>
 
 </body>
 </html>

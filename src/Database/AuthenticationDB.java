@@ -7,11 +7,18 @@ import java.sql.SQLException;
 
 public class AuthenticationDB extends DbConnectionAPI {
 
-	//constructor
+	/**
+	 * Constructor
+	 */
 	public AuthenticationDB(){
 		super();
 	}
 	
+	/**
+	 * Checks is user hasn't activated their account
+	 * @param code
+	 * @return user name related to the given 'code'
+	 */
 	public String doesExit(String code) {
 		String query = "SELECT * FROM authentication WHERE code='"+code+"'";
 		try {
@@ -24,7 +31,11 @@ public class AuthenticationDB extends DbConnectionAPI {
 		return null;
 	}
 	
-	
+	/**
+	 * Update account status
+	 * @param username
+	 * @return true upon success
+	 */
 	public boolean activate(String username){
 		
 		String query1 = "DELETE FROM authentication WHERE username='" + username + "'";

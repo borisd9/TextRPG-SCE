@@ -15,10 +15,8 @@ public class SessionListener implements HttpSessionAttributeListener{
 
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
-		System.out.println("attr created");
 		HttpSession session = event.getSession();
 		String attr = (String) session.getAttribute("username");
-		System.out.println("attr " +attr);
 		if(attr != null && !users.contains(attr)){
 			users.add(attr); 
 			session.setAttribute("online", this); 
@@ -28,20 +26,14 @@ public class SessionListener implements HttpSessionAttributeListener{
 
 	@Override
 	public void attributeRemoved(HttpSessionBindingEvent event) {
-		System.out.println("attr removed");
-		String attr = (String) event.getValue();
-		System.out.println("attr " +attr);
+		String attr = event.getValue().toString();
 		if(attr != null && users.contains(attr)){
 			users.remove(attr);
-			
 		}
-		
 	}
 
 	@Override
-	public void attributeReplaced(HttpSessionBindingEvent event) {
-		// TODO Auto-generated method stub
-		
+	public void attributeReplaced(HttpSessionBindingEvent event) {		
 	}
 	
 	public List getList(){

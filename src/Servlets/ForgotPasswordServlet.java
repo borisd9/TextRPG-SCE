@@ -1,12 +1,12 @@
 package Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import javax.mail.MessagingException;
-import javax.servlet.RequestDispatcher;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,10 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Database.ForgotPasswordDB;
-import Database.RegisterDB;
 import General.SendMail;
 import General.Sha1Hex;
 
+/**
+ * Servlet implementation class ForgotPasswordServlet
+ */
+@WebServlet("/ForgotPasswordServlet")
 public class ForgotPasswordServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
@@ -45,24 +48,27 @@ public class ForgotPasswordServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String username = request.getParameter("user");
 		final String email = request.getParameter("email");
-		
-		if(db.doesExist(username, email))
+			contextPath = request.getContextPath();
+		if(username=="" || email=="")
+			response.sendRedirect(contextPath + "/ForgotPassword.jsp?err=1");
+		else if(!isValidEmail(email))
+			response.sendRedirect(contextPath + "/ForgotPassword.jsp?err=2");
+		else if(db.doesExist(username, email))
 		{
 			final String password =Password();
-			String hashed = null;
+			String hashedPassword = null;
 			Sha1Hex sha1 = new Sha1Hex();
 			try {
-				hashed = sha1.makeSHA1Hash(password);
+				hashedPassword = sha1.makeSHA1Hash(password);
 			} catch (NoSuchAlgorithmException e) {
 				System.out.println("Error creating hash: "+e);
 			}
 			
-			final String auth_code = hashed;
+			final String auth_code = hashedPassword;
 			if(db.UpdatePassword(username, auth_code)){
 				
 		
-			
-			
+		
 			//Send mail
 			Thread t = new Thread(new Runnable() {	
 				@Override
@@ -72,28 +78,41 @@ public class ForgotPasswordServlet extends HttpServlet{
 					try {
 						sm.send();
 					} catch (MessagingException e) {
-						e.printStackTrace();
+						System.out.println("Error sending mail: "+e);
 					}
 				}
 			});
 			t.start();
-			response.sendRedirect(contextPath + "/contact.jsp?ok=1");
+			response.sendRedirect(contextPath + "/ForgotPassword.jsp?ok=1");
 			}
-		}
+		}else response.sendRedirect(contextPath + "/ForgotPassword.jsp?err=3");
 	}
+	
 	protected String Password()
 	{
-		String pas=null;
+		String pas="";
 		Random rand = new Random(); 
+		//System.out.println("wow1="+pas);
 		for(int i=0; i<8;i++)
 		{
 			int value = rand.nextInt(26)+65; 
 			pas+=(char)value;
-			System.out.println(pas);
+			//System.out.println(pas);
 		}
+		System.out.println("wow2= "+pas);
 		return pas;
 	}
 	
+	public static boolean isValidEmail(String email) {
+		   boolean result = true;
+		   try {
+		      InternetAddress emailAddr = new InternetAddress(email);
+		      emailAddr.validate();
+		   } catch (AddressException ex) {
+		      result = false;
+		   }
+		   return result;
+		}
 	
 }
 

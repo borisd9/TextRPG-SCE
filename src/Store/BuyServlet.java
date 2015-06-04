@@ -37,7 +37,6 @@ public class BuyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		  HttpSession session = request.getSession();
 		  Cart cartBean = null;
-		   
 		  Object objCartBean = session.getAttribute("cart");
 		 
 		  if(objCartBean!=null) {
@@ -52,15 +51,11 @@ public class BuyServlet extends HttpServlet {
 		 
 	      contextPath= request.getContextPath();
 	         
-	      int quantity=0,price=0,Imoney=0;
-	      quantity =cartBean.getQuantity();
-	      price= cartBean.getPrice();
+	      int total=0,Imoney=0;
+	      total=cartBean.getTotalPrice();
 	      Imoney = (int) session.getAttribute("money");
-	      //System.out.println(quantity);
-	     // System.out.println(price);
-	      //System.out.println(Imoney);
 
-	      if(price*quantity<=Imoney ){
+	      if(total<=Imoney ){
 	    	  cartBean.updatePlayerMoney(user);
 			  cartBean.updatePlayerCoins(user);	
 	    	  response.sendRedirect(contextPath+"/ShoppingCart.jsp?ok=1");

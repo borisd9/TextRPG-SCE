@@ -451,6 +451,18 @@ public class GameDB extends DbConnectionAPI {
 		modifyDatabase(query);
 	}
 
+	public int getLevel(String username){
+		String query = "SELECT level FROM players WHERE username='"+username+"'";
+		ResultSet rs = readFromDatabase(query);
+		try {
+			if(rs.next())
+				return rs.getInt("level");
+		} catch (SQLException e) {
+			System.out.println("Error in getLevel query: "+e);
+		}
+		return -1;
+	}
+	
 	/**
 	 * get an opponent for username
 	 * 
@@ -458,8 +470,10 @@ public class GameDB extends DbConnectionAPI {
 	 * @return name of opponent
 	 */
 	public String getOpponent(String username) {
+		int my_level = getLevel(username);
+		int min_level = my_level - 5, max_level = my_level + 5;
 		String query = "SELECT username FROM players WHERE username<>'"
-				+ username + "'";
+				+ username + "' AND (level=" + min_level + " OR level=" + max_level +")";
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if (rs.next())

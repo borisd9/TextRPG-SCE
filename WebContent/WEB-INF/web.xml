@@ -10,8 +10,8 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
    <listener>
-		<listener-class>General.SessionListener</listener-class>
-	</listener>
+    <listener-class>General.SessionListener</listener-class>
+  </listener>
   <servlet>
     <servlet-name>ChatServlet</servlet-name>
     <servlet-class>Servlets.ChatServlet</servlet-class>
@@ -20,7 +20,6 @@
     <servlet-name>ChatServlet</servlet-name>
     <url-pattern>/ChatServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ChangePasswordServlet</servlet-name>
     <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
@@ -29,7 +28,6 @@
     <servlet-name>ChangePasswordServlet</servlet-name>
     <url-pattern>/ChangePasswordServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>CartServlet</servlet-name>
     <servlet-class>Store.CartServlet</servlet-class>
@@ -101,7 +99,7 @@
 <!-- ADMIN BASIC Authenitacion-Declarative Security -->
   
   <security-role>
-	<role-name>administrator</role-name>
+  <role-name>administrator</role-name>
     </security-role>
   
   <security-constraint>

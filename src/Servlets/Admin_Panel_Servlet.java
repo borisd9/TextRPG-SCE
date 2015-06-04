@@ -54,7 +54,7 @@ public class Admin_Panel_Servlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String submitAction= request.getParameter("submitAction");
 		HttpSession session = request.getSession();	
-		String user = request.getParameter("user").toString();
+		String user=(String)request.getParameter("user").toString();
 		String userlist= request.getParameter("userlist");
 		if(!userlist.equals("-1")){
 			flag_userlist=true;
@@ -64,9 +64,11 @@ public class Admin_Panel_Servlet extends HttpServlet {
 		{
 			if (submitAction.equals("Search")){
             	Search(request, response);
+
             }
 
 			if(submitAction.equals("change to Normal"))
+
             {
             	
             	if(db.Update_To_Normal(user));
@@ -80,9 +82,11 @@ public class Admin_Panel_Servlet extends HttpServlet {
             		
             	}
             	
+
             }
 			
 			if(submitAction.equals("change to Moderator"))
+
             {
             	if(db.Update_To_Moderator(user))
             	{

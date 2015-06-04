@@ -441,7 +441,7 @@
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your location before you start the game!<br>Type <b>"+
-	    					font("blue")+"/startGame</font></b> to start the game.");
+	    					font("blue")+"/start</font></b> to start the game.");
 			}
 			else displayLocation();
 			break;
@@ -453,7 +453,7 @@
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
-	    					font("blue")+"/startGame</font></b> to start the game.");
+	    					font("blue")+"/start</font></b> to start the game.");
 			} else{
 				Console.log("");
 				Console.log(font("#009700")+"Character information:");
@@ -535,8 +535,28 @@
 		
 
 	 	case "/battle":
-	 		toggle_visibility('battleBoxPosition');
-	 		document.getElementById("exit").value = "Forfeit";
+	 		
+	 		
+	 		
+	 		<%
+	 			doesExist = false;
+				if (username != null)
+					doesExist = gdb.doesExist(username);
+			%>
+	 		//If player has started a game
+			if(<%=doesExist%>==true){
+				//Check if there is a compatible opponent
+				if(opponent=="null")
+		 			Console.log(font("red")+"Unfortunately, we could not find a match for you.");
+				else{
+					toggle_visibility('battleBoxPosition');
+	 				document.getElementById("exit").value = "Forfeit";
+				}
+			}
+			else
+				Console.log(font("red")+"You have to start a game before participating in a battle!<br>Type <b>"+
+    					font("blue")+"/start</font></b> to start the game.");
+ 		
 	 		break;		
 
 

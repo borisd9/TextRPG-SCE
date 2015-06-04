@@ -67,6 +67,15 @@
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
   </servlet>
   
+    <servlet-mapping>
+    <servlet-name>MuteServlet</servlet-name>
+    <url-pattern>/servlet/MuteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MuteServlet</servlet-name>
+    <servlet-class>Servlets.MuteServlet</servlet-class>
+  </servlet>
+  
   <error-page> 
     <error-code>500</error-code>
     <location>/500err.jsp</location>

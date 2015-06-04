@@ -64,7 +64,11 @@ public class Admin_Panel_Servlet extends HttpServlet {
 		{
 			if (submitAction.equals("Search")){
             	Search(request, response);
-            }else if(submitAction.equals("change to Normal"))
+
+            }
+
+			if(submitAction.equals("change to Normal"))
+
             {
             	
             	if(db.Update_To_Normal(user));
@@ -78,7 +82,11 @@ public class Admin_Panel_Servlet extends HttpServlet {
             		
             	}
             	
-            }else if(submitAction.equals("change to Moderator"))
+
+            }
+			
+			if(submitAction.equals("change to Moderator"))
+
             {
             	if(db.Update_To_Moderator(user))
             	{
@@ -89,10 +97,14 @@ public class Admin_Panel_Servlet extends HttpServlet {
             		session.setAttribute("ranks","2");
 					request.getRequestDispatcher("/admin_panel.jsp").forward(request, response);
             	}
+            } 
+
+			if(submitAction.equals("ban")){
             }
-		}if(submitAction.equals("ban")){
+		
 			
-		}else request.getRequestDispatcher("/admin_panel.jsp").forward(request, response);
+		} else 
+			request.getRequestDispatcher("/admin_panel.jsp").forward(request, response); 
 	}
 
 	

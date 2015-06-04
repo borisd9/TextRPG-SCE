@@ -30,7 +30,7 @@
 		<br>
 		Password:<br> <input type="password" name="pwd"  style="background-color:#eeeeee; border:1px solid grey"/>
 		<br><br>
-		<a style="font-size: 100%" href="ForgotPassword.jsp">forgot password</a>
+		<a style="font-size: 100%" href="ForgotPassword.jsp">Forgot Password?</a>
 		<center><input type="submit" value="Login" style="background-color:#eeeeee; border:1px solid grey;"/></center>
 		</form>
 		

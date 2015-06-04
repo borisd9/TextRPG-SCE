@@ -40,19 +40,19 @@
 
 	//Init GameDB object and MapDB, and get username from session
 	<%
-			int atk;
-			int defense;
-			int speed;
-			int hp;
-			int exp;
+		int atk;
+		int defense;
+		int speed;
+		int hp;
+		int exp;
 
-			GameDB gdb = new GameDB();
-			String username = (String) session.getAttribute("username");
-			ResultSet rs;
-			MapDB map = new MapDB();
+		GameDB gdb = new GameDB();
+		String username = (String) session.getAttribute("username");
+		ResultSet rs;
+		MapDB map = new MapDB();
 
-			String opponent = gdb.getOpponent(username);
-			String my_char = "", opp_char = "";
+		String opponent = gdb.getOpponent(username);
+		String my_char = "", opp_char = "";
 	%>
 	
 	var opponent = '<%=opponent%>';
@@ -447,7 +447,6 @@
 			}else 
 	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
  			
-	 		
 	 	//view location
 		case "/location":	
 			//check if game has started
@@ -458,14 +457,31 @@
 			else displayLocation();
 			break;
 			
-		
+		case "/mystatus":
+			//check if game has started
+			if(mode != "started"){
+	    		Console.log(font("red")+"You can't check your status before you start the game!<br>Type <b>"+
+	    					font("blue")+"/start</font></b> to start the game.");
+			} else{
+				Console.log("");
+				Console.log(font("#009700")+"Player information:");	
+				//Getting Json object containing HashMap with character status
+				$.get('gameservlet', { action: "getMyStatus", username: '<%=username%>'}, 
+				function(responseJson){
+					$.each(responseJson, function(key, value){
+						Console.log(key+": <b>"+font("orange")+value);
+					});
+				}, 
+				'json');			
+			} 
+			break;
 			
 	 	//view character information//
 	 	case "/char":
 			//check if game has started
 			if(mode != "started"){
 	    		Console.log(font("red")+"You can't check your character before you start the game!<br>Type <b>"+
-	    					font("blue")+"/startGame</font></b> to start the game.");
+	    					font("blue")+"/start</font></b> to start the game.");
 			} else{
 				Console.log("");
 				Console.log(font("#009700")+"Character information:");
@@ -473,12 +489,7 @@
 				//Getting Json object containing HashMap with character status
 				$.get('gameservlet', { action: "getCharStatus", username: '<%=username%>'}, 
 				function(responseJson){
-					var i=0;
 					$.each(responseJson, function(key, value){
-						if(i==0){ 
-							i++;
-							Console.log(font("blue")+"<b>"+value);
-						}
 						Console.log(key+": <b>"+font("orange")+value);
 					});
 				}, 
@@ -490,7 +501,7 @@
 	 	case "/up":
 	 		if(mapInfo.get("up")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveSomewhere", direction: msg}, 
+				$.get('gameservlet', { action: "moveTo", direction: msg}, 
 						function(responseJson){
 					displayLocation();
 				}
@@ -502,7 +513,7 @@
 	 	case "/down":
 	 		if(mapInfo.get("down")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveSomewhere", direction: msg}, 
+				$.get('gameservlet', { action: "moveTo", direction: msg}, 
 						function(responseJson){
 					displayLocation();
 				}
@@ -516,7 +527,7 @@
 	 			//Console.log("<b>"+font("orange")+flagprison);
 	 			if((flagprison==0 && mapInfo.get("location")==("The Screamers Prison")) || mapInfo.get("location")!="The Screamers Prison"){
 			 		//Sending AJAX to update map DB	
-					$.get('gameservlet', { action: "moveSomewhere", direction: msg}, 
+					$.get('gameservlet', { action: "moveTo", direction: msg}, 
 							function(responseJson){
 						displayLocation();
 					}
@@ -533,7 +544,7 @@
 	 	case "/right":
 	 		if(mapInfo.get("right")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveSomewhere", direction: msg}, 
+				$.get('gameservlet', { action: "moveTo", direction: msg}, 
 						function(responseJson){
 					displayLocation();
 				}
@@ -701,6 +712,7 @@
 		Console.log(font("#009700")+"Below is a list of available commands:");
 		Console.log(font("blue")+"<b>/start</b></font>"+font("#FF69B4")+" : to start the game.");
 		Console.log(font("blue")+"<b>/char</b></font>"+font("#FF69B4")+" : to check your character's information");
+		Console.log(font("blue")+"<b>/mystatus</b></font>"+font("#FF69B4")+" : to check your player's information");
 		Console.log(font("blue")+"<b>/location</b></font>"+font("#FF69B4")+" : to see your current location");
 		Console.log(font("blue")+"<b>/premium</b></font>"+font("#FF69B4")+" : to buy items from premium store");
 
@@ -708,7 +720,7 @@
 	
 	//display current location and options
 	function displayLocation(){
-		
+		Console.log("");
  		mapInfo.clear();
 		
 		//Getting Json object containing HashMap with map info, and inputing info to mapInfo object
@@ -1082,17 +1094,20 @@
 </head>
 <body>
 	<div id="content">
-		<font color='blue'><b>To start the game, please type <font
+		<font color='blue'>
+		<b>To start the game, please type <font
 				color='red'>/start</font> in the box below.
-		</b><br /> <b>To see the list of possible commands, type <font
-				color='red'>/cmd</font></b><br /> <br /> <b>To access the premium
-				store, type <font color='red'>/premium</font>
-		</b><br /> <b>Enjoy your gaming!</b><br /> <br /> <br /></font>
+		</b><br> 
+		<b>To see the list of possible commands, type <font
+				color='red'>/cmd</font></b><br>
+		<b>To access the premium store, type <font color='red'>/premium</font>
+		</b><br> 
+		<b>Enjoy your gaming!</b><br /> <br /> <br /></font>
 
 		<div id="right">
 
 			<div id="mapDisplay"
-				style="background: url('images/worldMap.png'); width: 280px; height: 360px; border: thick; border-style: dotted solid; border-color: black; position: relative; left: -10px; visibility: hidden;">
+				style="background: url('images/worldMap.png'); width: 280px; height: 360px; border: thick; border-style: solid; border-color: black; position: relative; left: -10px; visibility: hidden;">
 				<img id="pin" src="images/pin.gif"
 					style="width: 90px; height: 70px; position: relative;">
 			</div>

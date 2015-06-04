@@ -1,17 +1,10 @@
 package Servlets;
 
-import javax.servlet.annotation.WebServlet;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import Database.ChangePasswordDB;
 import General.Sha1Hex;
-import General.SessionListener;
 
 
 /**
@@ -60,7 +52,9 @@ public class ChangePasswordServlet extends HttpServlet{
 		final String oldPass = request.getParameter("oldPass");
 		final String newpass = request.getParameter("newpass");
 		final String newpassR = request.getParameter("newpassR");
+		contextPath = request.getContextPath();
 		
+		//System.out.println("~~~~"+contextPath);
 		
 		if(oldPass=="" || newpass=="" || newpassR=="")
 			response.sendRedirect(contextPath + "/changePassword.jsp?err=1");
@@ -80,9 +74,11 @@ public class ChangePasswordServlet extends HttpServlet{
 				response.sendRedirect(contextPath + "/changePassword.jsp?err=2");
 			else if(newpass.equals(newpassR)){
 				
+				
 				final String newpassword =newpass;
 				String newhashedpassword = null;
 				Sha1Hex sha2 = new Sha1Hex();
+				
 				try {
 					newhashedpassword = sha2.makeSHA1Hash(newpassword);
 				} catch (NoSuchAlgorithmException e) {

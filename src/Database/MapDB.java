@@ -64,7 +64,7 @@ public class MapDB extends DbConnectionAPI {
 				
 			}
 		}	catch (SQLException e) {
-			System.out.println("Error in map query: "+e);
+			System.out.println("Error in mapDB - update query: "+e);
 		}		
 	}
 	

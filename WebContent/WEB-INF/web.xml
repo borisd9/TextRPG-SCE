@@ -59,6 +59,15 @@
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/servlet/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
+  
   <error-page> 
     <error-code>500</error-code>
     <location>/500err.jsp</location>

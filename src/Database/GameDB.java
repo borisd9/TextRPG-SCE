@@ -192,23 +192,6 @@ public class GameDB extends DbConnectionAPI
 	}
 	
 	/**
-	 * get Item Price
-	 * @param item
-	 * @return get the price of the item , -1 if it's empty
-	 */
-	public int getItemPrice(String item){
-		String query = "SELECT price FROM items WHERE item='"+item+"'";
-		ResultSet rs = readFromDatabase(query);
-		try {
-			if(rs.next())
-				return rs.getInt(1);
-		} catch (SQLException e) {
-			System.out.println("Error in getMoney query: "+e);
-		}
-		return -1;
-	}
-	
-	/**
 	 * player Location
 	 * @param username
 	 * @return get the player Location, -1 if it's empty
@@ -330,6 +313,8 @@ public class GameDB extends DbConnectionAPI
 
 	
 	/**
+	 * get Item Price
+	 * @param item
 	 * @return price of  items from database
 	 */
 	public int getItemPrice(String item){

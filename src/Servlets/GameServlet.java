@@ -121,7 +121,7 @@ public class GameServlet extends HttpServlet {
 			
 		}
 		
-		if(action.equals("moveto")){
+		if(action.equals("moveSomewhere")){
 			
 			String direction = request.getParameter("direction").substring(0);
 			System.out.println(direction);
@@ -132,6 +132,8 @@ public class GameServlet extends HttpServlet {
 				map.move("Chimaki Hospital");
 			else if(direction.equals("The Screamers Prison"))
 				map.move("The Screamers Prison");
+			else if(direction.equals("Torchwood"))
+				map.move("Torchwood");
 			
 		}
 		

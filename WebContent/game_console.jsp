@@ -182,7 +182,7 @@
 				 				"You has been send to the hospital to patch your character's <br> "+font("White")+"System: "+font("#33aaaa")+ "injuries."+
 				 				"The treatment cost you 100 coins. Don't warry - if <br> "+font("White")+"System: "+font("#33aaaa")+"you didn't have that sum - nothing won't be taken <br> "+font("White")+"System: "+font("#33aaaa")+"from you. Take Care!");
 				 		underconst();
-				 		$.get('gameservlet', { action: "moveto", direction: "Chimaki Hospital"}, 
+				 		$.get('gameservlet', { action: "moveSomewhere", direction: "Chimaki Hospital"}, 
 								function(responseJson){
 							displayLocation();
 						}
@@ -196,7 +196,7 @@
 					case "Chimaki Hospital":
 						//Return Home V
 				 		Console.log("<b>"+font("#33aaaa")+"You returned home in safety.");	
-				 		$.get('gameservlet', { action: "moveto", direction: "Home"}, 
+				 		$.get('gameservlet', { action: "moveSomewhere", direction: "Home"}, 
 								function(responseJson){
 							displayLocation();
 						}
@@ -217,7 +217,7 @@
 							else Console.log("<b>"+font("#33aaaa")+"You cleaned your cell 3 times and did all <br> "+font("White")+"System: "+font("#33aaaa")+
 									"what the screamers told you to do. <br> "+font("White")+"System: "+font("#33aaaa")+"You are free to go home!");
 				 			Console.log("<b>"+font("#33aaaa")+"You returned home in safety.");	
-				 			$.get('gameservlet', { action: "moveto", direction: "Home"}, 
+				 			$.get('gameservlet', { action: "moveSomewhere", direction: "Home"}, 
 									function(responseJson){
 								displayLocation();
 							}
@@ -341,7 +341,7 @@
 			 		//need to update the DB
 			 		underconst();
 					//send to hospital
-					$.get('gameservlet', { action: "moveto", direction: "Chimaki Hospital"}, 
+					$.get('gameservlet', { action: "moveSomewhere", direction: "Chimaki Hospital"}, 
 							function(responseJson){
 						displayLocation();
 					}
@@ -409,7 +409,7 @@
 						//Kill Some People Around V
 				 		Console.log("<b>"+font("#33aaaa")+"What have you done?! Are you crazy?!<br> "+font("White")+"System: "+font("#33aaaa")+
 				 				"Now you are going to Jail!");
-				 		$.get('gameservlet', { action: "moveto", direction: "The Screamers Prison"}, 
+				 		$.get('gameservlet', { action: "moveSomewhere", direction: "The Screamers Prison"}, 
 								function(responseJson){
 							displayLocation();
 						}
@@ -482,7 +482,7 @@
 	 	case "/up":
 	 		if(mapInfo.get("up")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveTo", direction: msg}, 
+				$.get('gameservlet', { action: "moveSomewhere", direction: msg}, 
 						function(responseJson){
 					displayLocation();
 				}
@@ -494,7 +494,7 @@
 	 	case "/down":
 	 		if(mapInfo.get("down")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveTo", direction: msg}, 
+				$.get('gameservlet', { action: "moveSomewhere", direction: msg}, 
 						function(responseJson){
 					displayLocation();
 				}
@@ -508,7 +508,7 @@
 	 			//Console.log("<b>"+font("orange")+flagprison);
 	 			if((flagprison==0 && mapInfo.get("location")==("The Screamers Prison")) || mapInfo.get("location")!="The Screamers Prison"){
 			 		//Sending AJAX to update map DB	
-					$.get('gameservlet', { action: "moveTo", direction: msg}, 
+					$.get('gameservlet', { action: "moveSomewhere", direction: msg}, 
 							function(responseJson){
 						displayLocation();
 					}
@@ -525,7 +525,7 @@
 	 	case "/right":
 	 		if(mapInfo.get("right")!= null){
 		 		//Sending AJAX to update map DB	
-				$.get('gameservlet', { action: "moveTo", direction: msg}, 
+				$.get('gameservlet', { action: "moveSomewhere", direction: msg}, 
 						function(responseJson){
 					displayLocation();
 				}
@@ -823,7 +823,7 @@
 					"You has been send to the hospital to patch your character's <br> "+font("White")+"System: "+font("#33aaaa")+ "injuries."+
 	 				"The treatment cost you 100 coins. Don't warry - if <br> "+font("White")+"System: "+font("#33aaaa")+"you didn't have that sum - nothing won't be taken <br> "+font("White")+"System: "+font("#33aaaa")+"from you. Take Care!");
 			//send to hospital
-			$.get('gameservlet', { action: "moveto", direction: "Chimaki Hospital"}, 
+			$.get('gameservlet', { action: "moveSomewhere", direction: "Chimaki Hospital"}, 
 					function(responseJson){
 				displayLocation();
 			}

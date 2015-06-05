@@ -672,19 +672,20 @@
 		 Console.log("you can select one of the following premium items:");
 		 if(flag=="")
 		 	Console.log(font("red")+"Money you have: "+" <b>"+font("orange")+<%=cash%>+"$");
-		 flag="1";
-								 
+		 flag="1";					 
 		//Print premium items and price from DB and add to arrays
-		<%rs = gdb.getPremiumItems();
-			for (int i = 1; rs.next(); i++) {
+		<%int j;
+		rs = gdb.getPremiumItems();
+			for ( j = 1; rs.next(); j++) {
 				String item = rs.getString(1);
 				int Price = gdb.getItemPrice(item);%>
 		 
-		Console.log(font("blue")+"<%=i%></font> - <b> <%=item%> ,price=<%=Price%> $</b>");
+		Console.log(font("blue")+"<%=j%></font> - <b> <%=item%> ,price=<%=Price%> $</b>");
 		premItemsPrice.push("<%=Price%>");
 		premItems.push("<%=item%>");
-		
 		<%}%>
+		Console.log(font("blue")+"<%=j%></font> - <b>Cancel</b> ");
+
 		Console.log("You can select  item by typing the relevant number");
 		mode="premium";
 	}

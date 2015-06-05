@@ -36,4 +36,17 @@ public class AdminDB extends DbConnectionAPI {
 		return modifyDatabase(query);
 	}
 	
+	public boolean Update_To_ban(String username){
+		//System.out.println(username);
+		String query = "UPDATE users SET ban=1 WHERE username='"+username+"'";
+		return modifyDatabase(query);
+	}
+	
+	public boolean Update_To_unban(String username){
+		//System.out.println(username);
+		String query = "UPDATE users SET ban=0 WHERE username='"+username+"'";
+		return modifyDatabase(query);
+	}
+	
+	
 }

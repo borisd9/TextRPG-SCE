@@ -68,6 +68,9 @@ public class Admin_Panel_Servlet extends HttpServlet {
 		HttpSession session = request.getSession();	
 		String user=(String)request.getParameter("user").toString();
 		String userlist= request.getParameter("userlist");
+		
+		
+		
 		if(!userlist.equals("-1")){
 			flag_userlist=true;
 			Search(request, response);
@@ -84,6 +87,7 @@ public class Admin_Panel_Servlet extends HttpServlet {
             		request.setAttribute("user",request.getParameter("user"));
 					request.setAttribute("email",request.getParameter("email"));
 					request.setAttribute("activated",request.getParameter("activated"));
+					session.setAttribute("ban",request.getParameter("ban"));
             		request.setAttribute("rank","Normal");
             		session.setAttribute("ranks","1");
 					request.getRequestDispatcher("/admin_panel.jsp").forward(request, response);
@@ -97,18 +101,37 @@ public class Admin_Panel_Servlet extends HttpServlet {
             		request.setAttribute("user",request.getParameter("user"));
 					request.setAttribute("email",request.getParameter("email"));
 					request.setAttribute("activated",request.getParameter("activated"));
+					session.setAttribute("ban",request.getParameter("ban"));
             		request.setAttribute("rank","Moderator");
             		session.setAttribute("ranks","2");
 					request.getRequestDispatcher("/admin_panel.jsp").forward(request, response);
             	}
-            }
-		}if(submitAction.equals("ban")){
-			
+            }else	if(submitAction.equals("ban user")){
+            	if(db.Update_To_ban(user))
+            	{
+					request.setAttribute("user",request.getParameter("user"));
+					request.setAttribute("email",request.getParameter("email"));
+					request.setAttribute("activated",request.getParameter("activated"));
+					session.setAttribute("ban","1");
+		    		request.setAttribute("rank","Moderator");
+		    		session.setAttribute("ranks","2");
+					request.getRequestDispatcher("/admin_panel.jsp").forward(request, response);
+            	}
+			}else if(submitAction.equals("unban user")){
+				if(db.Update_To_unban(user))
+            	{
+					request.setAttribute("user",request.getParameter("user"));
+					request.setAttribute("email",request.getParameter("email"));
+					request.setAttribute("activated",request.getParameter("activated"));
+					session.setAttribute("ban","0");
+		    		request.setAttribute("rank","Moderator");
+		    		session.setAttribute("ranks","2");
+					request.getRequestDispatcher("/admin_panel.jsp").forward(request, response);
+            	}
+			}
 		}else request.getRequestDispatcher("/admin_panel.jsp").forward(request, response);
 	}
 
-	
-	
 	
 	protected void Search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException	
 	{
@@ -161,6 +184,10 @@ public class Admin_Panel_Servlet extends HttpServlet {
 						request.setAttribute("activated","not_activated");
 					else
 						request.setAttribute("activated","activated");
+					if(rs.getInt("ban") == 1)
+						session.setAttribute("ban","1");
+					else
+						session.setAttribute("ban","0");
 					
 					session.setAttribute("ranks",rank);
 					flag_userlist=false;

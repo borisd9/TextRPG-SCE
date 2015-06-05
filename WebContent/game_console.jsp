@@ -181,7 +181,7 @@
 						break;
 					case "Seamol City":
 						//Consult The Mayer V
-				 		Console.log("<b>"+font("#33aaaa")+"The Mayer says you should go and fight the Coco Manster.");	
+				 		Console.log("<b>"+font("#33aaaa")+"The Mayer says you should go and fight the Coco Monster.");	
 						break;
 					case "Crocodile Bridge":
 						//Jump From The Bridge U
@@ -197,7 +197,7 @@
 						);
 				 		//update DB	
 						break;
-					case "Coconut Forest":
+					case "Coconut forest":
 						//Fight The Coco Manster V
 				 		fightmanster(20,61,1000,"Coco",80,700,70,300);
 						break;
@@ -262,6 +262,7 @@
 					//Travel Around V
 			 		Console.log("<b>"+font("#33aaaa")+"You found the <b>"+font("blue") +"The Blue Ring!<br> "+font("White")+"System: "+font("#33aaaa")+
 			 				"That amulet adds you 5 exp and 25 hp!");
+			 		underconst();
 					break;
 				case "The Amaya Throng":
 					//Fight The Amaya Manster V
@@ -282,7 +283,12 @@
 			 				"And they are very mad about you! RUN!!!<br> "+font("White")+"System: "+font("#33aaaa")+
 			 				"You ran to Torchwood. <br> "+font("White")+"System: "+font("#33aaaa")+
 			 				"DON'T YOU WAKE THEM UP AGAIN!");
-			 		underconst();
+			 		//send to Torchwood
+					$.get('gameservlet', { action: "moveSomewhere", direction: "Torchwood"}, 
+							function(responseJson){
+						displayLocation();
+					}
+					);
 					break;
 				case "The Zygons Tribe":
 					//Talk To The Tribe Chief X
@@ -299,7 +305,7 @@
 					//Fight The Enormous Crocodile V
 			 		fightmanster(20,61,300,"Enormous Crocodile",35,40,15,60);	
 					break;
-				case "Coconut Forest":
+				case "Coconut forest":
 					//Travel Around X
 			 		underconst();
 					break;
@@ -318,20 +324,24 @@
 					break;
 				case "The Screamers Prison":
 					//Clean Your Cell V
-					if(flagcell==0){
-						countcell=0;
-						flagcell=1;
+					if(flagprison==1)
+					{
+						if(flagcell==0){
+							countcell=0;
+							flagcell=1;
+						}
+						countcell++;
+						if (countcell==1)
+							Console.log("<b>"+font("#33aaaa")+"Yuck! You cleaned all the spider miners in your cell.");
+						else if(countcell==2)
+							Console.log("<b>"+font("#33aaaa")+"You organized all of your stuff in your cell.");
+						else if(countcell==3)
+							Console.log("<b>"+font("#33aaaa")+"You polished your cell and you are exhausted.");
+						else if(countcell>=4)
+							Console.log("<b>"+font("#33aaaa")+"Your cell shines! Stop cleaning it!");
+						break;
 					}
-					countcell++;
-					if (countcell==1)
-						Console.log("<b>"+font("#33aaaa")+"Yuck! You cleaned all the spider miners in your cell.");
-					else if(countcell==2)
-						Console.log("<b>"+font("#33aaaa")+"You organized all of your stuff in your cell.");
-					else if(countcell==3)
-						Console.log("<b>"+font("#33aaaa")+"You polished your cell and you are exhausted.");
-					else if(countcell>=4)
-						Console.log("<b>"+font("#33aaaa")+"Your cell shines! Stop cleaning it!");
-					break;
+					else Console.log("<b>"+font("#33aaaa")+"You are only a visitor - no cell to clean.");	
 			}
 			break;
 			}else 
@@ -386,10 +396,14 @@
 					break;
 				case "The Screamers Prison":
 					//Do What The Screamers Tells You V
-			 		Console.log("<b>"+font("#33aaaa")+"They shouted at you and hited you but you did it!<br> "+font("White")+"System: "+font("#33aaaa")+
-			 				"You did all what they wanted you to do - cleaned there<br> "+font("White")+"System: "+font("#33aaaa")+
-			 				"cells, run in circles in the beat down sun and you even<br>"+font("White")+"System: "+font("#33aaaa")+"made them laugh!");
-					flagdo=1;
+					if(flagprison==1)
+					{
+				 		Console.log("<b>"+font("#33aaaa")+"They shouted at you and hited you but you did it!<br> "+font("White")+"System: "+font("#33aaaa")+
+				 				"You did all what they wanted you to do - cleaned there<br> "+font("White")+"System: "+font("#33aaaa")+
+				 				"cells, run in circles in the beat down sun and you even<br>"+font("White")+"System: "+font("#33aaaa")+"made them laugh!");
+						flagdo=1;
+					}
+					else Console.log("<b>"+font("#33aaaa")+"You are only a visitor - nothing for you to do here.");
 					break;
 			}
 			break;
@@ -422,8 +436,7 @@
 							displayLocation();
 						}
 						);
-				 		//update DB
-				 		underconst();
+
 				 		flaghome=0;
 				 		flagprison=1;
 				 		flagcell=0;
@@ -438,9 +451,13 @@
 						break;
 					case "The Screamers Prison":
 						//Ask For Pardon V
-				 		Console.log("<b>"+font("#33aaaa")+"The court of law forgive you.<br>"+font("White")+"System: "+font("#33aaaa")+
-				 				"You can now leave the prison.");
-				 		pardonflag=1;
+						if(flagprison==1)
+						{
+					 		Console.log("<b>"+font("#33aaaa")+"The court of law forgive you.<br>"+font("White")+"System: "+font("#33aaaa")+
+					 				"You can now leave the prison.");
+					 		pardonflag=1;
+						}
+						else Console.log("<b>"+font("#33aaaa")+"You are only a visitor - you haven't done wrong.");
 						break;
 			}
 			break;
@@ -465,6 +482,7 @@
 			} else{
 				Console.log("");
 				Console.log(font("#009700")+"Player information:");	
+				Console.log(font("#009700")+"Type "+font("red")+"/char "+font("#009700")+"for your character's information");	
 				//Getting Json object containing HashMap with character status
 				$.get('gameservlet', { action: "getMyStatus", username: '<%=username%>'}, 
 				function(responseJson){

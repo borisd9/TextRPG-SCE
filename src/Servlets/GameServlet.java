@@ -3,7 +3,9 @@ package Servlets;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -55,7 +57,7 @@ public class GameServlet extends HttpServlet {
 		//Return character's status
 		if(action.equals("getCharStatus")){
 			String username = request.getParameter("username");
-			 rs = db.getPlayerInfo(username);
+			rs = db.getPlayerInfo(username);
 			Map<String, String> status = new LinkedHashMap<String, String>();
 			try {
 				if(rs.next()){
@@ -104,6 +106,7 @@ public class GameServlet extends HttpServlet {
 			}
 		}
 
+		
 		//Return location information
 		if(action.equals("getMapStatus")){
 			
@@ -172,20 +175,18 @@ public class GameServlet extends HttpServlet {
 		if(action.equals("buyFromStore")){
 			String username = request.getParameter("username");
 			//String location = request.getParameter("location");
-			String itemsChars = request.getParameter("itemsChars");
+			String itemList = request.getParameter("itemList");
 			
 			
 			int money= db.getMoney(username);
-			int price= db.getItemPrice(itemsChars);
-			System.out.println("price"+price);
-			System.out.println("money"+money);
+			int price= db.getItemPrice(itemList);	
 			int buy=money-price;
-			System.out.println("buy"+buy);
+			
 			String ans;
 			
-			if(buy>=0)
+			if(buy>=0 && price!=-1)
 			{	
-				db.updatePurchaseItem(username,itemsChars,buy);
+				db.updatePurchaseItem(username,itemList,buy);
 				ans = "1";
 			}
 			else{
@@ -243,7 +244,36 @@ public class GameServlet extends HttpServlet {
 			response.setContentType("text/plain");  
 			response.setCharacterEncoding("UTF-8"); 
 			response.getWriter().write(json); 
-		}		 
+		}	
+		
+		if(action.equals("getItemsDB")){
+			String username = request.getParameter("username");
+			rs = db.getStoreItems(username);
+			List<Map<String,String>> lst = new ArrayList<Map<String,String>>();
+
+			try {
+				while(rs.next()){
+					Map<String,String> item= new LinkedHashMap<String,String>();
+				
+					item.put("Item", rs.getString("item"));
+					item.put("Description", rs.getString("description"));
+					item.put("Bonus1", rs.getString("bonus1"));
+					item.put("Bonus2", rs.getString("bonus2"));
+					item.put("Price", rs.getString("price"));
+					
+					lst.add(item);
+				}
+			} catch (SQLException e) {
+				System.out.println("Error reading char status: "+e);
+			}
+			
+			String json = new Gson().toJson(lst);
+			
+			response.setContentType("text/plain");  
+			response.setCharacterEncoding("UTF-8"); 
+			response.getWriter().write(json); 
+			
+		}
 	}
 	/**
 	 * 

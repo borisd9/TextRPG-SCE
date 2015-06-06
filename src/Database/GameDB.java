@@ -138,7 +138,7 @@ public class GameDB extends DbConnectionAPI {
 		ResultSet rs = readFromDatabase(query);
 		return rs;
 	}
-
+	
 	/**
 	 * get store items
 	 * @param location
@@ -147,7 +147,7 @@ public class GameDB extends DbConnectionAPI {
 	public ResultSet getStoreItems(String username) {
 
 		String location = playerLocation(username);
-
+		
 		String query = "SELECT * FROM items WHERE location='" + location + "'";
 
 		ResultSet rs = readFromDatabase(query);
@@ -224,7 +224,7 @@ public class GameDB extends DbConnectionAPI {
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if (rs.next())
-				return rs.getInt(1);
+				return rs.getInt("price");
 		} catch (SQLException e) {
 			System.out.println("Error in getMoney query: " + e);
 		}
@@ -242,7 +242,6 @@ public class GameDB extends DbConnectionAPI {
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if (rs.next()) {
-				System.out.println("eshchar playerLocation:" + rs.getString("location"));
 				return rs.getString("location");
 			}
 		} catch (SQLException e) {

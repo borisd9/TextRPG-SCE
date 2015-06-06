@@ -49,6 +49,7 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("pwd");
 		final String email = request.getParameter("email");
 		contextPath = request.getContextPath();
+		final String URL = request.getServerName();
 		
 		//check if the fields are blank
 		if(username=="" || password=="" || email=="")
@@ -81,8 +82,8 @@ public class RegisterServlet extends HttpServlet {
 				Thread t = new Thread(new Runnable() {	
 					@Override
 					public void run() {
-						SendMail sm = new SendMail();
-						sm.registerMail(email, username, auth_code);
+						SendMail sm = new SendMail();	
+						sm.registerMail(email, username, auth_code, URL);
 						try {
 							sm.send();
 						} catch (MessagingException e) {

@@ -23,10 +23,10 @@ public class SendMail {
 	 * @param username
 	 * @param auth_code
 	 */
-	public void registerMail(String to, String username, String auth_code) {
+	public void registerMail(String to, String username, String auth_code, String URL) {
 		this.to = to;
 		this.subject = "TextRPG Registration";
-		String link = "<a href='localhost/text-rpg/activate.jsp?code="+auth_code+"&username="+username+"'>link</a>";
+		String link = "<a href='" + URL + "/text-rpg/activate.jsp?code="+auth_code+"&username="+username+"'>link</a>";
 		this.message = "Hello "+username+", welecome to TextRPG!<br><br>In order to activate your account, please go to the following " 
 					+ link + ".<br><br>Regards,<br>TextRPG Team";
 	}

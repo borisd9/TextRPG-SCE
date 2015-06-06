@@ -34,12 +34,6 @@ public class MuteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		MuteList ml = new MuteList();
-		String name= request.getParameter("name");
-		ml.addToList(name);
-		
 	}
 
 	/**
@@ -48,20 +42,29 @@ public class MuteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		
+		response.setContentType("text/plain");  
+	    response.setCharacterEncoding("UTF-8");
+	    
 		if(action.equals("addMutee")){
+			String mutee = request.getParameter("mutee");			
+			if(!mList.addToList(mutee))
+				response.getWriter().write("error");
+			else response.getWriter().write("ok");
+		}
+		
+		if(action.equals("removeMutee")){
 			String mutee = request.getParameter("mutee");
-			System.out.println("~~~~~~~~~~"+mutee);
-			
-			mList.addToList(mutee);
+			if(!mList.removeFromList(mutee))
+			    response.getWriter().write("error");
+			else response.getWriter().write("ok");
 		}
 		
 		if(action.equals("getList")){
-			ArrayList muted_list = mList.getList();
+			ArrayList<String> muted_list = mList.getList();
 			String json = new Gson().toJson(muted_list);
-			response.setContentType("text/plain");  
-		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
+		;
 	}
 
 }

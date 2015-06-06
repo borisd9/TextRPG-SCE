@@ -75,7 +75,7 @@
     <b> Game </b>
     <br/><br/>
     <div>
-		<jsp:include page="game_console.jsp" />
+		<jsp:include page="game_console.jsp" flush="true" />
 	</div>
     <br/><b> Chat </b>
     <br/><br/>
@@ -89,7 +89,7 @@
 	
 	<% } %>
 	<div>
-		<jsp:include page="chat.jsp" />
+		<jsp:include page="chat.jsp" flush="true" />
 	</div>
 	<br/>
 	<br/><br/><br/><br/><br/>

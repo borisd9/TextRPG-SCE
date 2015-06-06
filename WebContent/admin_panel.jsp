@@ -16,8 +16,6 @@
 
 </head>
 
-
-
 <body style="color: black" onload='document.form1.email.focus()'>
 	<div id="main">
 	  <jsp:include page="header.jsp"/>
@@ -101,9 +99,32 @@
 	      	      		} 
 	      		}
 			%>
+			
 			<br>
 			&nbsp;&nbsp;activated:<br>&nbsp;&nbsp;<input type="text" name='activated' readonly style="background-color:#eeeeee; border:1px solid grey" value=${activated} >
-			<br><br><br>
+			<br>
+			<%
+			String ban = null;
+			ban = (String)session.getAttribute("ban");
+			
+	   		if(ban!=null){
+	      		if(ban.equals("0")){
+	   		%>
+ 					 &nbsp;&nbsp;<input style="border:1px solid grey" type="submit" value="ban user" name="submitAction"/>
+ 
+			<%
+		      	}
+	      		else if(ban.equals("1")){
+	      	%>   
+	      		&nbsp;&nbsp;<font color="red"><b>the user is banned do you wont to unban him?</b></font>
+	      		&nbsp;&nbsp;<input style="border:1px solid grey" type="submit" value="unban user" name="submitAction"/>
+	      		
+	      	<%
+	      	      	} 
+	      		}
+			%>
+			
+			<br><br>
 			<center><input style="border:1px solid grey" type="submit" value="Search" name="submitAction"/></center>
 			<br/>
 		</form>

@@ -66,6 +66,13 @@
 	
 	<% 
       		}
+      		else if(err.equals("5")){
+      			%>   
+      			<font color="red"><b>Your Account Has Been Banned!</b>
+      			<br>You are welcome to <a href="contact.jsp">contact</a> us if you feel this ban was unrightful<br></font>
+      			<br><br>
+      			<%
+      		}   		
       	}
       	
     %>

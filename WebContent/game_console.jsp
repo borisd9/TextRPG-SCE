@@ -644,6 +644,7 @@
 	
 					Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
 					mode = "started";
+					<%Thread.sleep(500);%>
 					displayLocation();				
 				}
 				else{

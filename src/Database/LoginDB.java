@@ -29,7 +29,7 @@ public class LoginDB extends DbConnectionAPI {
 			if(rs.next())
 				return rs.getInt("activated");
 		} catch (SQLException e) {
-			System.out.println("Error in does exists query: "+e);
+			System.out.println("Error in LoginDB - doesExists query: "+e);
 		}		
 		return -1;
 	}
@@ -43,9 +43,27 @@ public class LoginDB extends DbConnectionAPI {
 			if(rs.next())
 				return Integer.toString(rs.getInt("rank"));
 		} catch (SQLException e) {
-			System.out.println("Error in does exists query: "+e);
+			System.out.println("Error in LoginDB - rank_check query: "+e);
 		}		
 		return "-1";			
+	}
+
+	public boolean isBanned(String username) {
+		
+		//Query establishment
+		String query = "SELECT ban FROM users WHERE username='"+username+"'";		
+		try {			
+			ResultSet rs = readFromDatabase(query);	
+			if(rs.next()){
+				if(rs.getInt("ban") == 1)
+					return true;
+				else
+					return false;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in LoginDB - isBanned query: "+e);
+		}		
+		return false;
 	}
 }
 

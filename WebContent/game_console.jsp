@@ -467,7 +467,8 @@
 							i++;
 							Console.log(font("blue")+"<b>"+value);
 						}
-						Console.log(key+": <b>"+font("orange")+value);
+						else
+							Console.log(key+": <b>"+font("orange")+value);
 					});
 				}, 
 				'json');			

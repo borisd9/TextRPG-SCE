@@ -28,6 +28,7 @@ CREATE TABLE `users` (
   `email` varchar(45) DEFAULT NULL,
   `rank` int(11) NOT NULL DEFAULT '3',
   `activated` int(11) NOT NULL DEFAULT '0',
+  `ban` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

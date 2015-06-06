@@ -3,8 +3,6 @@ package Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
-
 public class ChangePasswordDB extends DbConnectionAPI{
 
 	public ChangePasswordDB(){

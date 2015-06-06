@@ -47,8 +47,6 @@
     <servlet-name>CheckoutServlet</servlet-name>
     <url-pattern>/servlet/CheckoutServlet</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet-mapping>
     <servlet-name>BuyServlet</servlet-name>
     <url-pattern>/servlet/BuyServlet</url-pattern>
@@ -57,7 +55,6 @@
     <servlet-name>BuyServlet</servlet-name>
     <servlet-class>Store.BuyServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>AuthenticationServlet</servlet-name>
     <url-pattern>/servlet/AuthenticationServlet</url-pattern>
@@ -65,6 +62,25 @@
   <servlet>
     <servlet-name>AuthenticationServlet</servlet-name>
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ChangePassServlet</servlet-name>
+    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ChangePassServlet</servlet-name>
+    <url-pattern>/servlet/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
+
+    <servlet-mapping>
+    <servlet-name>MuteServlet</servlet-name>
+    <url-pattern>/servlet/MuteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MuteServlet</servlet-name>
+    <servlet-class>Servlets.MuteServlet</servlet-class>
   </servlet>
   
   <error-page> 
@@ -77,6 +93,7 @@
     <location>/404err.jsp</location>
   </error-page>
   
+  <!-- SSL for credit card payment page -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Purchase</web-resource-name>
@@ -87,7 +104,26 @@
     </user-data-constraint>
   </security-constraint>
   
-
   
+<!-- ADMIN BASIC Authenitacion-Declarative Security -->
+  
+  <security-role>
+	<role-name>administrator</role-name>
+    </security-role>
+  
+  <security-constraint>
+   <web-resource-collection>
+      <web-resource-name>Admin Panel</web-resource-name>
+      <url-pattern>/admin_panel.jsp</url-pattern>
+   </web-resource-collection>
+   <auth-constraint>
+      <role-name>administrator</role-name>
+   </auth-constraint>
+</security-constraint>
+
+<login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>ADMIN</realm-name>
+</login-config>
 
 </web-app>

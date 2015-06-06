@@ -1,14 +1,12 @@
 package Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +21,7 @@ import General.Sha1Hex;
  * Servlet implementation class ForgotPasswordServlet
  */
 @WebServlet("/ForgotPasswordServlet")
-public class ForgotPasswordServlet extends HttpServlet{
+public class ForgotPassServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	String contextPath;
@@ -32,7 +30,7 @@ public class ForgotPasswordServlet extends HttpServlet{
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ForgotPasswordServlet() {
+    public ForgotPassServlet() {
         super();   
         db = new ForgotPasswordDB();
     }

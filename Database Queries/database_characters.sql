@@ -40,7 +40,6 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES ('bulb',49,49,45,45,'leaf','poison'),('char',60,38,65,39,'fire','smoke'),('squir',40,65,35,44,'water','ice');
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

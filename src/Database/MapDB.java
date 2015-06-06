@@ -64,7 +64,7 @@ public class MapDB extends DbConnectionAPI {
 				
 			}
 		}	catch (SQLException e) {
-			System.out.println("Error in map query: "+e);
+			System.out.println("Error in mapDB - update query: "+e);
 		}		
 	}
 	
@@ -89,11 +89,9 @@ public class MapDB extends DbConnectionAPI {
 			System.out.println("Error in map moveTo query: "+e);
 		}		
 		return false;
-		
-
 	}
 	
-
+	
 	/**
 	 * get the location of the user
 	 * @return string of the location

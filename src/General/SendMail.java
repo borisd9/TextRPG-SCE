@@ -27,7 +27,7 @@ public class SendMail {
 		this.to = to;
 		this.subject = "TextRPG Registration";
 		String link = "<a href='" + URL + "/text-rpg/activate.jsp?code="+auth_code+"&username="+username+"'>link</a>";
-		this.message = "Hello "+username+", welecome to TextRPG!<br><br>In order to activate your account, please go to the following " 
+		this.message = "Hello "+username+", welcome to TextRPG!<br><br>In order to activate your account, please go to the following " 
 					+ link + ".<br><br>Regards,<br>TextRPG Team";
 	}
 	

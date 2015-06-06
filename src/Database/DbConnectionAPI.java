@@ -4,9 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
-
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
 
 public class DbConnectionAPI {
 
@@ -24,8 +23,8 @@ public class DbConnectionAPI {
 	 **/
 	
 	
-	private static BasicDataSource ds;
 	private static Connection con;
+	private static DataSource ds;
 	
 	
 	/**
@@ -33,12 +32,21 @@ public class DbConnectionAPI {
 	 */
 	public DbConnectionAPI()
 	{
-		//setup database connection settings
-		ds = new BasicDataSource();
-		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setUsername("root");
-		ds.setPassword("root");
-		ds.setUrl("jdbc:mysql://localhost/database");
+		
+		PoolProperties p = new PoolProperties();
+        p.setUrl("jdbc:mysql://localhost/database");
+        p.setDriverClassName("com.mysql.jdbc.Driver");
+        p.setUsername("root");
+        p.setPassword("root");
+        p.setMaxActive(20);
+        p.setMaxIdle(10);
+        p.setRemoveAbandoned(false);
+        p.setInitialSize(5);
+        p.setMinIdle(5);
+        p.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
+        						+"org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+        DataSource ds = new DataSource();
+        ds.setPoolProperties(p);
 		
 		
 		
@@ -60,16 +68,14 @@ public class DbConnectionAPI {
     	//print number of active connections and idle connections
 //        System.out.println("NumActive: " + ds.getNumActive());
 //        System.out.println("NumIdle: " + ds.getNumIdle());
-    	return "NumActive: " + ds.getNumActive() + "    NumIdle: " + ds.getNumIdle();
+    	return "NumActive: " + ds.getNumIdle() + "    NumIdle: " + ds.getNumIdle();
     }
 	
 	
     
 	/**
-	 * closes the DB connection - use this only when user logs out? 
+	 * closes the DB connection - use this only when user logs out
 	 */
-    //not sure when to use//
-    //********************//
 	public void closeConnection()
 	{	
 		try {

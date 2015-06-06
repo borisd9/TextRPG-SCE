@@ -33,9 +33,7 @@
 		<a style="font-size: 100%" href="ForgotPassword.jsp">Forgot Password?</a>
 		<center><input type="submit" value="Login" style="background-color:#eeeeee; border:1px solid grey;"/></center>
 		</form>
-		
-		
-  		
+			
 		<br>
       <center><a style="font-size: 100%" href="register.jsp">New User? Register Here</a></center>
     <%

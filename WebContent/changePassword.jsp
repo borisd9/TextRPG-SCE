@@ -25,11 +25,11 @@
       
  
 	 <form name="form1"  action="ChangePasswordServlet" method="post">
-		 old Password:<br> <input type="text" name="oldPass" style="background-color:#eeeeee; border:1px solid grey">
+		old Password:<br> <input type="password" name="oldPass" style="background-color:#eeeeee; border:1px solid grey">
 		<br>
-		new Password:<br><input type="text" name='newpass' style="background-color:#eeeeee; border:1px solid grey">
+		new Password:<br><input type="password" name='newpass' style="background-color:#eeeeee; border:1px solid grey">
 		<br>
-		repeat new password:<br><input type="text" name='newpassR' style="background-color:#eeeeee; border:1px solid grey">
+		repeat new password:<br><input type="password" name='newpassR' style="background-color:#eeeeee; border:1px solid grey">
 		<br>
 		<center><input type="submit" value="ChangePassword" style="background-color:#eeeeee; border:1px solid grey;"/></center>
 	</form>

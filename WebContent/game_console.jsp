@@ -525,8 +525,8 @@
 		 		//Sending AJAX to update map DB	
 				$.get('gameservlet', { action: "moveTo", direction: msg}, 
 						function(responseJson){
-					displayLocation();
-				}
+							displayLocation();
+						}
 				);
 	 		}
 	 		break;

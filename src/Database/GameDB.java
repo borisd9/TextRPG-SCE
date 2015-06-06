@@ -148,6 +148,8 @@ public class GameDB extends DbConnectionAPI {
 
 		String location = playerLocation(username);
 
+		System.out.println("~~~~~"+location);
+		
 		String query = "SELECT * FROM items WHERE location='" + location + "'";
 
 		ResultSet rs = readFromDatabase(query);
@@ -242,7 +244,7 @@ public class GameDB extends DbConnectionAPI {
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if (rs.next()) {
-				System.out.println("eshchar playerLocation:" + rs.getString("location"));
+				//System.out.println("eshchar playerLocation:" + rs.getString("location"));
 				return rs.getString("location");
 			}
 		} catch (SQLException e) {

@@ -3,7 +3,9 @@ package Servlets;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -104,6 +106,7 @@ public class GameServlet extends HttpServlet {
 			}
 		}
 
+		
 		//Return location information
 		if(action.equals("getMapStatus")){
 			
@@ -243,7 +246,23 @@ public class GameServlet extends HttpServlet {
 			response.setContentType("text/plain");  
 			response.setCharacterEncoding("UTF-8"); 
 			response.getWriter().write(json); 
-		}		 
+		}	
+		
+		if(action.equals("getItems")){
+			List<Map<String,String>> lst = new ArrayList<Map<String,String>>();
+			Map<String,String> map1 = new LinkedHashMap<String,String>();
+			map1.put("key", "val");
+			Map<String,String> map2 = new LinkedHashMap<String,String>();
+			map2.put("key1", "val1");
+			lst.add(map1);
+			lst.add(map2);
+			
+			String json = new Gson().toJson(lst);
+			
+			response.setContentType("text/plain");  
+			response.setCharacterEncoding("UTF-8"); 
+			response.getWriter().write(json); 
+		}
 	}
 	/**
 	 * 

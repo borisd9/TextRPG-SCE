@@ -817,7 +817,20 @@
 	
 	function displayStore(){
 		itemsChars=[];
-		<%rs = gdb.getStoreItems(username);
+		
+		$.get("gameservlet", {action: "getItems", username: username},
+			function(responseJson){
+				$.each(responseJson, function(index, value){
+					$.each(value, function(subindex, subvalue){
+						Console.log(subindex+": "+subvalue);
+					});
+					
+				});
+			}, 'json'	
+		);
+		
+		// delete all the scriptlet
+		<%	rs = gdb.getStoreItems(username);
 
 			String item_name;
 			String item_description;

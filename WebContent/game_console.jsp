@@ -117,7 +117,6 @@
 			displayCommands();
 			break;
 			
-				
 		//Start game//
 		case "/start":			
 	 		//if game has already started

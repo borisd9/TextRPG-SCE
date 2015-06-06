@@ -15,8 +15,7 @@
 		} else if ('MozWebSocket' in window) {
 			chat2.socket = new MozWebSocket(host);
 		} else {
-			chatConsole2
-					.log('Error: WebSocket is not supported by this browser.');
+			chatConsole2.log('Error: WebSocket is not supported by this browser.');
 			return;
 		}
 
@@ -55,12 +54,44 @@
 
 	//Sending message
 	chat2.sendMessage = (function() {
-		//check if message is not empty
-		if (document.getElementById('chat2').value != '') {
-			var message = "<font color='blue'>"	+ document.getElementById('un').value + ":   </font>"+ document.getElementById('chat2').value;
-			chat2.socket.send(message);
-			document.getElementById('chat2').value = '';
-		}
+		var msg = document.getElementById('chat2').value;
+		
+		var mutedList = [];
+		
+		//Get muted users list
+		$.post("MuteServlet", {action: "getList"}, 
+			function(responseJson){
+				$.each(responseJson, function(index, value){
+					mutedList[index] = value;
+				});
+		}, 'json');
+
+		//Once muted list is retrieved
+		setTimeout(function(){
+			//if user is in the list
+			if($.inArray(document.getElementById('un').value, mutedList) != -1){
+				chatConsole2.log(font("red")+"<b>System: </b>You are muted.");
+				document.getElementById('chat2').value = '';
+			}
+			else{
+				//Check if mute command has been used
+				if(msg.substring(0,5)=="/mute"){
+					var mutee = msg.substring(6);
+					$.post("MuteServlet", {action: "addMutee", mutee: mutee})
+				}
+				
+				//check if message is not empty
+				if (document.getElementById('chat2').value != '') {
+					var message = "<font color='blue'>"	+ document.getElementById('un').value + ":   </font>"+ document.getElementById('chat2').value;
+					chat2.socket.send(message);
+					document.getElementById('chat2').value = '';
+				}
+			}
+		}, 50);
+		
+		
+		
+		
 	});
 
 	var chatConsole2 = {};

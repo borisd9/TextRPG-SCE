@@ -7,17 +7,23 @@ public class MuteList{
 	
 	private static ArrayList<String> muted = new ArrayList<String>();
 	
-	public synchronized void addToList(String name){
-		System.out.println(name);
-		if (!muted.contains(name))
+	public synchronized boolean addToList(String name){
+		if (!muted.contains(name)){
 			muted.add(name);
+			return true;
+		}
+		else return false;
 	}
 	
-	public synchronized void removeFromList(String name){
-		muted.remove(name);
+	public synchronized boolean removeFromList(String name){
+		if (muted.contains(name)){
+			muted.remove(name);
+			return true;
+		}
+		else return false;
 	}
 	
-	public static ArrayList getList(){
+	public ArrayList<String> getList(){
 		return muted;
 	}
 }

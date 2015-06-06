@@ -61,6 +61,7 @@ public class GameServlet extends HttpServlet {
 			Map<String, String> status = new LinkedHashMap<String, String>();
 			try {
 				if(rs.next()){
+					status.put("Name", rs.getString("character"));
 					status.put("Level", rs.getString("level"));
 					status.put("Exp", rs.getString("exp"));
 					status.put("HP", rs.getString("hp"));

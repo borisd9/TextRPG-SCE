@@ -117,7 +117,6 @@
 			displayCommands();
 			break;
 			
-				
 		//Start game//
 		case "/start":			
 	 		//if game has already started
@@ -508,7 +507,12 @@
 				$.get('gameservlet', { action: "getCharStatus", username: '<%=username%>'}, 
 				function(responseJson){
 					$.each(responseJson, function(key, value){
-						Console.log(key+": <b>"+font("orange")+value);
+						if(i==0){ 
+							i++;
+							Console.log(font("blue")+"<b>"+value);
+						}
+						else
+							Console.log(key+": <b>"+font("orange")+value);
 					});
 				}, 
 				'json');			
@@ -641,7 +645,6 @@
 				if(msg > 0 && msg <= <%=numOfChars%>){
 					//Sending data to servlet, to be inserted into DB
 					$.get('gameservlet', { action: "newPlayer", username: '<%=username%>', charName: startChars[msg-1] });				
-	
 					Console.log(font("#009700")+"You have selected <b>" + font("blue") + startChars[msg-1] + "</b></font>! Have a safe journey!");
 					mode = "started";
 					<%Thread.sleep(500);%>

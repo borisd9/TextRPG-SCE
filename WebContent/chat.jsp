@@ -15,8 +15,7 @@
 		} else if ('MozWebSocket' in window) {
 			chat2.socket = new MozWebSocket(host);
 		} else {
-			chatConsole2
-					.log('Error: WebSocket is not supported by this browser.');
+			chatConsole.log('Error: WebSocket is not supported by this browser.');
 			return;
 		}
 
@@ -40,7 +39,7 @@
 			var date = new Date();
 			var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 			
-			chatConsole2.log("<font color='blue'>(" + time + ") " + " </font>" + message.data);
+			chatConsole.log("<font color='blue'>(" + time + ") " + " </font>" + message.data);
 		};
 	});
 
@@ -55,42 +54,107 @@
 
 	//Sending message
 	chat2.sendMessage = (function() {
-		//check if message is not empty
-		if (document.getElementById('chat2').value != '') {
-			var message = "<font color='blue'>"	+ document.getElementById('un').value + ":   </font>"+ document.getElementById('chat2').value;
-			chat2.socket.send(message);
+		var msg = document.getElementById('chat2').value;
+		
+		var mutedList = [];
+		
+		//Get muted users list
+		$.post("MuteServlet", {action: "getList"}, 
+			function(responseJson){
+				$.each(responseJson, function(index, value){
+					mutedList[index] = value;
+				});
+		}, 'json');
+
+		//Once muted list is retrieved
+		setTimeout(function(){
+			//if user is in the list
+			if($.inArray(document.getElementById('un').value, mutedList) != -1){
+				chatConsole.log(font("red")+"<b>System: </b>You are muted.");			
+			}
+			else{
+				//Check if mute command has been used
+				if(msg.substring(0,5)=="/mute"){
+					var mutee = msg.substring(6);
+					//Check if user trying to mute himself
+					if(mutee==document.getElementById('un').value)
+						chatConsole.log(font("red")+"<b>System: </b>You cannot mute yourself!");
+					//Check if a username has been entered
+					else if(mutee!=""){
+						//Mute user
+						$.post("MuteServlet", {action: "addMutee", mutee: mutee, muter: document.getElementById('un').value}, 
+						function(response){
+							//If mute was successful
+							if(response=="exists")
+								chatConsole.log(font("red")+"<b>System: "+font("blue")+mutee+"</b></font> is already muted.");
+							else if(response=="bad rank")
+								chatConsole.log(font("red")+"<b>System: </b>You don't have the authority to use this command!");
+							else if(response=="low rank")
+								chatConsole.log(font("red")+"<b>System: </b>You cannot mute someone with higher authority!");
+							else chatConsole.log(font("red")+"<b>System: "+font("blue")+mutee+"</b></font> is now muted.");
+						});
+					}
+					else chatConsole.log(font("red")+"<b>System: </b>Please specify a user you want to mute.<br>Ex.: "+font("blue")+"<b>/mute [username]");
+				}
+				//Check if unmute command has been used
+				else if(msg.substring(0,7)=="/unmute"){
+					var mutee = msg.substring(8);
+					//Check if a username has been entered
+					if(mutee!=""){
+						//Unmute user
+						$.post("MuteServlet", {action: "removeMutee", mutee: mutee, muter: document.getElementById('un').value}, 
+						function(response){
+							//If unmute was successful
+							if(response=="exists")
+								chatConsole.log(font("red")+"<b>System: "+font("blue")+mutee+"</b></font> is not muted.");
+							else if(response=="bad rank")
+								chatConsole.log(font("red")+"<b>System: </b>You don't have the authority to use this command!");
+							else chatConsole.log(font("red")+"<b>System: "+font("blue")+mutee+"</b></font> is able to chat again.");
+						});
+					}
+					else chatConsole.log(font("red")+"<b>System: </b>Please specify a user you want to unmute.<br>Ex.: "+font("blue")+"<b>/unmute [username]");
+				}
+				//check if message is not empty
+				else if (document.getElementById('chat2').value != '') {
+					var message = "<font color='blue'>"	+ document.getElementById('un').value + ":   </font>"+ document.getElementById('chat2').value;
+					chat2.socket.send(message);
+				}
+			}
 			document.getElementById('chat2').value = '';
-		}
+		}, 50);	
+		
 	});
 
-	var chatConsole2 = {};
+	var chatConsole = {};
 
 	//Adding the message to the console
-	chatConsole2.log = (function(message) {
-		var chatConsole2 = document.getElementById('chatConsole2');
+	chatConsole.log = (function(message) {
+		var chatConsole = document.getElementById('chatConsole2');
 		var p = document.createElement('p');
 		p.style.wordWrap = 'break-word';
 		p.innerHTML = message;
-		chatConsole2.appendChild(p);
-		while (chatConsole2.childNodes.length > 25) {
-			chatConsole2.removeChild(chatConsole2.firstChild);
+		chatConsole.appendChild(p);
+		while (chatConsole.childNodes.length > 25) {
+			chatConsole.removeChild(chatConsole.firstChild);
 		}
-		chatConsole2.scrollTop = chatConsole2.scrollHeight;
+		chatConsole.scrollTop = chatConsole.scrollHeight;
 	});
 
 	chat2.initialize();
-</script>
-
-<script type="text/javascript">
+	
 	var auto_refresh = setInterval(function() {
 		$('#chatUsers').load('chat_users.jsp').fadeIn("slow");
 	}, 30000); // autorefresh the content of the div after
 	//every 30000 milliseconds(30sec)
 </script>
+
+<script type="text/javascript">
+	
+</script>
 </head>
 <body>
 	<div>
-		<div id="chatConsole2-container">
+		<div id="chatConsole-container">
 			<table>
 				<tr>
 					<td>

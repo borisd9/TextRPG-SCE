@@ -9,17 +9,16 @@ public class MuteDB extends DbConnectionAPI{
 		super();
 	}
 	
-	public boolean isAdmin(String username) throws SQLException{
-		
+	public int getRank(String username){
 		String query = "SELECT rank FROM users WHERE username='"+username+"'";
-		ResultSet val = readFromDatabase(query);
+		ResultSet rs = readFromDatabase(query);
 		try {
-			val.next();
-			if( val.getInt("rank") == 1 || val.getInt("rank") == 2)
-				return true;
-		}	catch (SQLException e) {
-			System.out.println("Error in muteDB - isAdmin query: "+e);
-		}
-			return false;
+			if(rs.next())
+				return rs.getInt("rank");
+		}catch (SQLException e) {
+			System.out.println("Error in muteDB - getRank query: "+e);
+		}		
+		
+		return -1;
 	}
 }

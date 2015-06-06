@@ -54,9 +54,12 @@ public class LoginDB extends DbConnectionAPI {
 		String query = "SELECT ban FROM users WHERE username='"+username+"'";		
 		try {			
 			ResultSet rs = readFromDatabase(query);	
-			if(rs.next())
-				if(rs.getInt("ban") == 1);
+			if(rs.next()){
+				if(rs.getInt("ban") == 1)
 					return true;
+				else
+					return false;
+			}
 		} catch (SQLException e) {
 			System.out.println("Error in LoginDB - isBanned query: "+e);
 		}		

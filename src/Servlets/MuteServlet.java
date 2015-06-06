@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import Database.MuteDB;
 import General.MuteList;
 
 /**
@@ -41,22 +42,39 @@ public class MuteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
+		MuteDB mdb = new MuteDB();
 		
 		response.setContentType("text/plain");  
 	    response.setCharacterEncoding("UTF-8");
 	    
 		if(action.equals("addMutee")){
 			String mutee = request.getParameter("mutee");			
-			if(!mList.addToList(mutee))
-				response.getWriter().write("error");
-			else response.getWriter().write("ok");
+			String muter = request.getParameter("muter");
+			int mutee_rank = mdb.getRank(mutee);
+			int muter_rank = mdb.getRank(muter);
+			
+			if(muter_rank < 1)
+				response.getWriter().write("bad rank");
+			else if(mutee_rank > muter_rank)
+				response.getWriter().write("low rank");
+			else{
+				if(!mList.addToList(mutee))
+					response.getWriter().write("exists");
+				else response.getWriter().write("ok");
+			}	
 		}
 		
 		if(action.equals("removeMutee")){
-			String mutee = request.getParameter("mutee");
-			if(!mList.removeFromList(mutee))
-			    response.getWriter().write("error");
-			else response.getWriter().write("ok");
+			String mutee = request.getParameter("mutee");			
+			String muter = request.getParameter("muter");
+			
+			if(mdb.getRank(muter) < 1)
+				response.getWriter().write("bad rank");
+			else{
+				if(!mList.removeFromList(mutee))
+					response.getWriter().write("exists");
+				else response.getWriter().write("ok");
+			}
 		}
 		
 		if(action.equals("getList")){

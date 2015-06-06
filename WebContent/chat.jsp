@@ -76,13 +76,21 @@
 				//Check if mute command has been used
 				if(msg.substring(0,5)=="/mute"){
 					var mutee = msg.substring(6);
+					//Check if user trying to mute himself
+					if(mutee==document.getElementById('un').value)
+						chatConsole.log(font("red")+"<b>System: </b>You cannot mute yourself!");
 					//Check if a username has been entered
-					if(mutee!=""){
+					else if(mutee!=""){
 						//Mute user
-						$.post("MuteServlet", {action: "addMutee", mutee: mutee}, function(response){
+						$.post("MuteServlet", {action: "addMutee", mutee: mutee, muter: document.getElementById('un').value}, 
+						function(response){
 							//If mute was successful
-							if(response=="error")
+							if(response=="exists")
 								chatConsole.log(font("red")+"<b>System: "+font("blue")+mutee+"</b></font> is already muted.");
+							else if(response=="bad rank")
+								chatConsole.log(font("red")+"<b>System: </b>You don't have the authority to use this command!");
+							else if(response=="low rank")
+								chatConsole.log(font("red")+"<b>System: </b>You cannot mute someone with higher authority!");
 							else chatConsole.log(font("red")+"<b>System: "+font("blue")+mutee+"</b></font> is now muted.");
 						});
 					}
@@ -94,10 +102,13 @@
 					//Check if a username has been entered
 					if(mutee!=""){
 						//Unmute user
-						$.post("MuteServlet", {action: "removeMutee", mutee: mutee}, function(response){
+						$.post("MuteServlet", {action: "removeMutee", mutee: mutee, muter: document.getElementById('un').value}, 
+						function(response){
 							//If unmute was successful
-							if(response=="error")
+							if(response=="exists")
 								chatConsole.log(font("red")+"<b>System: "+font("blue")+mutee+"</b></font> is not muted.");
+							else if(response=="bad rank")
+								chatConsole.log(font("red")+"<b>System: </b>You don't have the authority to use this command!");
 							else chatConsole.log(font("red")+"<b>System: "+font("blue")+mutee+"</b></font> is able to chat again.");
 						});
 					}
@@ -130,13 +141,15 @@
 	});
 
 	chat2.initialize();
+	
+	var auto_refresh = setInterval(function() {
+		$('#chatUsers').load('chat_users.jsp').fadeIn("slow");
+	}, 30000); // autorefresh the content of the div after
+	//every 30000 milliseconds(30sec)
 </script>
 
 <script type="text/javascript">
-	/*var auto_refresh = setInterval(function() {
-		$('#chatUsers').load('chat_users.jsp').fadeIn("slow");
-	}, 30000); // autorefresh the content of the div after
-	//every 30000 milliseconds(30sec)*/
+	
 </script>
 </head>
 <body>
@@ -153,7 +166,7 @@
 							if (loggedIn != null) {
 						%>
 						<div id="chatUsers">
-							<%-- <%@ include file="chat_users.jsp"%> --%> 
+							<%@ include file="chat_users.jsp"%>
 						</div> 
 						<% } %>
 					</td>

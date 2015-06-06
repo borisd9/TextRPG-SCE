@@ -797,8 +797,8 @@
 				item_bonus1 = rs.getString("bonus1");
 				item_bonus2 = rs.getString("bonus2");
 				item_price = rs.getString("price");
+				
 				//if ther is two bonus to the item
-
 				if (item_bonus2 != null) {%>
 				
 				Console.log(font("blue")+"<%=i%></font> - <b><%=item_name%> &nbsp;&nbsp;  bonus1: <%=item_bonus1%> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bonus2: <%=item_bonus2%> &nbsp;&nbsp; itme_price: <%=item_price%><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item description: <%=item_description%></b>");

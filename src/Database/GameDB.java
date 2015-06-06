@@ -139,7 +139,11 @@ public class GameDB extends DbConnectionAPI {
 		return rs;
 	}
 
-
+	/**
+	 * get store items
+	 * @param location
+	 * @return relevant row from items database
+	 */
 	public ResultSet getStoreItems(String username) {
 
 		String location = playerLocation(username);
@@ -160,7 +164,6 @@ public class GameDB extends DbConnectionAPI {
 	public int getItemsCount(String username) {
 
 		String location = playerLocation(username);
-		// String location=username;
 		if (location != "-1") {
 			String query = "SELECT count(*) FROM items WHERE location='"
 					+ location + "'";
@@ -168,7 +171,6 @@ public class GameDB extends DbConnectionAPI {
 			ResultSet rs = readFromDatabase(query);
 			try {
 				if (rs.next()) {
-					System.out.println("getItemsCount:" + rs.getString(1));
 					return rs.getInt(1);
 				}
 			} catch (SQLException e) {
@@ -231,19 +233,17 @@ public class GameDB extends DbConnectionAPI {
 
 	/**
 	 * player Location
-	 * 
 	 * @param username
 	 * @return get the player Location, -1 if it's empty
 	 */
 	public String playerLocation(String username) {
-		String query = "SELECT location FROM players WHERE username='"
-				+ username + "'";
+		String query = "SELECT location FROM players WHERE username='"+ username + "'";
 
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if (rs.next()) {
-				System.out.println("playerLocation:" + rs.getString(1));
-				return rs.getString(1);
+				System.out.println("eshchar playerLocation:" + rs.getString("location"));
+				return rs.getString("location");
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in count query: " + e);

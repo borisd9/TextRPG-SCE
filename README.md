@@ -13,3 +13,11 @@
 &#x202b;
 &#x202b; שוב, לא לעבוד על המאסטר! 
 
+Count code lines:
+// Go to menue:
+// find->find in files
+// Switch on reg_ex button
+// Find:
+^.*\S+.*$
+// Where:
+c:\your_folder\,*.php,*.phtml,*.js,*.inc,*.html, -*/folder_to_exclude/*

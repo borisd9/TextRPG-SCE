@@ -138,7 +138,7 @@ public class GameDB extends DbConnectionAPI {
 		ResultSet rs = readFromDatabase(query);
 		return rs;
 	}
-
+	
 	/**
 	 * get store items
 	 * @param location
@@ -222,11 +222,12 @@ public class GameDB extends DbConnectionAPI {
 	 */
 
 	public int getItemPrice(String item) {
+		System.out.println(item);
 		String query = "SELECT price FROM items WHERE item='" + item + "'";
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if (rs.next())
-				return rs.getInt(1);
+				return rs.getInt("price");
 		} catch (SQLException e) {
 			System.out.println("Error in getMoney query: " + e);
 		}

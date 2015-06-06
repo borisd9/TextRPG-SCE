@@ -57,7 +57,7 @@ public class GameServlet extends HttpServlet {
 		//Return character's status
 		if(action.equals("getCharStatus")){
 			String username = request.getParameter("username");
-			 rs = db.getPlayerInfo(username);
+			rs = db.getPlayerInfo(username);
 			Map<String, String> status = new LinkedHashMap<String, String>();
 			try {
 				if(rs.next()){
@@ -175,20 +175,21 @@ public class GameServlet extends HttpServlet {
 		if(action.equals("buyFromStore")){
 			String username = request.getParameter("username");
 			//String location = request.getParameter("location");
-			String itemsChars = request.getParameter("itemsChars");
+			String itemList = request.getParameter("itemList");
 			
 			
 			int money= db.getMoney(username);
-			int price= db.getItemPrice(itemsChars);
+			int price= db.getItemPrice(itemList);
 			System.out.println("price"+price);
 			System.out.println("money"+money);
+			
 			int buy=money-price;
 			System.out.println("buy"+buy);
 			String ans;
 			
-			if(buy>=0)
+			if(buy>=0 && price!=-1)
 			{	
-				db.updatePurchaseItem(username,itemsChars,buy);
+				db.updatePurchaseItem(username,itemList,buy);
 				ans = "1";
 			}
 			else{
@@ -248,20 +249,33 @@ public class GameServlet extends HttpServlet {
 			response.getWriter().write(json); 
 		}	
 		
-		if(action.equals("getItems")){
+		if(action.equals("getItemsDB")){
+			String username = request.getParameter("username");
+			rs = db.getStoreItems(username);
 			List<Map<String,String>> lst = new ArrayList<Map<String,String>>();
-			Map<String,String> map1 = new LinkedHashMap<String,String>();
-			map1.put("key", "val");
-			Map<String,String> map2 = new LinkedHashMap<String,String>();
-			map2.put("key1", "val1");
-			lst.add(map1);
-			lst.add(map2);
+
+			try {
+				while(rs.next()){
+					Map<String,String> item= new LinkedHashMap<String,String>();
+				
+					item.put("Item", rs.getString("item"));
+					item.put("Description", rs.getString("description"));
+					item.put("Bonus1", rs.getString("bonus1"));
+					item.put("Bonus2", rs.getString("bonus2"));
+					item.put("Price", rs.getString("price"));
+					
+					lst.add(item);
+				}
+			} catch (SQLException e) {
+				System.out.println("Error reading char status: "+e);
+			}
 			
 			String json = new Gson().toJson(lst);
 			
 			response.setContentType("text/plain");  
 			response.setCharacterEncoding("UTF-8"); 
 			response.getWriter().write(json); 
+			
 		}
 	}
 	/**

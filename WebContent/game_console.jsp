@@ -40,19 +40,19 @@
 
 	//Init GameDB object and MapDB, and get username from session
 	<%
-			int atk;
-			int defense;
-			int speed;
-			int hp;
-			int exp;
+		int atk;
+		int defense;
+		int speed;
+		int hp;
+		int exp;
 
-			GameDB gdb = new GameDB();
-			String username = (String) session.getAttribute("username");
-			ResultSet rs;
-			MapDB map = new MapDB();
+		GameDB gdb = new GameDB();
+		String username = (String) session.getAttribute("username");
+		ResultSet rs;
+		MapDB map = new MapDB();
 
-			String opponent = gdb.getOpponent(username);
-			String my_char = "", opp_char = "";
+		String opponent = gdb.getOpponent(username);
+		String my_char = "", opp_char = "";
 	%>
 	
 	var opponent = '<%=opponent%>';
@@ -163,11 +163,11 @@
 					case "Green City":
 						//Go To Greenvas Store X
 						displayStore();
-				 		Console.log("<b>"+font("#33aaaa")+"");	 
 						break;
 					case "Torchwood":
 						//Go To Torch Hotel U
 				 		Console.log("<b>"+font("#33aaaa")+"You enjoyed one night at the Tourch Hotel. <br> "+font("White")+"System: "+font("#33aaaa")+"It costed you 80 coins.");
+				 		underconst();
 						//update DB
 						break;
 					case "The Silent Woods":
@@ -176,12 +176,12 @@
 				 		hasmap=1;
 						break;
 					case "The Zygons Tribe":
-						//Fight A Zygon X
+						//Fight A Zygon V
 						fightmanster(20,61,300,"Zygon",40,50,15,80);
 						break;
 					case "Seamol City":
 						//Consult The Mayer V
-				 		Console.log("<b>"+font("#33aaaa")+"The Mayer says you should go and fight the Coco Manster.");	
+				 		Console.log("<b>"+font("#33aaaa")+"The Mayer says you should go and fight the Coco Monster.");	
 						break;
 					case "Crocodile Bridge":
 						//Jump From The Bridge U
@@ -189,28 +189,33 @@
 				 				"Who's that crazy that jumps from the bridge?!<br> "+font("White")+"System: "+font("#33aaaa")+
 				 				"You has been send to the hospital to patch your character's <br> "+font("White")+"System: "+font("#33aaaa")+ "injuries."+
 				 				"The treatment cost you 100 coins. Don't warry - if <br> "+font("White")+"System: "+font("#33aaaa")+"you didn't have that sum - nothing won't be taken <br> "+font("White")+"System: "+font("#33aaaa")+"from you. Take Care!");
-				 		//update DB
-						break;
-					case "Coconut Forest":
-						//Fight The Coco Manster X
-				 		fightmanster(20,61,1000,"Coco",80,700,70,300);
-						break;
-					case "Chimaki Hospital":
-						//Return Home U
-				 		Console.log("<b>"+font("#33aaaa")+"You returned home in safety.");	
-				 		$.get('gameservlet', { action: "moveto", direction: "Home"}, 
+				 		underconst();
+				 		$.get('gameservlet', { action: "moveSomewhere", direction: "Chimaki Hospital"}, 
 								function(responseJson){
 							displayLocation();
 						}
 						);
-				 		//update DB
+				 		//update DB	
+						break;
+					case "Coconut forest":
+						//Fight The Coco Manster V
+				 		fightmanster(20,61,1000,"Coco",80,700,70,300);
+						break;
+					case "Chimaki Hospital":
+						//Return Home V
+				 		Console.log("<b>"+font("#33aaaa")+"You returned home in safety.");	
+				 		$.get('gameservlet', { action: "moveSomewhere", direction: "Home"}, 
+								function(responseJson){
+							displayLocation();
+						}
+						);
 						break;
 					case "The Ghosts Casle":
-						//Fight A Ghost X
+						//Fight A Ghost V
 				 		fightmanster(20,61,300,"Ghost",35,40,15,60);	 
 						break;
 					case "The Screamers Prison":
-						//Return Home U
+						//Return Home V
 						//Console.log("<b>"+font("#33aaaa")+flagprison);
 						if((countcell>=3 && flagdo==1) || pardonflag==1){
 							if(pardonflag==1){
@@ -220,7 +225,7 @@
 							else Console.log("<b>"+font("#33aaaa")+"You cleaned your cell 3 times and did all <br> "+font("White")+"System: "+font("#33aaaa")+
 									"what the screamers told you to do. <br> "+font("White")+"System: "+font("#33aaaa")+"You are free to go home!");
 				 			Console.log("<b>"+font("#33aaaa")+"You returned home in safety.");	
-				 			$.get('gameservlet', { action: "moveto", direction: "Home"}, 
+				 			$.get('gameservlet', { action: "moveSomewhere", direction: "Home"}, 
 									function(responseJson){
 								displayLocation();
 							}
@@ -257,9 +262,10 @@
 					//Travel Around V
 			 		Console.log("<b>"+font("#33aaaa")+"You found the <b>"+font("blue") +"The Blue Ring!<br> "+font("White")+"System: "+font("#33aaaa")+
 			 				"That amulet adds you 5 exp and 25 hp!");
+			 		underconst();
 					break;
 				case "The Amaya Throng":
-					//Fight The Amaya Manster X
+					//Fight The Amaya Manster V
 			 		fightmanster(20,61,300,"Amaya",35,40,15,60);	
 					break;
 				case "Green City":
@@ -270,61 +276,72 @@
 				case "Torchwood":
 					//Go To Woodens Store 
 					displayStore();
-			 		Console.log("<b>"+font("#33aaaa")+"");
 					break;
 				case "The Silent Woods":
 					//Walk Loudly Around U
 			 		Console.log("<b>"+font("#33aaaa")+"Great! Now you waked up these trees! <br> "+font("White")+"System: "+font("#33aaaa")+ 
 			 				"And they are very mad about you! RUN!!!<br> "+font("White")+"System: "+font("#33aaaa")+
-			 				"You ran to Torchwood. You lost 5 attack. <br> "+font("White")+"System: "+font("#33aaaa")+
+			 				"You ran to Torchwood. <br> "+font("White")+"System: "+font("#33aaaa")+
 			 				"DON'T YOU WAKE THEM UP AGAIN!");
-			 		//update DB
+			 		//send to Torchwood
+					$.get('gameservlet', { action: "moveSomewhere", direction: "Torchwood"}, 
+							function(responseJson){
+						displayLocation();
+					}
+					);
 					break;
 				case "The Zygons Tribe":
 					//Talk To The Tribe Chief X
-			 		Console.log("<b>"+font("#33aaaa")+"");
+			 		underconst();
 					break;
 				case "Seamol City":
 					//Help The Poor People Of The City U
 			 		Console.log("<b>"+font("#33aaaa")+"You helped the poor people in town by giving up<br> "+font("White")+"System: "+font("#33aaaa")+
 			 				"150 coins of your money.<br> "+font("White")+"System: "+font("#33aaaa")+"Because of your generosity you earned 30 exp!");
 			 		//update DB
+			 		underconst();
 					break;
 				case "Crocodile Bridge":
-					//Fight The Enormous Crocodile X
+					//Fight The Enormous Crocodile V
 			 		fightmanster(20,61,300,"Enormous Crocodile",35,40,15,60);	
 					break;
-				case "Coconut Forest":
+				case "Coconut forest":
 					//Travel Around X
-			 		Console.log("<b>"+font("#33aaaa")+"");
+			 		underconst();
 					break;
 				case "Chimaki Hospital":
 					//Get An Injection U
 			 		Console.log("<b>"+font("#33aaaa")+"Aouch! That hurts! It costed you 150 coins.");
 			 		//update DB
+			 		underconst();
 					break;
 				case "The Ghosts Casle":
 					//Scare The Ghosts U
 			 		Console.log("<b>"+font("#33aaaa")+"You scared the ghosts and you found <b>"+font("blue") +"The Steel Sword!<br> "+font("White")+"System: "+font("#33aaaa")+
 			 				"That amulet adds you 30 exp and 35 hp!");
 					//update DB
+					underconst();
 					break;
 				case "The Screamers Prison":
 					//Clean Your Cell V
-					if(flagcell==0){
-						countcell=0;
-						flagcell=1;
+					if(flagprison==1)
+					{
+						if(flagcell==0){
+							countcell=0;
+							flagcell=1;
+						}
+						countcell++;
+						if (countcell==1)
+							Console.log("<b>"+font("#33aaaa")+"Yuck! You cleaned all the spider miners in your cell.");
+						else if(countcell==2)
+							Console.log("<b>"+font("#33aaaa")+"You organized all of your stuff in your cell.");
+						else if(countcell==3)
+							Console.log("<b>"+font("#33aaaa")+"You polished your cell and you are exhausted.");
+						else if(countcell>=4)
+							Console.log("<b>"+font("#33aaaa")+"Your cell shines! Stop cleaning it!");
+						break;
 					}
-					countcell++;
-					if (countcell==1)
-						Console.log("<b>"+font("#33aaaa")+"Yuck! You cleaned all the spider miners in your cell.");
-					else if(countcell==2)
-						Console.log("<b>"+font("#33aaaa")+"You organized all of your stuff in your cell.");
-					else if(countcell==3)
-						Console.log("<b>"+font("#33aaaa")+"You polished your cell and you are exhausted.");
-					else if(countcell>=4)
-						Console.log("<b>"+font("#33aaaa")+"Your cell shines! Stop cleaning it!");
-					break;
+					else Console.log("<b>"+font("#33aaaa")+"You are only a visitor - no cell to clean.");	
 			}
 			break;
 			}else 
@@ -340,8 +357,9 @@
 			 				"You has been send to the hospital to patch your character's <br> "+font("White")+"System: "+font("#33aaaa")+ "injuries. "+
 			 				"The treatment cost you 100 coins. Don't warry - if <br> "+font("White")+"System: "+font("#33aaaa")+"you didn't have that sum - nothing won't be taken <br> "+font("White")+"System: "+font("#33aaaa")+"from you. Take Care!");
 			 		//need to update the DB
+			 		underconst();
 					//send to hospital
-					$.get('gameservlet', { action: "moveto", direction: "Chimaki Hospital"}, 
+					$.get('gameservlet', { action: "moveSomewhere", direction: "Chimaki Hospital"}, 
 							function(responseJson){
 						displayLocation();
 					}
@@ -350,37 +368,42 @@
 				case "Green City":
 					//Visit The Local Casino X
 			 		//rand function
-			 		Console.log("<b>"+font("#33aaaa")+"");
+			 		underconst();
 					break;
 				case "Torchwood":
 					//Go To Yammi Restaurant U
 			 		Console.log("<b>"+font("#33aaaa")+"Yammi! You enjoyed a tasty meal in the Yammi Restaurant. <br> "+font("White")+"System: "+font("#33aaaa")+"It costed you 50 coins.");
 					//update DB
+					underconst();
 					break;
 				case "The Silent Woods":
-					//Fight The Trees X
+					//Fight The Trees V
 			 		fightmanster(20,61,300,"Trees",35,40,15,60);
 					break;
 				case "Seamol City":
 					//Go To Pak Store
 					displayStore();
-			 		Console.log("<b>"+font("#33aaaa")+"");
 					break;
 				case "Crocodile Bridge":
 					//Swim Around X
-			 		Console.log("<b>"+font("#33aaaa")+"");
+			 		underconst();
 					break;
 				case "Chimaki Hospital":
 					//Buy A Potion U
 			 		Console.log("<b>"+font("#33aaaa")+"You drank the potion. It costs 150 coins.");
 					//update DB
+					underconst();
 					break;
 				case "The Screamers Prison":
-					//Do What The Screamers Tells You
-			 		Console.log("<b>"+font("#33aaaa")+"They shouted at you and hited you but you did it!<br> "+font("White")+"System: "+font("#33aaaa")+
-			 				"You did all what they wanted you to do - cleaned there<br> "+font("White")+"System: "+font("#33aaaa")+
-			 				"cells, run in circles in the beat down sun and you even<br>"+font("White")+"System: "+font("#33aaaa")+"made them laugh!");
-					flagdo=1;
+					//Do What The Screamers Tells You V
+					if(flagprison==1)
+					{
+				 		Console.log("<b>"+font("#33aaaa")+"They shouted at you and hited you but you did it!<br> "+font("White")+"System: "+font("#33aaaa")+
+				 				"You did all what they wanted you to do - cleaned there<br> "+font("White")+"System: "+font("#33aaaa")+
+				 				"cells, run in circles in the beat down sun and you even<br>"+font("White")+"System: "+font("#33aaaa")+"made them laugh!");
+						flagdo=1;
+					}
+					else Console.log("<b>"+font("#33aaaa")+"You are only a visitor - nothing for you to do here.");
 					break;
 			}
 			break;
@@ -395,6 +418,7 @@
 						if(hasmap==1){
 				 			Console.log("<b>"+font("#33aaaa")+"WOW! YOU FOUND THE TREAURE!<br> "+font("White")+"System: "+font("#33aaaa")+
 				 					"You found 1000 coins!");
+				 			underconst();
 				 			hasmap=2;
 						}
 						else if(hasmap==0)
@@ -404,15 +428,15 @@
 						//update DB
 						break;
 					case "Seamol City":
-						//Kill Some People Around
+						//Kill Some People Around V
 				 		Console.log("<b>"+font("#33aaaa")+"What have you done?! Are you crazy?!<br> "+font("White")+"System: "+font("#33aaaa")+
 				 				"Now you are going to Jail!");
-				 		$.get('gameservlet', { action: "moveto", direction: "The Screamers Prison"}, 
+				 		$.get('gameservlet', { action: "moveSomewhere", direction: "The Screamers Prison"}, 
 								function(responseJson){
 							displayLocation();
 						}
 						);
-				 		//update DB
+
 				 		flaghome=0;
 				 		flagprison=1;
 				 		flagcell=0;
@@ -423,19 +447,23 @@
 						//Take A pill U
 				 		Console.log("<b>"+font("#33aaaa")+"You took a power pill! It costed you 100 coins.");
 						//update DB
+						underconst();
 						break;
 					case "The Screamers Prison":
-						//Ask For Pardon X
-				 		Console.log("<b>"+font("#33aaaa")+"The court of law forgive you.<br>"+font("White")+"System: "+font("#33aaaa")+
-				 				"You can now leave the prison.");
-				 		pardonflag=1;
+						//Ask For Pardon V
+						if(flagprison==1)
+						{
+					 		Console.log("<b>"+font("#33aaaa")+"The court of law forgive you.<br>"+font("White")+"System: "+font("#33aaaa")+
+					 				"You can now leave the prison.");
+					 		pardonflag=1;
+						}
+						else Console.log("<b>"+font("#33aaaa")+"You are only a visitor - you haven't done wrong.");
 						break;
 			}
 			break;
 			}else 
 	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
  			
-	 		
 	 	//view location
 		case "/location":	
 			//check if game has started
@@ -446,7 +474,25 @@
 			else displayLocation();
 			break;
 			
-		
+		case "/mystatus":
+			//check if game has started
+			if(mode != "started"){
+	    		Console.log(font("red")+"You can't check your status before you start the game!<br>Type <b>"+
+	    					font("blue")+"/start</font></b> to start the game.");
+			} else{
+				Console.log("");
+				Console.log(font("#009700")+"Player information:");	
+				Console.log(font("#009700")+"Type "+font("red")+"/char "+font("#009700")+"for your character's information");	
+				//Getting Json object containing HashMap with character status
+				$.get('gameservlet', { action: "getMyStatus", username: '<%=username%>'}, 
+				function(responseJson){
+					$.each(responseJson, function(key, value){
+						Console.log(key+": <b>"+font("orange")+value);
+					});
+				}, 
+				'json');			
+			} 
+			break;
 			
 	 	//view character information//
 	 	case "/char":
@@ -461,12 +507,7 @@
 				//Getting Json object containing HashMap with character status
 				$.get('gameservlet', { action: "getCharStatus", username: '<%=username%>'}, 
 				function(responseJson){
-					var i=0;
 					$.each(responseJson, function(key, value){
-						if(i==0){ 
-							i++;
-							Console.log(font("blue")+"<b>"+value);
-						}
 						Console.log(key+": <b>"+font("orange")+value);
 					});
 				}, 
@@ -510,6 +551,9 @@
 					}
 					);
 		 		}
+	 			else Console.log("<b>"+font("#33aaaa")+"Hold on! Not so fast!<br> "+font("White")+"System: "+font("#33aaaa")+
+						"In order to go back home you should clean your cell<br> "+font("White")+"System: "+font("#33aaaa")+
+				"at least 3 times and do what the screamers tells you to do.");	
 	 		}
 	 		break;
 	 		
@@ -562,8 +606,10 @@
 
 		default:
 			if (isNum(msg) && mode=="store"){
-	 		<%System.out.println("test");
-			int numOfItems = gdb.getItemsCount(username);%>
+	 		<%
+	 		//System.out.println("test");
+			int numOfItems=gdb.getItemsCount(username);
+			%>
 			
 			//checking if legal character number has been selected
 			if(msg > 0 && msg <= <%=numOfItems%> && <%=numOfItems%>!=-1){
@@ -571,11 +617,11 @@
 				
 				$.get('gameservlet', { action: "buyFromStore", username: '<%=username%>', itemsChars: itemsChars[msg-1]}, 
 				function(responseAns){
-					if(ans==1){
-						Console.log(font("#009700")+"</font>!your purchase was successful!");
+					if(responseAns==1){
+						Console.log(font("#009700")+"</font>your purchase was successful!");
 					}
 					else{
-						Console.log(font("#009700")+"</font>!You do not have enough money!");
+						Console.log(font("#009700")+"</font>You do not have enough money!");
 					}
 				});
 				mode = "started";
@@ -718,6 +764,7 @@
 		Console.log(font("#009700")+"Below is a list of available commands:");
 		Console.log(font("blue")+"<b>/start</b></font>"+font("#FF69B4")+" : to start the game.");
 		Console.log(font("blue")+"<b>/char</b></font>"+font("#FF69B4")+" : to check your character's information");
+		Console.log(font("blue")+"<b>/mystatus</b></font>"+font("#FF69B4")+" : to check your player's information");
 		Console.log(font("blue")+"<b>/location</b></font>"+font("#FF69B4")+" : to see your current location");
 		Console.log(font("blue")+"<b>/premium</b></font>"+font("#FF69B4")+" : to buy items from premium store");
 
@@ -725,7 +772,7 @@
 	
 	//display current location and options
 	function displayLocation(){
-		
+		Console.log("");
  		mapInfo.clear();
 		
 		//Getting Json object containing HashMap with map info, and inputing info to mapInfo object
@@ -784,8 +831,8 @@
 				item_bonus1 = rs.getString("bonus1");
 				item_bonus2 = rs.getString("bonus2");
 				item_price = rs.getString("price");
+				
 				//if ther is two bonus to the item
-
 				if (item_bonus2 != null) {%>
 				
 				Console.log(font("blue")+"<%=i%></font> - <b><%=item_name%> &nbsp;&nbsp;  bonus1: <%=item_bonus1%> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bonus2: <%=item_bonus2%> &nbsp;&nbsp; itme_price: <%=item_price%><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item description: <%=item_description%></b>");
@@ -827,7 +874,7 @@
 					"You has been send to the hospital to patch your character's <br> "+font("White")+"System: "+font("#33aaaa")+ "injuries."+
 	 				"The treatment cost you 100 coins. Don't warry - if <br> "+font("White")+"System: "+font("#33aaaa")+"you didn't have that sum - nothing won't be taken <br> "+font("White")+"System: "+font("#33aaaa")+"from you. Take Care!");
 			//send to hospital
-			$.get('gameservlet', { action: "moveto", direction: "Chimaki Hospital"}, 
+			$.get('gameservlet', { action: "moveSomewhere", direction: "Chimaki Hospital"}, 
 					function(responseJson){
 				displayLocation();
 			}
@@ -1005,6 +1052,11 @@
 		battle.log(font("blue")+"2</font> - <b>"+font("#FF69B4")+p1["atk2"]);
 	}
 	
+
+	function underconst(){
+		Console.log("<b>"+font("#cccc33")+"This function is under construction.");	
+	}
+
 	//unleash an attack
 	function Attack(move, attacker){
 		battle.log(font("#009700")+"<b>Turn #" + turn++);
@@ -1088,24 +1140,26 @@
 		document.getElementById("exit").value = "Exit";
 		$.get('gameservlet', { action: "battleOver", winner: win, loser: lose, exp: exp, levelup: lvlup});
 	}
-	
 
 </script>
 
 </head>
 <body>
 	<div id="content">
-		<font color='blue'><b>To start the game, please type <font
+		<font color='blue'>
+		<b>To start the game, please type <font
 				color='red'>/start</font> in the box below.
-		</b><br /> <b>To see the list of possible commands, type <font
-				color='red'>/cmd</font></b><br /> <br /> <b>To access the premium
-				store, type <font color='red'>/premium</font>
-		</b><br /> <b>Enjoy your gaming!</b><br /> <br /> <br /></font>
+		</b><br> 
+		<b>To see the list of possible commands, type <font
+				color='red'>/cmd</font></b><br>
+		<b>To access the premium store, type <font color='red'>/premium</font>
+		</b><br> 
+		<b>Enjoy your gaming!</b><br /> <br /> <br /></font>
 
 		<div id="right">
 
 			<div id="mapDisplay"
-				style="background: url('images/worldMap.png'); width: 280px; height: 360px; border: thick; border-style: dotted solid; border-color: black; position: relative; left: -10px; visibility: hidden;">
+				style="background: url('images/worldMap.png'); width: 280px; height: 360px; border: thick; border-style: solid; border-color: black; position: relative; left: -10px; visibility: hidden;">
 				<img id="pin" src="images/pin.gif"
 					style="width: 90px; height: 70px; position: relative;">
 			</div>

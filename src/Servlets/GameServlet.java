@@ -52,7 +52,7 @@ public class GameServlet extends HttpServlet {
 			db.addPlayer(username, charName);
 		}
 		
-		//Return character's stats
+		//Return character's status
 		if(action.equals("getCharStatus")){
 			String username = request.getParameter("username");
 			 rs = db.getPlayerInfo(username);
@@ -77,6 +77,32 @@ public class GameServlet extends HttpServlet {
 			}
 		}
 		
+		//Return player's status
+		if(action.equals("getMyStatus")){
+			String username = request.getParameter("username");
+			 rs = db.getPlayerInfo(username);
+			Map<String, String> status = new LinkedHashMap<String, String>();
+			try {
+				if(rs.next()){
+					status.put("Username", rs.getString("username"));
+					status.put("Location", rs.getString("location"));
+					status.put("Character", rs.getString("character"));
+					status.put("Money", rs.getString("money"));
+					status.put("Cash", rs.getString("cash"));
+					status.put("Item", rs.getString("item"));
+					status.put("Wins", rs.getString("wins"));
+					status.put("Loses", rs.getString("loses"));
+					
+					String json = new Gson().toJson(status);
+					
+					response.setContentType("text/plain");  
+				    response.setCharacterEncoding("UTF-8"); 
+				    response.getWriter().write(json); 
+				}
+			} catch (SQLException e) {
+				System.out.println("Error reading char status: "+e);
+			}
+		}
 
 		//Return location information
 		if(action.equals("getMapStatus")){
@@ -127,7 +153,7 @@ public class GameServlet extends HttpServlet {
 			
 		}
 		
-		if(action.equals("moveto")){
+		if(action.equals("moveSomewhere")){
 			
 			String direction = request.getParameter("direction").substring(0);
 			//get current map location and move player
@@ -137,6 +163,8 @@ public class GameServlet extends HttpServlet {
 				map.move("Chimaki Hospital");
 			else if(direction.equals("The Screamers Prison"))
 				map.move("The Screamers Prison");
+			else if(direction.equals("Torchwood"))
+				map.move("Torchwood");
 			
 		}
 		
@@ -149,17 +177,23 @@ public class GameServlet extends HttpServlet {
 			
 			int money= db.getMoney(username);
 			int price= db.getItemPrice(itemsChars);
+			System.out.println("price"+price);
+			System.out.println("money"+money);
 			int buy=money-price;
+			System.out.println("buy"+buy);
+			String ans;
+			
 			if(buy>=0)
-			{
+			{	
 				db.updatePurchaseItem(username,itemsChars,buy);
-				String ans = "1";
-				response.getWriter().write(ans);
+				ans = "1";
 			}
 			else{
-				String ans = "0";
-				response.getWriter().write(ans);
+				ans = "0";	
 			}
+			response.setContentType("text/plain");  
+		    response.setCharacterEncoding("UTF-8"); 
+		    response.getWriter().write(ans);
 			
 		}
 		

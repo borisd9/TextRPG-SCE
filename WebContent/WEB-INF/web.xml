@@ -10,8 +10,8 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
    <listener>
-    <listener-class>General.SessionListener</listener-class>
-  </listener>
+		<listener-class>General.SessionListener</listener-class>
+	</listener>
   <servlet>
     <servlet-name>ChatServlet</servlet-name>
     <servlet-class>Servlets.ChatServlet</servlet-class>
@@ -22,12 +22,21 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>CartServlet</servlet-name>
     <servlet-class>Store.CartServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CartServlet</servlet-name>
-    <url-pattern>/Store/CartServlet</url-pattern>
+    <url-pattern>/servlet/CartServlet</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -36,28 +45,35 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CheckoutServlet</servlet-name>
-    <url-pattern>/Store/CheckoutServlet</url-pattern>
+    <url-pattern>/servlet/CheckoutServlet</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet-mapping>
     <servlet-name>BuyServlet</servlet-name>
-    <url-pattern>/Store/BuyServlet</url-pattern>
+    <url-pattern>/servlet/BuyServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>BuyServlet</servlet-name>
     <servlet-class>Store.BuyServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>AuthenticationServlet</servlet-name>
-    <url-pattern>/Servlets/AuthenticationServlet</url-pattern>
+    <url-pattern>/servlet/AuthenticationServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>AuthenticationServlet</servlet-name>
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/servlet/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
+
     <servlet-mapping>
     <servlet-name>MuteServlet</servlet-name>
     <url-pattern>/servlet/MuteServlet</url-pattern>
@@ -92,7 +108,7 @@
 <!-- ADMIN BASIC Authenitacion-Declarative Security -->
   
   <security-role>
-  <role-name>administrator</role-name>
+	<role-name>administrator</role-name>
     </security-role>
   
   <security-constraint>

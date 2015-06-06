@@ -104,7 +104,7 @@ public class GameDB extends DbConnectionAPI {
 				if (rs.next()) {
 					intcheck = rs.getInt("exp");
 					intcoins = rs.getInt("money");
-					System.out.println(intcoins);
+					
 				}
 			} catch (SQLException e) {
 				System.out.println("Error in add player query: " + e);
@@ -139,12 +139,17 @@ public class GameDB extends DbConnectionAPI {
 		return rs;
 	}
 
+	/**
+	 * get store items
+	 * @param location
+	 * @return relevant row from items database
+	 */
 	public ResultSet getStoreItems(String username) {
 
 		String location = playerLocation(username);
 
 		String query = "SELECT * FROM items WHERE location='" + location + "'";
-		// String query = "SELECT * FROM items WHERE location='"+username+"'";
+
 		ResultSet rs = readFromDatabase(query);
 		return rs;
 	}
@@ -155,10 +160,10 @@ public class GameDB extends DbConnectionAPI {
 	 * @param location
 	 * @return number of items in database, -1 if it's empty
 	 */
+
 	public int getItemsCount(String username) {
 
 		String location = playerLocation(username);
-		// String location=username;
 		if (location != "-1") {
 			String query = "SELECT count(*) FROM items WHERE location='"
 					+ location + "'";
@@ -166,7 +171,6 @@ public class GameDB extends DbConnectionAPI {
 			ResultSet rs = readFromDatabase(query);
 			try {
 				if (rs.next()) {
-					System.out.println("getItemsCount:" + rs.getString(1));
 					return rs.getInt(1);
 				}
 			} catch (SQLException e) {
@@ -182,9 +186,8 @@ public class GameDB extends DbConnectionAPI {
 	 * @param username
 	 * @return player amount of money , -1 if it's empty
 	 */
-	public int getMoney(String username) {
-		String query = "SELECT money FROM players WHERE username='" + username
-				+ "'";
+	public int getMoney(String username){
+		String query = "SELECT money FROM players WHERE username='"+username+"'";
 
 		ResultSet rs = readFromDatabase(query);
 		try {
@@ -202,9 +205,10 @@ public class GameDB extends DbConnectionAPI {
 	 * @param username
 	 *            ,item,money update the amount of money of player and the item
 	 */
-	public void updatePurchaseItem(String username, String item, int money) {
-		String query = "UPDATE players SET item='" + item + "' money='" + money
-				+ "'  WHERE username='" + username + "'";
+
+	public void updatePurchaseItem(String username,String item,int money){
+
+		String query = "UPDATE players SET item='"+item+"' , money="+money+" WHERE username='"+username+"'";
 		modifyDatabase(query);
 	}
 
@@ -214,9 +218,9 @@ public class GameDB extends DbConnectionAPI {
 	 * @param item
 	 * @return get the price of the item , -1 if it's empty
 	 */
+
 	public int getItemPrice(String item) {
 		String query = "SELECT price FROM items WHERE item='" + item + "'";
-
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if (rs.next())
@@ -229,20 +233,17 @@ public class GameDB extends DbConnectionAPI {
 
 	/**
 	 * player Location
-	 * 
 	 * @param username
 	 * @return get the player Location, -1 if it's empty
 	 */
 	public String playerLocation(String username) {
-		String query = "SELECT location FROM players WHERE username='"
-				+ username + "'";
+		String query = "SELECT location FROM players WHERE username='"+ username + "'";
 
 		ResultSet rs = readFromDatabase(query);
 		try {
 			if (rs.next()) {
-				System.out.println("playerLocation:" + rs.getString(1));
-				return rs.getString(1);
-
+				System.out.println("eshchar playerLocation:" + rs.getString("location"));
+				return rs.getString("location");
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in count query: " + e);
@@ -341,18 +342,6 @@ public class GameDB extends DbConnectionAPI {
 
 	}
 
-	/**
-	 * @return price of items from database
-	 */
-	/*
-	 * public int getItemPrice(String item){ String query =
-	 * "SELECT * FROM items WHERE item='"+item+"'"; int price=0; ResultSet rs =
-	 * readFromDatabase(query); try { if(rs.next()){ price =
-	 * rs.getInt("price");} } catch (SQLException e) { // TODO Auto-generated
-	 * catch block e.printStackTrace(); } return price;
-	 * 
-	 * }
-	 */
 
 	public int getatk(String username) {
 		String atk = "SELECT attack FROM players WHERE username='" + username

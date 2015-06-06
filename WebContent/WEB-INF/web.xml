@@ -65,12 +65,12 @@
   </servlet>
   
   <servlet>
-    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-name>ChangePassServlet</servlet-name>
     <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-name>ChangePassServlet</servlet-name>
     <url-pattern>/servlet/ChangePasswordServlet</url-pattern>
   </servlet-mapping>
 

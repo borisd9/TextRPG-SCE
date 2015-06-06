@@ -21,7 +21,7 @@ import General.Sha1Hex;
  * Servlet implementation class ForgotPasswordServlet
  */
 @WebServlet("/ForgotPasswordServlet")
-public class ForgotPassServlet extends HttpServlet{
+public class ForgotPasswordServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	String contextPath;
@@ -30,7 +30,7 @@ public class ForgotPassServlet extends HttpServlet{
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ForgotPassServlet() {
+    public ForgotPasswordServlet() {
         super();   
         db = new ForgotPasswordDB();
     }

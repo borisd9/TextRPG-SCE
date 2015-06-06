@@ -27,7 +27,17 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ChangePasswordServlet</servlet-name>
-    <url-pattern>/ChangePasswordServlet</url-pattern>
+    <url-pattern>/servlet/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>ForgotPasswordServlet</servlet-name>
+    <servlet-class>Servlets.ForgotPasswordServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ForgotPasswordServlet</servlet-name>
+    <url-pattern>/servlet/ForgotPasswordServlet</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -63,16 +73,6 @@
     <servlet-name>AuthenticationServlet</servlet-name>
     <servlet-class>Servlets.AuthenticationServlet</servlet-class>
   </servlet>
-  
-  <servlet>
-    <servlet-name>ChangePassServlet</servlet-name>
-    <servlet-class>Servlets.ChangePasswordServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>ChangePassServlet</servlet-name>
-    <url-pattern>/servlet/ChangePasswordServlet</url-pattern>
-  </servlet-mapping>
 
     <servlet-mapping>
     <servlet-name>MuteServlet</servlet-name>

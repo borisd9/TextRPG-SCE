@@ -179,12 +179,9 @@ public class GameServlet extends HttpServlet {
 			
 			
 			int money= db.getMoney(username);
-			int price= db.getItemPrice(itemList);
-			System.out.println("price"+price);
-			System.out.println("money"+money);
-			
+			int price= db.getItemPrice(itemList);	
 			int buy=money-price;
-			System.out.println("buy"+buy);
+			
 			String ans;
 			
 			if(buy>=0 && price!=-1)

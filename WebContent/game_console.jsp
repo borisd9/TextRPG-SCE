@@ -697,10 +697,7 @@
 				}
 				else
 					Console.log(font("red")+"Item #"+msg+" does not exist!<br>");
-					
-				
-				
-				
+						
 			}
 			else 
 	 			Console.log(font("red")+"'"+input+"' is not a valid command.<br>Type /cmd to see the available commands.");
@@ -846,37 +843,6 @@
 		} , 100);		
 		
 	}
-	
-	function useless(){// delete all the scriptlet
-		<%	rs = gdb.getStoreItems(username);
-
-		String item_name;
-		String item_description;
-		String item_bonus1;
-		String item_bonus2;
-		String item_price;
-
-		for (i = 1; rs.next(); i++) {
-			item_name = rs.getString("item");
-			item_description = rs.getString("description");
-			item_bonus1 = rs.getString("bonus1");
-			item_bonus2 = rs.getString("bonus2");
-			item_price = rs.getString("price");
-			
-			//if ther is two bonus to the item
-			if (item_bonus2 != null) {%>
-			
-			Console.log(font("blue")+"<%=i%></font> - <b><%=item_name%> &nbsp;&nbsp;  bonus1: <%=item_bonus1%> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bonus2: <%=item_bonus2%> &nbsp;&nbsp; itme_price: <%=item_price%><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item description: <%=item_description%></b>");
-			
-			<%//if ther is one bonus to the item
-			} else {%>
-			Console.log(font("blue")+"<%=i%></font> - <b><%=item_name%> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bonus1: <%=item_bonus1%> &nbsp;&nbsp; itme_price: <%=item_price%><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item description: <%=item_description%></b>");
-			<%}%>
-
-		itemList.push("<%=item_name%>");
-	<%}%>
-	
-	mode="store";}
 	
 	function fightmanster(min,max,value,name,exptoadd,coinstoadd,exptolose,coinstolose)
 	{

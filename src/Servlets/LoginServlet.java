@@ -65,6 +65,11 @@ public class LoginServlet extends HttpServlet {
 		{
 			response.sendRedirect(contextPath + "/login.jsp?err=3");
 		}
+		//check if user isnt banned from the game
+		else if(db.isBanned(username))
+		{
+			response.sendRedirect(contextPath + "/login.jsp?err=5");		
+		}
 		//Check if user exists in database and his account is activated
 		else if(db.doesExist(username, encPassword)==1)
 		{
